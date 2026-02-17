@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>laundry service — miami</title>
+  <meta name="description" content="Towel and linen rental for South Florida hospitality. HOAs, hotels, spas, restaurants. linen la vida loca.">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <!-- Open Graph (Facebook, iMessage, WhatsApp, LinkedIn, etc.) -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://laundry-service-miami.netlify.app/">
+  <meta property="og:title" content="laundry service — towel & linen rental · south florida">
+  <meta property="og:description" content="Fresh towels delivered weekly. HOAs, hotels, spas, gyms. We handle everything — you never think about it. linen la vida loca.">
+  <meta property="og:image" content="https://laundry-service-miami.netlify.app/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="laundry service — linen la vida loca. Towel and linen rental for South Florida.">
+  <meta property="og:site_name" content="laundry service">
+  <meta property="og:locale" content="en_US">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="laundry service — towel & linen rental · south florida">
+  <meta name="twitter:description" content="Fresh towels delivered weekly. HOAs, hotels, spas, gyms. We handle everything — you never think about it.">
+  <meta name="twitter:image" content="https://laundry-service-miami.netlify.app/og-image.png">
+
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#1a1a18">
+  <meta name="msapplication-TileColor" content="#1a1a18">
+  <link rel="canonical" href="https://laundry-service-miami.netlify.app/">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a09;
+      --night: #111110;
+      --charcoal: #1a1a18;
+      --stone: #2a2a27;
+      --ash: #4a4a44;
+      --drift: #7a7a70;
+      --sand: #b0aa9c;
+      --bone: #d4cfc2;
+      --linen: #e8e3d8;
+      --cream: #f2efe8;
+      --milk: #f9f7f3;
+      --white: #fefdfb;
+      --warm: #c4a872;
+      --copper: #b87a4a;
+      --blush: #c49080;
+      --moss: #5a6e56;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      color: var(--charcoal);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 9999;
+      pointer-events: none;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 0 clamp(2rem, 5vw, 4rem);
+      background: rgba(254,253,251,0);
+      transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    nav.scrolled {
+      background: rgba(254,253,251,0.92);
+      backdrop-filter: blur(24px) saturate(1.2);
+    }
+    .nav-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 80px;
+    }
+    .wordmark {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: lowercase;
+      color: var(--charcoal); text-decoration: none;
+    }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-link {
+      font-size: 0.76rem; font-weight: 500; color: var(--drift);
+      text-decoration: none; letter-spacing: 0.06em; text-transform: lowercase;
+      transition: color 0.3s;
+    }
+    .nav-link:hover { color: var(--charcoal); }
+    .nav-btn {
+      font-size: 0.76rem; font-weight: 600; color: var(--charcoal);
+      text-decoration: none; letter-spacing: 0.06em; text-transform: lowercase;
+      border-bottom: 1.5px solid var(--charcoal);
+      padding-bottom: 2px; transition: all 0.3s;
+    }
+    .nav-btn:hover { color: var(--copper); border-color: var(--copper); }
+
+    /* ═══ HERO ═══ */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: flex-end;
+      padding: 0 clamp(2rem, 5vw, 4rem) clamp(4rem, 8vh, 8rem);
+      position: relative;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 80% 30%, rgba(196,168,114,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 70% at 20% 80%, rgba(180,140,100,0.06) 0%, transparent 50%),
+        linear-gradient(180deg, var(--milk) 0%, var(--cream) 60%, var(--linen) 100%);
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; width: 100%;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--drift);
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeIn 1s 0.2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 400;
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--charcoal);
+      margin-bottom: 3rem;
+      max-width: 900px;
+      opacity: 0; animation: slideUp 1s 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero h1 i {
+      font-style: italic;
+      color: var(--ash);
+    }
+    .hero-bottom {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      opacity: 0; animation: fadeIn 1s 0.8s forwards;
+    }
+    .hero-desc {
+      font-size: 0.95rem; line-height: 1.75;
+      color: var(--drift); font-weight: 400;
+      max-width: 420px;
+    }
+    .hero-cta {
+      display: flex; align-items: center; gap: 36px;
+    }
+    .cta-main {
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); background: var(--charcoal);
+      padding: 18px 36px; text-decoration: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .cta-main:hover {
+      background: var(--black);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(10,10,9,0.2);
+    }
+    .cta-ghost {
+      font-size: 0.76rem; font-weight: 500;
+      letter-spacing: 0.06em; color: var(--ash);
+      text-decoration: none;
+      border-bottom: 1px solid var(--bone);
+      padding-bottom: 3px; transition: all 0.3s;
+    }
+    .cta-ghost:hover { color: var(--charcoal); border-color: var(--charcoal); }
+
+    /* ═══ TICKER ═══ */
+    .ticker {
+      padding: 20px 0;
+      background: var(--charcoal);
+      overflow: hidden;
+    }
+    .ticker-track {
+      display: flex; gap: 0;
+      animation: tickerScroll 30s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 0.95rem; font-weight: 400;
+      color: var(--sand);
+      white-space: nowrap;
+      padding: 0 24px;
+    }
+    .ticker-dot {
+      color: var(--ash); padding: 0 16px;
+      font-size: 0.6rem; vertical-align: middle;
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ═══ INTRO ═══ */
+    .intro {
+      padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem);
+      background: var(--white);
+    }
+    .intro-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 120px;
+      align-items: start;
+    }
+    .intro-left {}
+    .label {
+      font-size: 0.65rem; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--drift); margin-bottom: 1.5rem;
+    }
+    .intro-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.15;
+      letter-spacing: -0.03em;
+      color: var(--charcoal);
+    }
+    .intro-headline i { font-style: italic; color: var(--ash); }
+    .intro-right {}
+    .intro-body {
+      font-size: 0.98rem; line-height: 1.85;
+      color: var(--ash); font-weight: 400;
+      margin-bottom: 3rem;
+    }
+    .traits {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    }
+    .trait {
+      padding: 24px; background: var(--milk);
+      transition: all 0.3s;
+    }
+    .trait:hover { background: var(--cream); }
+    .trait h3 {
+      font-size: 0.82rem; font-weight: 600; color: var(--charcoal);
+      margin-bottom: 4px; letter-spacing: 0.01em;
+    }
+    .trait p {
+      font-size: 0.78rem; color: var(--drift); line-height: 1.55;
+      font-weight: 400;
+    }
+
+    /* ═══ SERVICES ═══ */
+    .services {
+      padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem);
+      background: var(--night);
+      color: var(--bone);
+      position: relative;
+    }
+    .services::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 40% 50% at 10% 80%, rgba(196,168,114,0.04) 0%, transparent 60%),
+        radial-gradient(ellipse 30% 40% at 90% 20%, rgba(180,140,100,0.03) 0%, transparent 50%);
+    }
+    .services-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: clamp(3rem, 6vh, 5rem);
+      padding-bottom: clamp(3rem, 6vh, 5rem);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .services .label { color: var(--sand); }
+    .services-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.15;
+      letter-spacing: -0.03em; color: var(--cream);
+    }
+    .services-title i { color: var(--sand); }
+    .services-note {
+      font-size: 0.85rem; color: var(--drift);
+      max-width: 280px; text-align: right;
+      line-height: 1.65; font-weight: 400;
+    }
+    .svc-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: rgba(255,255,255,0.04);
+    }
+    .svc-card {
+      padding: clamp(2rem, 4vw, 3rem);
+      background: var(--night);
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: default;
+      position: relative;
+    }
+    .svc-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; width: 0; height: 1px;
+      background: var(--warm);
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .svc-card:hover { background: var(--charcoal); }
+    .svc-card:hover::after { width: 100%; }
+    .svc-num {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 2rem; color: var(--stone);
+      margin-bottom: 1.5rem;
+      transition: color 0.4s;
+    }
+    .svc-card:hover .svc-num { color: var(--warm); }
+    .svc-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 400;
+      color: var(--cream); margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+    .svc-card p {
+      font-size: 0.82rem; color: var(--drift);
+      line-height: 1.6; font-weight: 400;
+    }
+
+    /* ═══ PROCESS ═══ */
+    .process {
+      padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem);
+      background: var(--cream);
+    }
+    .process-inner { max-width: 1280px; margin: 0 auto; }
+    .process-header { margin-bottom: clamp(3rem, 6vh, 5rem); }
+    .process-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400; color: var(--charcoal);
+      letter-spacing: -0.03em;
+    }
+    .steps {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--bone);
+    }
+    .step {
+      padding: 2.5rem 2rem 2.5rem 0;
+      border-right: 1px solid var(--bone);
+    }
+    .step:last-child { border-right: none; }
+    .step-n {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 2.5rem; font-weight: 400;
+      color: var(--bone); margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+    .step h3 {
+      font-size: 0.88rem; font-weight: 600;
+      color: var(--charcoal); margin-bottom: 6px;
+      letter-spacing: 0.01em;
+    }
+    .step p {
+      font-size: 0.82rem; color: var(--drift);
+      line-height: 1.6; font-weight: 400;
+    }
+
+    /* ═══ AI SERVICES ═══ */
+    .ai-services {
+      padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem);
+      background: var(--cream);
+      position: relative;
+    }
+    .ai-services::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 70% 20%, rgba(196,168,114,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(90,110,86,0.04) 0%, transparent 50%);
+    }
+    .ai-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .ai-header { margin-bottom: clamp(3rem, 6vh, 5rem); max-width: 600px; }
+    .ai-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 400; line-height: 1.15;
+      letter-spacing: -0.03em; color: var(--charcoal);
+      margin-bottom: 1rem;
+    }
+    .ai-title i { font-style: italic; color: var(--ash); }
+    .ai-subtitle {
+      font-size: 0.95rem; line-height: 1.75;
+      color: var(--drift); font-weight: 400;
+    }
+    .ai-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    }
+    .ai-card {
+      background: var(--white);
+      padding: clamp(28px, 3vw, 40px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .ai-card:hover {
+      background: var(--milk);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(10,10,9,0.06);
+    }
+    .ai-card-featured {
+      background: var(--charcoal);
+      color: var(--cream);
+    }
+    .ai-card-featured:hover {
+      background: var(--black);
+      box-shadow: 0 12px 40px rgba(10,10,9,0.25);
+    }
+    .ai-card-featured .ai-card-icon { color: var(--warm); }
+    .ai-card-featured h3 { color: var(--cream); }
+    .ai-card-featured p { color: var(--sand); }
+    .ai-card-badge {
+      position: absolute; top: 20px; right: 20px;
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--moss); background: rgba(90,110,86,0.12);
+      padding: 4px 10px; border-radius: 2px;
+    }
+    .ai-card-featured .ai-card-badge {
+      color: var(--warm); background: rgba(196,168,114,0.15);
+    }
+    .ai-card-icon {
+      color: var(--copper);
+      margin-bottom: 20px;
+    }
+    .ai-card h3 {
+      font-size: 0.92rem; font-weight: 600; color: var(--charcoal);
+      margin-bottom: 8px; letter-spacing: 0.01em;
+    }
+    .ai-card p {
+      font-size: 0.82rem; color: var(--drift); line-height: 1.65;
+      font-weight: 400;
+    }
+    .ai-card-cta {
+      display: inline-block; margin-top: 16px;
+      font-size: 0.76rem; font-weight: 600;
+      letter-spacing: 0.04em; color: var(--warm);
+      text-decoration: none; border-bottom: 1px solid rgba(196,168,114,0.3);
+      padding-bottom: 2px; transition: all 0.3s;
+    }
+    .ai-card-cta:hover { border-color: var(--warm); }
+    .ai-bottom {
+      margin-top: clamp(2rem, 4vh, 3rem);
+      padding-top: clamp(2rem, 4vh, 3rem);
+      border-top: 1px solid var(--bone);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .ai-bottom-text {
+      font-size: 0.85rem; color: var(--ash); font-style: italic;
+      font-family: 'Playfair Display', serif;
+    }
+    .ai-bottom-link {
+      font-size: 0.76rem; font-weight: 600;
+      letter-spacing: 0.06em; color: var(--charcoal);
+      text-decoration: none; border-bottom: 1.5px solid var(--charcoal);
+      padding-bottom: 2px; transition: all 0.3s;
+    }
+    .ai-bottom-link:hover { color: var(--copper); border-color: var(--copper); }
+
+    /* ═══ CONTACT ═══ */
+    .contact {
+      padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem);
+      background: var(--white);
+    }
+    .contact-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 100px;
+      align-items: start;
+    }
+    .contact-left {}
+    .contact-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400; line-height: 1.1;
+      color: var(--charcoal); letter-spacing: -0.03em;
+      margin-bottom: 1.5rem;
+    }
+    .contact-headline i { font-style: italic; color: var(--ash); }
+    .contact-body {
+      font-size: 0.95rem; color: var(--drift);
+      line-height: 1.75; margin-bottom: 3rem;
+    }
+    .promises { list-style: none; }
+    .promises li {
+      display: flex; gap: 16px; align-items: baseline;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--linen);
+    }
+    .promises li:first-child { border-top: 1px solid var(--linen); }
+    .promise-mark {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem; color: var(--bone);
+      flex-shrink: 0; width: 24px;
+    }
+    .promise-text {
+      font-size: 0.88rem; color: var(--ash); line-height: 1.55;
+    }
+    .promise-text strong { font-weight: 600; color: var(--charcoal); }
+
+    /* Form */
+    .form-wrap {
+      background: var(--milk);
+      border: 1px solid var(--linen);
+    }
+    .form-header {
+      padding: 32px 36px 24px;
+      border-bottom: 1px solid var(--linen);
+    }
+    .form-header h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 400;
+      color: var(--charcoal); letter-spacing: -0.02em;
+    }
+    .form-header p {
+      font-size: 0.78rem; color: var(--drift); margin-top: 4px;
+    }
+    .form-body { padding: 28px 36px 36px; }
+    .fg { margin-bottom: 18px; }
+    .fg label {
+      display: block; font-size: 0.68rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ash); margin-bottom: 8px;
+    }
+    .fg input, .fg select, .fg textarea {
+      width: 100%; padding: 14px 16px;
+      border: 1px solid var(--bone);
+      background: var(--white);
+      font-family: 'Syne', sans-serif; font-size: 0.9rem;
+      color: var(--charcoal);
+      transition: all 0.3s;
+    }
+    .fg input::placeholder, .fg textarea::placeholder {
+      color: var(--sand); font-weight: 400;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus {
+      outline: none;
+      border-color: var(--charcoal);
+      box-shadow: 0 0 0 3px rgba(26,26,24,0.04);
+    }
+    .fg textarea { resize: vertical; min-height: 100px; }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .form-submit {
+      width: 100%; padding: 16px;
+      background: var(--charcoal); color: var(--white);
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.78rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      cursor: pointer; transition: all 0.4s;
+      margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--black); transform: translateY(-1px); }
+    .form-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .form-fine {
+      font-size: 0.68rem; color: var(--sand); text-align: center;
+      margin-top: 16px; letter-spacing: 0.02em;
+    }
+
+    .form-success {
+      display: none; text-align: center;
+      padding: 64px 36px;
+    }
+    .form-success h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; font-weight: 400;
+      color: var(--charcoal); margin-bottom: 10px;
+    }
+    .form-success p {
+      font-size: 0.9rem; color: var(--drift); line-height: 1.65;
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      padding: 48px clamp(2rem, 5vw, 4rem) 32px;
+      background: var(--black);
+    }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-mark {
+      font-size: 0.82rem; font-weight: 600; color: var(--white);
+      letter-spacing: 0.08em;
+    }
+    .footer-mark span {
+      font-family: 'Playfair Display', serif;
+      font-style: italic; font-weight: 400;
+      color: var(--ash); margin-left: 12px;
+    }
+    .footer-links { display: flex; gap: 28px; }
+    .footer-links a {
+      font-size: 0.72rem; color: var(--ash);
+      text-decoration: none; letter-spacing: 0.06em;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--bone); }
+    .footer-bottom {
+      max-width: 1280px; margin: 32px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between;
+      font-size: 0.65rem; color: var(--stone);
+      letter-spacing: 0.06em;
+    }
+
+    /* ═══ STICKY CTA ═══ */
+    .sticky-cta {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 99;
+      background: var(--black);
+      padding: 0 clamp(2rem, 5vw, 4rem);
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .sticky-text {
+      font-size: 0.78rem; color: var(--sand);
+      letter-spacing: 0.02em;
+    }
+    .sticky-text strong { color: var(--cream); font-weight: 600; }
+    .sticky-actions { display: flex; align-items: center; gap: 20px; }
+    .sticky-phone {
+      font-size: 0.78rem; color: var(--sand);
+      text-decoration: none; letter-spacing: 0.04em;
+      transition: color 0.3s;
+    }
+    .sticky-phone:hover { color: var(--white); }
+    .sticky-book {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--black); background: var(--cream);
+      padding: 10px 24px; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .sticky-book:hover { background: var(--white); }
+
+    /* ═══ QUICK BOOK BAR ═══ */
+    .quickbook {
+      padding: 0 clamp(2rem, 5vw, 4rem);
+      background: var(--white);
+      border-bottom: 1px solid var(--linen);
+    }
+    .quickbook-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 28px 0;
+    }
+    .qb-left {
+      display: flex; align-items: center; gap: 32px;
+    }
+    .qb-stat {
+      display: flex; flex-direction: column;
+    }
+    .qb-value {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 1.1rem; color: var(--charcoal);
+    }
+    .qb-label {
+      font-size: 0.62rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--sand); margin-top: 2px;
+    }
+    .qb-divider { width: 1px; height: 32px; background: var(--linen); }
+    .qb-right { display: flex; align-items: center; gap: 24px; }
+    .qb-phone {
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--charcoal); text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.3s;
+    }
+    .qb-phone:hover { color: var(--copper); }
+    .qb-or {
+      font-size: 0.72rem; color: var(--sand);
+      font-style: italic; font-family: 'Playfair Display', serif;
+    }
+    .qb-book {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--white); background: var(--charcoal);
+      padding: 12px 28px; text-decoration: none;
+      transition: all 0.3s;
+    }
+    .qb-book:hover { background: var(--black); transform: translateY(-1px); }
+
+    @media (max-width: 900px) {
+      .quickbook-inner { flex-direction: column; gap: 20px; align-items: flex-start; }
+      .sticky-text { display: none; }
+      .qb-left { gap: 20px; }
+      .ai-grid { grid-template-columns: 1fr 1fr; }
+      .ai-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .qb-left { flex-wrap: wrap; }
+      .qb-divider { display: none; }
+      .qb-right { flex-wrap: wrap; gap: 16px; }
+    }
+
+    /* ═══ ANIMATIONS ═══ */
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 900px) {
+      .hero-inner { padding-top: 140px; }
+      .hero { align-items: center; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 32px; }
+      .intro-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .ai-grid { grid-template-columns: 1fr; }
+      .svc-grid { grid-template-columns: 1fr 1fr; }
+      .services-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .services-note { text-align: left; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--bone); }
+      .nav-link { display: none; }
+    }
+    @media (max-width: 600px) {
+      .hero h1 { font-size: 2.8rem; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .fg-row { grid-template-columns: 1fr; }
+      .traits { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 6px; }
+      .hero-cta { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="nav">
+    <div class="nav-inner">
+      <a href="#" class="wordmark">laundry service</a>
+      <div class="nav-right">
+        <a href="#services" class="nav-link">services</a>
+        <a href="#ai" class="nav-link">ai</a>
+        <a href="#process" class="nav-link">process</a>
+        <a href="../ops/" class="nav-link" style="opacity:0.5;">ops</a>
+        <a href="#contact" class="nav-btn">request a quote</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">linen la vida loca.</div>
+      <h1>Fresh towels.<br>Full service.<br><i>Zero friction.</i></h1>
+      <div class="hero-bottom">
+        <p class="hero-desc">Towel and linen rental for hotels, HOAs, spas, and hospitality businesses across Miami-Dade, Broward, and Palm Beach. We pick up, we clean, we deliver. You never think about it again.</p>
+        <div class="hero-cta">
+          <a href="#contact" class="cta-main">Get a quote</a>
+          <a href="#services" class="cta-ghost">what we do</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">Miami-Dade</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Broward</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Palm Beach</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Pool Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Bed Linens</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Bath Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Restaurant Napkins</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Spa Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Robes</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Chef Coats</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Weekly Routes</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Same-Day Available</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Miami-Dade</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Broward</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Palm Beach</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Pool Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Bed Linens</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Bath Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Restaurant Napkins</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Spa Towels</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Robes</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Chef Coats</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Weekly Routes</span><span class="ticker-dot">—</span>
+      <span class="ticker-item">Same-Day Available</span><span class="ticker-dot">—</span>
+    </div>
+  </div>
+
+  <div class="quickbook">
+    <div class="quickbook-inner">
+      <div class="qb-left">
+        <div class="qb-stat">
+          <div class="qb-value">3 counties</div>
+          <div class="qb-label">service area</div>
+        </div>
+        <div class="qb-divider"></div>
+        <div class="qb-stat">
+          <div class="qb-value">weekly routes</div>
+          <div class="qb-label">scheduled delivery</div>
+        </div>
+        <div class="qb-divider"></div>
+        <div class="qb-stat">
+          <div class="qb-value">same-day</div>
+          <div class="qb-label">emergency available</div>
+        </div>
+      </div>
+      <div class="qb-right">
+        <a href="tel:+15138225130" class="qb-phone">(513) 822-5130</a>
+        <span class="qb-or">or</span>
+        <a href="#contact" class="qb-book">Book a call</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="intro">
+    <div class="intro-inner">
+      <div class="intro-left">
+        <div class="label">The premise</div>
+        <div class="intro-headline">Your guests notice<br>clean linens.<br><i>They really notice<br>bad ones.</i></div>
+      </div>
+      <div class="intro-right">
+        <p class="intro-body">We're a towel and linen rental service built for South Florida hospitality. HOAs with pool decks. Boutique hotels that care about thread count. Spas where the towels are part of the experience. We pick up the used ones, deliver fresh ones on schedule, and replace anything worn — automatically. No contracts. No surprises.</p>
+        <div class="traits">
+          <div class="trait">
+            <h3>Full replacement</h3>
+            <p>Worn items swapped. No paperwork, no upcharges.</p>
+          </div>
+          <div class="trait">
+            <h3>No contracts</h3>
+            <p>We earn it every delivery. Stay because you want to.</p>
+          </div>
+          <div class="trait">
+            <h3>Reliable routes</h3>
+            <p>Same driver, same day. Consistency is the product.</p>
+          </div>
+          <div class="trait">
+            <h3>Actual humans</h3>
+            <p>You call, a person answers. We're local.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services" id="services">
+    <div class="services-inner">
+      <div class="services-header">
+        <div>
+          <div class="label">What we handle</div>
+          <div class="services-title">Programs built for<br><i>South Florida hospitality</i></div>
+        </div>
+        <p class="services-note">Every program is custom. We build around your property, your schedule, and your standards.</p>
+      </div>
+      <div class="svc-grid">
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <h3>HOA & Condo Pools</h3>
+          <p>Pool deck towels for condominiums and HOAs. We handle seasonal surges and board-meeting politics with equal ease.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <h3>Hotels & Resorts</h3>
+          <p>Bed, bath, pool, and restaurant linens. Hospitality-grade quality your housekeeping team will actually appreciate.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <h3>Spas & Salons</h3>
+          <p>Premium soft towels in every size your treatment rooms need. Delivery matched to your busiest days.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <h3>Gyms & Fitness</h3>
+          <p>High-volume towel programs for fitness centers. Durable, fresh, and scaled to your membership count.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">05</div>
+          <h3>Vacation Rentals</h3>
+          <p>Turn-ready linens for Airbnb and short-term rental managers. Same-day turnaround when bookings stack.</p>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">06</div>
+          <h3>Restaurants</h3>
+          <p>Table linens, napkins, kitchen towels, chef coats. Delivery timed around your prep schedule, not ours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="process" id="process">
+    <div class="process-inner">
+      <div class="process-header">
+        <div class="label">How it works</div>
+        <div class="process-title">Four steps. Then forget about it.</div>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <div class="step-n">i</div>
+          <h3>Tell us your setup</h3>
+          <p>Property type, size, what you need. Two-minute form. We handle the rest.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">ii</div>
+          <h3>Custom quote</h3>
+          <p>Pricing built around your property. No hidden fees, no commitments you can't walk away from.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">iii</div>
+          <h3>First delivery</h3>
+          <p>Fresh inventory arrives on your schedule. Ready to go day one. Setup is on us.</p>
+        </div>
+        <div class="step">
+          <div class="step-n">iv</div>
+          <h3>Forget about it</h3>
+          <p>We show up every week like clockwork. Pickup, clean, deliver. You're covered.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ AI SERVICES ═══ -->
+  <section class="ai-services" id="ai">
+    <div class="ai-inner">
+      <div class="ai-header">
+        <div class="label" style="color: var(--warm);">Powered by AI</div>
+        <div class="ai-title">Smarter operations,<br><i>better service.</i></div>
+        <p class="ai-subtitle">We don't just deliver linens — we use AI to make every touchpoint faster, smarter, and more personal. Available 24/7, English and Spanish.</p>
+      </div>
+
+      <div class="ai-grid">
+        <div class="ai-card ai-card-featured">
+          <div class="ai-card-badge">Live now</div>
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>AI Phone Agent</h3>
+          <p>Call us anytime — our AI answers 24/7, qualifies your needs, and gets the right person back to you within the hour. Nights, weekends, holidays. Never a voicemail.</p>
+          <a href="tel:+15138225130" class="ai-card-cta">Call (513) 822-5130 →</a>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
+          <h3>Instant Chat</h3>
+          <p>Get answers without picking up the phone. Pricing estimates, service area questions, delivery schedules — all answered instantly, around the clock.</p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          </div>
+          <h3>Smart Quoting</h3>
+          <p>Tell us your property details and get an instant ballpark quote. Our AI sizes your program based on similar properties we serve, then a specialist confirms the details.</p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Service Shield</h3>
+          <p>Every interaction monitored for satisfaction. If something goes wrong, we know before you call to complain — and we're already working on fixing it.</p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <h3>Route Intelligence</h3>
+          <p>Your driver shows up already knowing your account — open requests, preferences, seasonal patterns. No clipboard. No guessing. Every visit informed by data.</p>
+        </div>
+
+        <div class="ai-card">
+          <div class="ai-card-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+          </div>
+          <h3>Customer Dashboard</h3>
+          <p>Real-time visibility into your account — delivery history, upcoming routes, open issues, spend tracking. No phone tag. No guessing. Everything at a glance.</p>
+        </div>
+      </div>
+
+      <div class="ai-bottom">
+        <p class="ai-bottom-text">These aren't features on a roadmap — they're running right now.</p>
+        <a href="../ops/" class="ai-bottom-link">See the operations dashboard →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-left">
+        <div class="label">Get started</div>
+        <div class="contact-headline">Let's build your<br><i>linen program.</i></div>
+        <p class="contact-body">Tell us about your property. We'll come back with a custom quote — usually within a few hours, evenings and weekends included.</p>
+        <ul class="promises">
+          <li>
+            <span class="promise-mark">i</span>
+            <span class="promise-text"><strong>No contracts.</strong> We earn your business every delivery.</span>
+          </li>
+          <li>
+            <span class="promise-mark">ii</span>
+            <span class="promise-text"><strong>Free setup.</strong> First inventory delivery, no charge.</span>
+          </li>
+          <li>
+            <span class="promise-mark">iii</span>
+            <span class="promise-text"><strong>Auto-replacement.</strong> Worn items swapped. No surprise fees.</span>
+          </li>
+          <li>
+            <span class="promise-mark">iv</span>
+            <span class="promise-text"><strong>Local and personal.</strong> A real person picks up the phone.</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="form-wrap">
+        <form id="intakeForm">
+          <div class="form-header">
+            <h3>Request a quote</h3>
+            <p>Two minutes. No commitment.</p>
+          </div>
+          <div class="form-body">
+            <div class="fg-row">
+              <div class="fg">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required placeholder="Patricia Vega">
+              </div>
+              <div class="fg">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required placeholder="patricia@property.com">
+              </div>
+            </div>
+            <div class="fg-row">
+              <div class="fg">
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="(305) 555-0000">
+              </div>
+              <div class="fg">
+                <label for="property_type">Property type</label>
+                <select id="property_type" name="property_type" required>
+                  <option value="">Select...</option>
+                  <option value="hoa_condo">HOA / Condominium</option>
+                  <option value="hotel_resort">Hotel / Resort</option>
+                  <option value="spa_salon">Spa / Salon</option>
+                  <option value="gym_fitness">Gym / Fitness Center</option>
+                  <option value="vacation_rental">Airbnb / Vacation Rental</option>
+                  <option value="restaurant">Restaurant</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+            </div>
+            <div class="fg">
+              <label for="property_name">Property name</label>
+              <input type="text" id="property_name" name="property_name" placeholder="Sunrise Point Condominiums">
+            </div>
+            <div class="fg">
+              <label for="message">What do you need</label>
+              <textarea id="message" name="message" required placeholder="120-unit condo with a pool in Aventura. Currently buying towels ourselves and it's become a problem. Looking for weekly service."></textarea>
+            </div>
+            <button type="submit" class="form-submit" id="submitBtn">Send request</button>
+            <div class="form-fine">Your information stays between us.</div>
+          </div>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <h3>We're on it.</h3>
+          <p>Custom quote incoming — usually within a few hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-inner">
+      <div class="sticky-text"><strong>laundry service</strong> — towel & linen rental, miami</div>
+      <div class="sticky-actions">
+        <a href="tel:+15138225130" class="sticky-phone">(513) 822-5130</a>
+        <a href="#contact" class="sticky-book">Get a quote</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-mark">laundry service <span>linen la vida loca.</span></div>
+      <div class="footer-links">
+        <a href="#services">services</a>
+        <a href="#ai">ai</a>
+        <a href="#process">process</a>
+        <a href="#contact">contact</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 laundry service</span>
+      <span>miami-dade / broward / palm beach</span>
+    </div>
+  </footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+      const sticky = document.getElementById('stickyCta');
+      const contactSection = document.getElementById('contact');
+      const contactTop = contactSection.getBoundingClientRect().top;
+      const show = window.scrollY > 600 && contactTop > window.innerHeight;
+      sticky.classList.toggle('visible', show);
+    });
+    document.getElementById('intakeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const btn = document.getElementById('submitBtn');
+      btn.disabled = true; btn.textContent = 'sending...';
+      const d = {
+        name: document.getElementById('name').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        property_type: document.getElementById('property_type').value,
+        property_name: document.getElementById('property_name').value,
+        message: document.getElementById('message').value,
+        source: 'website_form',
+        timestamp: new Date().toISOString()
+      };
+      try { await fetch('https://laundry-service-miami.netlify.app/api/intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); } catch (err) { console.error(err); }
+      document.getElementById('intakeForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); });
+    });
+  </script>
+</body>
+</html>

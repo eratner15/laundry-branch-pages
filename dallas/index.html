@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>laundry service — dallas</title>
+  <meta name="description" content="Uniform and linen rental for the DFW metroplex. Hotels, restaurants, medical, corporate. linen la vida loca.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --earth: #1c1814;
+      --walnut: #2a231c;
+      --bark: #3d322a;
+      --hide: #5a4a3a;
+      --saddle: #7a6a56;
+      --dust: #a09484;
+      --clay: #c4b4a0;
+      --sand: #ddd2c2;
+      --linen: #ece5da;
+      --cream: #f5f0e8;
+      --ivory: #faf7f2;
+      --white: #fdfcfa;
+      --terra: #b8704a;
+      --sienna: #a05a34;
+      --gold: #c49a5a;
+      --sage: #6a7a5a;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Outfit', sans-serif; color: var(--earth); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    body::after { content: ''; position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); background-size: 128px; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 clamp(2rem, 5vw, 4rem); background: rgba(253,252,250,0); transition: all 0.5s; }
+    nav.scrolled { background: rgba(253,252,250,0.92); backdrop-filter: blur(24px) saturate(1.2); }
+    .nav-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 80px; }
+    .wordmark { font-family: 'Outfit', sans-serif; font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em; text-transform: lowercase; color: var(--earth); text-decoration: none; }
+    .wordmark span { color: var(--terra); }
+    .nav-right { display: flex; align-items: center; gap: 36px; }
+    .nav-link { font-size: 0.74rem; font-weight: 500; color: var(--saddle); text-decoration: none; letter-spacing: 0.04em; text-transform: lowercase; transition: color 0.3s; }
+    .nav-link:hover { color: var(--earth); }
+    .nav-btn { font-size: 0.74rem; font-weight: 600; color: var(--earth); text-decoration: none; letter-spacing: 0.04em; text-transform: lowercase; border-bottom: 1.5px solid var(--earth); padding-bottom: 2px; transition: all 0.3s; }
+    .nav-btn:hover { color: var(--terra); border-color: var(--terra); }
+
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 0 clamp(2rem, 5vw, 4rem) clamp(4rem, 8vh, 7rem); position: relative; background: var(--cream); overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(184,112,74,0.06) 0%, transparent 60%), radial-gradient(ellipse 50% 80% at 20% 70%, rgba(196,154,90,0.04) 0%, transparent 50%), linear-gradient(180deg, var(--ivory) 0%, var(--cream) 50%, var(--linen) 100%); }
+    .hero-wide { position: absolute; top: 15%; right: -5%; font-family: 'Cormorant Garamond', serif; font-size: clamp(12rem, 25vw, 22rem); font-weight: 400; color: rgba(0,0,0,0.02); line-height: 0.8; letter-spacing: -0.05em; pointer-events: none; }
+    .hero-inner { max-width: 1280px; margin: 0 auto; width: 100%; position: relative; z-index: 1; }
+    .hero-tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); margin-bottom: 2rem; }
+    .hero h1 { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(3.5rem, 8vw, 7.5rem); line-height: 0.9; letter-spacing: -0.04em; color: var(--earth); margin-bottom: 2.5rem; max-width: 800px; }
+    .hero h1 em { font-style: italic; color: var(--hide); }
+    .hero-row { display: flex; justify-content: space-between; align-items: flex-end; }
+    .hero-desc { font-size: 0.95rem; line-height: 1.8; color: var(--saddle); max-width: 460px; font-weight: 400; }
+    .hero-actions { display: flex; gap: 20px; align-items: center; }
+    .btn-solid { font-family: 'Outfit', sans-serif; font-size: 0.76rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--earth); padding: 18px 36px; text-decoration: none; transition: all 0.4s; }
+    .btn-solid:hover { background: var(--sienna); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(28,24,20,0.2); }
+    .btn-line { font-size: 0.76rem; font-weight: 500; color: var(--hide); text-decoration: none; border-bottom: 1px solid var(--clay); padding-bottom: 3px; transition: all 0.3s; }
+    .btn-line:hover { color: var(--earth); border-color: var(--earth); }
+
+    .stats-bar { background: var(--earth); padding: 20px clamp(2rem, 5vw, 4rem); }
+    .stats-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .stat-item { text-align: center; flex: 1; }
+    .stat-val { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 400; color: var(--sand); }
+    .stat-label { font-size: 0.62rem; font-weight: 500; color: var(--saddle); letter-spacing: 0.14em; text-transform: uppercase; margin-top: 2px; }
+    .stat-div { width: 1px; height: 40px; background: var(--bark); }
+
+    .ticker { padding: 14px 0; background: var(--walnut); overflow: hidden; }
+    .ticker-track { display: flex; animation: tick 40s linear infinite; width: max-content; }
+    .ticker-item { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.95rem; color: var(--dust); white-space: nowrap; padding: 0 24px; }
+    .ticker-dot { color: var(--bark); padding: 0 12px; font-size: 0.5rem; }
+    @keyframes tick { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+    .intro { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--white); }
+    .intro-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+    .stag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--terra); margin-bottom: 1.5rem; }
+    .intro-hl { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--earth); }
+    .intro-hl em { font-style: italic; color: var(--hide); }
+    .intro-body { font-size: 0.95rem; line-height: 1.85; color: var(--hide); margin-bottom: 2.5rem; font-weight: 400; }
+    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .trait { padding: 24px; background: var(--ivory); transition: background 0.3s; }
+    .trait:hover { background: var(--cream); }
+    .trait h3 { font-size: 0.82rem; font-weight: 600; color: var(--earth); margin-bottom: 4px; }
+    .trait p { font-size: 0.76rem; color: var(--saddle); line-height: 1.55; }
+
+    .services { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--earth); }
+    .services-inner { max-width: 1280px; margin: 0 auto; }
+    .services .stag { color: var(--gold); }
+    .services-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--cream); margin-bottom: clamp(3rem, 6vh, 5rem); }
+    .services-title em { color: var(--dust); }
+    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .svc-card { padding: clamp(28px, 3vw, 40px); background: var(--walnut); transition: background 0.3s; }
+    .svc-card:hover { background: var(--bark); }
+    .svc-num { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; color: var(--bark); margin-bottom: 12px; }
+    .svc-card h3 { font-size: 0.88rem; font-weight: 600; color: var(--sand); margin-bottom: 8px; }
+    .svc-card p { font-size: 0.78rem; color: var(--dust); line-height: 1.65; }
+
+    .ai-section { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--cream); position: relative; }
+    .ai-section::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 50% 40% at 80% 30%, rgba(184,112,74,0.04) 0%, transparent 60%); }
+    .ai-inner { max-width: 1280px; margin: 0 auto; position: relative; z-index: 1; }
+    .ai-header { margin-bottom: clamp(3rem, 6vh, 5rem); max-width: 580px; }
+    .ai-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 400; line-height: 1.15; color: var(--earth); margin-bottom: 1rem; }
+    .ai-title em { color: var(--hide); }
+    .ai-sub { font-size: 0.95rem; line-height: 1.75; color: var(--saddle); }
+    .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .ai-card { background: var(--white); padding: clamp(28px, 3vw, 40px); transition: all 0.4s; position: relative; }
+    .ai-card:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(28,24,20,0.06); }
+    .ai-feat { background: var(--earth); }
+    .ai-feat:hover { background: var(--walnut); box-shadow: 0 12px 40px rgba(28,24,20,0.25); }
+    .ai-feat h3 { color: var(--cream); }
+    .ai-feat p { color: var(--dust); }
+    .ai-feat .ai-ico { color: var(--gold); }
+    .ai-badge { position: absolute; top: 20px; right: 20px; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
+    .ai-feat .ai-badge { color: var(--gold); background: rgba(196,154,90,0.15); }
+    .ai-ico { color: var(--terra); margin-bottom: 20px; display: block; }
+    .ai-card h3 { font-size: 0.88rem; font-weight: 600; color: var(--earth); margin-bottom: 8px; }
+    .ai-card p { font-size: 0.8rem; color: var(--saddle); line-height: 1.65; }
+    .ai-cta { display: inline-block; margin-top: 16px; font-size: 0.74rem; font-weight: 600; color: var(--gold); text-decoration: none; border-bottom: 1px solid rgba(196,154,90,0.3); padding-bottom: 2px; }
+    .ai-cta:hover { border-color: var(--gold); }
+    .ai-bottom { margin-top: clamp(2rem, 4vh, 3rem); padding-top: clamp(2rem, 4vh, 3rem); border-top: 1px solid var(--sand); display: flex; justify-content: space-between; align-items: center; }
+    .ai-bottom i { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 0.88rem; color: var(--hide); }
+    .ai-bottom a { font-size: 0.76rem; font-weight: 600; color: var(--earth); text-decoration: none; border-bottom: 1.5px solid var(--earth); padding-bottom: 2px; }
+    .ai-bottom a:hover { color: var(--terra); border-color: var(--terra); }
+
+    .process { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--white); }
+    .process-inner { max-width: 1280px; margin: 0 auto; }
+    .process-title { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; color: var(--earth); margin-bottom: clamp(2rem, 4vh, 3rem); }
+    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+    .step { padding: 32px; background: var(--ivory); transition: background 0.3s; }
+    .step:hover { background: var(--cream); }
+    .step-n { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; color: var(--sand); margin-bottom: 12px; line-height: 1; font-style: italic; }
+    .step h3 { font-size: 0.85rem; font-weight: 600; color: var(--earth); margin-bottom: 6px; }
+    .step p { font-size: 0.78rem; color: var(--saddle); line-height: 1.55; }
+
+    .contact { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--cream); }
+    .contact-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: start; }
+    .contact-hl { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; line-height: 1.2; color: var(--earth); margin-bottom: 1rem; }
+    .contact-hl em { color: var(--hide); }
+    .contact-body { font-size: 0.92rem; line-height: 1.75; color: var(--saddle); margin-bottom: 2rem; }
+    .promises { list-style: none; }
+    .promises li { display: flex; gap: 12px; padding: 10px 0; font-size: 0.85rem; color: var(--hide); }
+    .promises li strong { color: var(--earth); }
+    .pm { font-family: 'Cormorant Garamond', serif; font-style: italic; color: var(--terra); font-size: 1.1rem; min-width: 20px; }
+    .form-wrap { background: var(--white); padding: 40px; }
+    .form-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; margin-bottom: 4px; }
+    .form-header p { font-size: 0.78rem; color: var(--saddle); margin-bottom: 24px; }
+    .fg { margin-bottom: 16px; }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .fg label { display: block; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--saddle); margin-bottom: 6px; }
+    .fg input, .fg select, .fg textarea { width: 100%; font-family: 'Outfit', sans-serif; font-size: 0.88rem; padding: 14px 16px; border: 1px solid var(--sand); background: var(--white); color: var(--earth); outline: none; transition: border 0.3s; }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--terra); }
+    .fg textarea { min-height: 100px; resize: vertical; }
+    .form-submit { width: 100%; font-family: 'Outfit', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--white); background: var(--earth); border: none; padding: 18px; cursor: pointer; transition: all 0.3s; }
+    .form-submit:hover { background: var(--sienna); }
+    .form-fine { font-size: 0.7rem; color: var(--dust); margin-top: 8px; text-align: center; }
+    .form-success { display: none; text-align: center; padding: 60px 20px; }
+    .form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; margin-bottom: 8px; }
+    .form-success p { color: var(--saddle); }
+
+    footer { background: var(--earth); padding: clamp(3rem, 5vh, 4rem) clamp(2rem, 5vw, 4rem); }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .footer-mark { font-size: 0.82rem; font-weight: 600; color: var(--dust); letter-spacing: 0.06em; text-transform: lowercase; }
+    .footer-mark span { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; color: var(--saddle); letter-spacing: 0; }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.74rem; color: var(--dust); text-decoration: none; text-transform: lowercase; }
+    .footer-links a:hover { color: var(--sand); }
+    .footer-bottom { max-width: 1280px; margin: 16px auto 0; padding-top: 16px; border-top: 1px solid var(--walnut); display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--saddle); }
+
+    .sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; background: var(--earth); padding: 12px clamp(2rem, 5vw, 4rem); transform: translateY(100%); transition: transform 0.4s; z-index: 99; }
+    .sticky-cta.visible { transform: translateY(0); }
+    .sticky-inner { max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .sticky-text { font-size: 0.78rem; color: var(--dust); }
+    .sticky-text strong { color: var(--sand); }
+    .sticky-actions { display: flex; gap: 16px; align-items: center; }
+    .sticky-phone { font-size: 0.82rem; font-weight: 600; color: var(--sand); text-decoration: none; }
+    .sticky-book { font-size: 0.74rem; font-weight: 600; color: var(--earth); background: var(--sand); padding: 8px 20px; text-decoration: none; transition: all 0.3s; }
+    .sticky-book:hover { background: var(--cream); }
+
+    @media (max-width: 900px) {
+      .intro-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
+      .svc-grid, .ai-grid { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .stats-inner { flex-wrap: wrap; gap: 16px; } .stat-div { display: none; }
+      .hero-row { flex-direction: column; gap: 24px; align-items: flex-start; }
+      .sticky-text { display: none; }
+      .ai-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .svc-grid, .ai-grid, .steps, .traits, .fg-row { grid-template-columns: 1fr; }
+      .nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav"><div class="nav-inner">
+    <a href="../" class="wordmark">laundry service <span>dallas</span></a>
+    <div class="nav-right">
+      <a href="#services" class="nav-link">services</a>
+      <a href="#ai" class="nav-link">ai</a>
+      <a href="#process" class="nav-link">process</a>
+      <a href="#contact" class="nav-btn">request a quote</a>
+    </div>
+  </div></nav>
+
+  <section class="hero">
+    <div class="hero-wide">DFW</div>
+    <div class="hero-inner">
+      <div class="hero-tag">Dallas — Fort Worth — Plano</div>
+      <h1>Sharp uniforms.<br>Clean linens.<br><em>Texas-sized service.</em></h1>
+      <div class="hero-row">
+        <p class="hero-desc">Uniform and linen rental for hotels, restaurants, medical offices, and corporate campuses across the DFW metroplex. Pickup, cleaning, and delivery on your schedule. Scale up or down as your business moves.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-solid">Get a quote</a>
+          <a href="#services" class="btn-line">what we handle</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="stats-bar"><div class="stats-inner">
+    <div class="stat-item"><div class="stat-val">DFW</div><div class="stat-label">Metro Coverage</div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><div class="stat-val">Weekly</div><div class="stat-label">Scheduled Routes</div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><div class="stat-val">24/7</div><div class="stat-label">AI Phone Line</div></div>
+    <div class="stat-div"></div>
+    <div class="stat-item"><div class="stat-val">Next Day</div><div class="stat-label">Rush Available</div></div>
+  </div></div>
+
+  <div class="ticker"><div class="ticker-track">
+    <span class="ticker-item">Dallas</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Fort Worth</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Plano</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Work Shirts</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Hotel Linens</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Table Linens</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Kitchen Towels</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Lab Coats</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Scrubs</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Floor Mats</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Weekly Routes</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Next-Day Rush</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Dallas</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Fort Worth</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Plano</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Work Shirts</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Hotel Linens</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Table Linens</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Kitchen Towels</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Lab Coats</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Scrubs</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Floor Mats</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Weekly Routes</span><span class="ticker-dot">—</span>
+    <span class="ticker-item">Next-Day Rush</span><span class="ticker-dot">—</span>
+  </div></div>
+
+  <section class="intro"><div class="intro-inner">
+    <div><div class="stag">The premise</div>
+      <div class="intro-hl">First impressions<br>start with what<br><em>your team wears.</em></div>
+    </div>
+    <div>
+      <p class="intro-body">We're a uniform and linen service built for the pace of DFW business. Hotels along the 35 corridor that need reliability at scale. Medical campuses in Plano and Frisco growing faster than their supply closets. Restaurants from Deep Ellum to Southlake where the linens set the tone. Pickup, cleaning, delivery, replacement — all handled. No contracts. No surprises.</p>
+      <div class="traits">
+        <div class="trait"><h3>Full replacement</h3><p>Worn items swapped. No paperwork, no upcharges.</p></div>
+        <div class="trait"><h3>No contracts</h3><p>We earn it every delivery. Stay because you want to.</p></div>
+        <div class="trait"><h3>Reliable routes</h3><p>Same driver, same day. Consistency is the product.</p></div>
+        <div class="trait"><h3>Real people</h3><p>Local team. You call, someone answers.</p></div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="services" id="services"><div class="services-inner">
+    <div class="stag">What we handle</div>
+    <div class="services-title">Programs built for<br><em>DFW business</em></div>
+    <div class="svc-grid">
+      <div class="svc-card"><div class="svc-num">01</div><h3>Hotels & Convention</h3><p>Bed linens, bath towels, pool towels, banquet settings for hotels and convention venues across DFW. We scale with your occupancy.</p></div>
+      <div class="svc-card"><div class="svc-num">02</div><h3>Restaurants & Bars</h3><p>Table linens, napkins, kitchen towels, chef coats, aprons. From fine dining in Uptown to BBQ joints in Fort Worth — we fit your vibe.</p></div>
+      <div class="svc-card"><div class="svc-num">03</div><h3>Medical & Dental</h3><p>Lab coats, scrubs, patient gowns, surgical towels. Growing practices across Plano, Frisco, and McKinney trust us to keep up.</p></div>
+      <div class="svc-card"><div class="svc-num">04</div><h3>Corporate Campus</h3><p>Branded uniforms, executive linens, facility mats for corporate HQs and tech campuses. Professional image, zero hassle.</p></div>
+      <div class="svc-card"><div class="svc-num">05</div><h3>Gyms & Fitness</h3><p>High-volume towel programs scaled to your membership. Durable, fresh, delivered on the schedule your front desk needs.</p></div>
+      <div class="svc-card"><div class="svc-num">06</div><h3>Auto & Industrial</h3><p>Uniforms, shop towels, fender covers for dealerships and service shops. Built for Texas-sized volume.</p></div>
+    </div>
+  </div></section>
+
+  <section class="ai-section" id="ai"><div class="ai-inner">
+    <div class="ai-header">
+      <div class="stag">Powered by AI</div>
+      <div class="ai-title">Smarter operations,<br><em>better service.</em></div>
+      <p class="ai-sub">We use AI to make every touchpoint faster, smarter, and more personal. Available 24/7, English and Spanish.</p>
+    </div>
+    <div class="ai-grid">
+      <div class="ai-card ai-feat">
+        <div class="ai-badge">Live now</div>
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.8.3 1.56.52 2.29a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.73.22 1.5.4 2.29.52A2 2 0 0 1 22 16.92z"/></svg>
+        <h3>AI Phone Agent</h3>
+        <p>Call us anytime — our AI answers 24/7, qualifies your needs, and gets the right person back to you within the hour.</p>
+        <a href="tel:+15138225130" class="ai-cta">Call (513) 822-5130 →</a>
+      </div>
+      <div class="ai-card">
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        <h3>Instant Chat</h3>
+        <p>Get answers without picking up the phone. Pricing, service area, schedules — answered instantly, around the clock.</p>
+      </div>
+      <div class="ai-card">
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <h3>Smart Quoting</h3>
+        <p>Tell us your details, get an instant ballpark. AI sizes your program based on similar operations, then a specialist confirms.</p>
+      </div>
+      <div class="ai-card">
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <h3>Service Shield</h3>
+        <p>Every interaction monitored for satisfaction. If something slips, we know before you call — and we're already fixing it.</p>
+      </div>
+      <div class="ai-card">
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        <h3>Route Intelligence</h3>
+        <p>Your driver arrives knowing your account — open requests, preferences, seasonal patterns. Every visit informed by data.</p>
+      </div>
+      <div class="ai-card">
+        <svg class="ai-ico" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <h3>Customer Dashboard</h3>
+        <p>Real-time visibility — delivery history, upcoming routes, open issues, spend tracking. Everything at a glance.</p>
+      </div>
+    </div>
+    <div class="ai-bottom">
+      <i>These aren't features on a roadmap — they're running right now.</i>
+      <a href="../ops/">Operations dashboard →</a>
+    </div>
+  </div></section>
+
+  <section class="process" id="process"><div class="process-inner">
+    <div class="stag">How it works</div>
+    <div class="process-title">Four steps. Then forget about it.</div>
+    <div class="steps">
+      <div class="step"><div class="step-n">i</div><h3>Tell us your setup</h3><p>Business type, headcount, what you need. Two-minute form.</p></div>
+      <div class="step"><div class="step-n">ii</div><h3>Custom quote</h3><p>Pricing built around your operation. No hidden fees, no lock-in.</p></div>
+      <div class="step"><div class="step-n">iii</div><h3>First delivery</h3><p>Fresh inventory on your schedule. Setup is on us.</p></div>
+      <div class="step"><div class="step-n">iv</div><h3>Forget about it</h3><p>We show up every week like clockwork. You're covered.</p></div>
+    </div>
+  </div></section>
+
+  <section class="contact" id="contact"><div class="contact-inner">
+    <div>
+      <div class="stag">Get started</div>
+      <div class="contact-hl">Let's build your<br><em>linen program.</em></div>
+      <p class="contact-body">Tell us about your business. Custom quote back within a few hours — evenings and weekends included.</p>
+      <ul class="promises">
+        <li><span class="pm">i</span><span><strong>No contracts.</strong> We earn your business every delivery.</span></li>
+        <li><span class="pm">ii</span><span><strong>Free setup.</strong> First inventory delivery, no charge.</span></li>
+        <li><span class="pm">iii</span><span><strong>Auto-replacement.</strong> Worn items swapped. No surprise fees.</span></li>
+        <li><span class="pm">iv</span><span><strong>Local and personal.</strong> A real person picks up the phone.</span></li>
+      </ul>
+    </div>
+    <div class="form-wrap">
+      <form id="intakeForm">
+        <div class="form-header"><h3>Request a quote</h3><p>Two minutes. No commitment.</p></div>
+        <div class="form-body">
+          <div class="fg-row">
+            <div class="fg"><label for="name">Name</label><input type="text" id="name" name="name" required placeholder="Sarah Mitchell"></div>
+            <div class="fg"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="sarah@legacywestmed.com"></div>
+          </div>
+          <div class="fg-row">
+            <div class="fg"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="(214) 555-0000"></div>
+            <div class="fg"><label for="btype">Business type</label>
+              <select id="btype" name="btype" required>
+                <option value="">Select...</option>
+                <option value="hotel">Hotel / Convention</option>
+                <option value="restaurant">Restaurant / Bar</option>
+                <option value="medical">Medical / Dental</option>
+                <option value="corporate">Corporate Campus</option>
+                <option value="gym">Gym / Fitness</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="fg"><label for="bname">Business name</label><input type="text" id="bname" name="bname" placeholder="Legacy West Medical Group"></div>
+          <div class="fg"><label for="message">What do you need</label><textarea id="message" name="message" required placeholder="12-doctor practice in Plano expanding to a second location. Need a reliable scrub and lab coat program with weekly service."></textarea></div>
+          <button type="submit" class="form-submit" id="submitBtn">Send request</button>
+          <div class="form-fine">Your information stays between us.</div>
+        </div>
+      </form>
+      <div class="form-success" id="formSuccess"><h3>We're on it.</h3><p>Custom quote incoming — usually within a few hours.</p></div>
+    </div>
+  </div></section>
+
+  <div class="sticky-cta" id="stickyCta"><div class="sticky-inner">
+    <div class="sticky-text"><strong>laundry service</strong> — uniform & linen, dallas</div>
+    <div class="sticky-actions">
+      <a href="tel:+15138225130" class="sticky-phone">(513) 822-5130</a>
+      <a href="#contact" class="sticky-book">Get a quote</a>
+    </div>
+  </div></div>
+
+  <footer><div class="footer-inner">
+    <div class="footer-mark">laundry service <span>linen la vida loca.</span></div>
+    <div class="footer-links"><a href="#services">services</a><a href="#ai">ai</a><a href="#process">process</a><a href="#contact">contact</a></div>
+  </div><div class="footer-bottom"><span>&copy; 2025 laundry service</span><span>dallas / fort worth / plano</span></div></footer>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+      const s = document.getElementById('stickyCta'), c = document.getElementById('contact');
+      s.classList.toggle('visible', window.scrollY > 600 && c.getBoundingClientRect().top > window.innerHeight);
+    });
+    document.getElementById('intakeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const b = document.getElementById('submitBtn'); b.disabled = true; b.textContent = 'sending...';
+      const d = { name: document.getElementById('name').value, email: document.getElementById('email').value, phone: document.getElementById('phone').value, business_type: document.getElementById('btype').value, business_name: document.getElementById('bname').value, message: document.getElementById('message').value, source: 'website_dallas', timestamp: new Date().toISOString() };
+      try { await fetch('https://laundry-service-miami.netlify.app/api/intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); } catch (err) {}
+      document.getElementById('intakeForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); }); });
+  </script>
+</body>
+</html>

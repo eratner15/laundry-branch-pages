@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Command Dashboard — AI Operations</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --blue: #003DA5; --dark: #0f1419; --dark2: #1a1f26; --dark3: #242a33; --gray: #8899a6; --light: #e1e8ed; --white: #fff; --red: #dc2626; --amber: #f59e0b; --green: #16a34a; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: var(--dark); color: var(--white); -webkit-font-smoothing: antialiased; }
+    
+    .dash-nav { padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dark3); }
+    .dash-nav .title { font-size: 15px; font-weight: 600; }
+    .dash-nav .title span { color: var(--blue); }
+    .dash-nav .meta { font-size: 12px; color: var(--gray); }
+    .dash-nav .meta .live { color: var(--green); }
+    .back-link { color: var(--gray); text-decoration: none; font-size: 13px; }
+    .back-link:hover { color: var(--white); }
+    
+    .grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px; max-width: 1400px; margin: 0 auto; }
+    .card { background: var(--dark2); border: 1px solid var(--dark3); border-radius: 10px; padding: 20px; }
+    .card.span2 { grid-column: span 2; }
+    .card.span4 { grid-column: span 4; }
+    .card h3 { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    
+    .big-number { font-size: 36px; font-weight: 700; }
+    .big-number.blue { color: var(--blue); }
+    .big-number.green { color: var(--green); }
+    .big-number.red { color: var(--red); }
+    .big-number.amber { color: var(--amber); }
+    .sub { font-size: 13px; color: var(--gray); margin-top: 4px; }
+    
+    /* Sentiment bars */
+    .bar-chart { display: flex; align-items: flex-end; gap: 4px; height: 100px; margin-top: 8px; }
+    .bar { flex: 1; border-radius: 3px 3px 0 0; min-height: 2px; transition: height 0.3s; position: relative; }
+    .bar .bar-label { position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); font-size: 10px; color: var(--gray); }
+    
+    /* Call feed */
+    .feed { max-height: 400px; overflow-y: auto; }
+    .feed-item { padding: 12px 0; border-bottom: 1px solid var(--dark3); display: grid; grid-template-columns: 70px 1fr 60px 50px; gap: 8px; align-items: center; font-size: 13px; }
+    .feed-item:last-child { border-bottom: none; }
+    .feed-item .time { color: var(--gray); font-size: 11px; }
+    .feed-item .biz { font-weight: 500; }
+    .feed-item .type { font-size: 11px; color: var(--gray); }
+    .tier-badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-align: center; }
+    .tier-badge.hot { background: rgba(220,38,38,0.15); color: #ef4444; }
+    .tier-badge.warm { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .tier-badge.cool { background: rgba(107,114,128,0.15); color: #9ca3af; }
+    
+    /* Complaint list */
+    .complaint-item { padding: 10px 0; border-bottom: 1px solid var(--dark3); font-size: 13px; }
+    .complaint-item:last-child { border-bottom: none; }
+    .complaint-cat { display: inline-block; font-size: 11px; background: rgba(220,38,38,0.12); color: #f87171; padding: 2px 6px; border-radius: 3px; margin-right: 4px; margin-top: 4px; }
+    
+    /* Competitor */
+    .comp-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--dark3); font-size: 13px; }
+    .comp-row:last-child { border-bottom: none; }
+    .comp-count { font-weight: 600; color: var(--amber); }
+    
+    /* Route intel button */
+    .route-btn { display: inline-block; background: var(--blue); color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 500; margin-top: 12px; transition: opacity 0.2s; }
+    .route-btn:hover { opacity: 0.85; }
+    
+    .empty { color: var(--gray); font-size: 13px; padding: 20px 0; text-align: center; }
+    
+    @media (max-width: 800px) { .grid { grid-template-columns: 1fr 1fr; } .card.span4 { grid-column: span 2; } }
+    @media (max-width: 500px) { .grid { grid-template-columns: 1fr; } .card.span2, .card.span4 { grid-column: span 1; } }
+  </style>
+</head>
+<body>
+
+<div class="dash-nav">
+  <div><a href="./" class="back-link">← Ops Hub</a> · <a href="../" class="back-link">Main Site</a></div>
+  <div class="title"><span>Command</span> Dashboard</div>
+  <div class="meta"><span class="live">● Live</span> — refreshes every 15s</div>
+</div>
+
+<div class="grid">
+  <!-- Row 1: Key metrics -->
+  <div class="card">
+    <h3>Total Calls</h3>
+    <div class="big-number blue" id="dTotal">—</div>
+    <div class="sub" id="dToday">today: —</div>
+  </div>
+  <div class="card">
+    <h3>Avg Sentiment</h3>
+    <div class="big-number green" id="dSentiment">—</div>
+    <div class="sub">out of 10</div>
+  </div>
+  <div class="card">
+    <h3>Hot Leads</h3>
+    <div class="big-number red" id="dHot">—</div>
+    <div class="sub" id="dWarm">warm: —</div>
+  </div>
+  <div class="card">
+    <h3>Active Complaints</h3>
+    <div class="big-number amber" id="dComplaints">—</div>
+    <div class="sub">requiring follow-up</div>
+  </div>
+
+  <!-- Row 2: Sentiment distribution + Lead pipeline -->
+  <div class="card span2">
+    <h3>Sentiment Distribution</h3>
+    <div class="bar-chart" id="sentBars"></div>
+  </div>
+  <div class="card span2">
+    <h3>Lead Pipeline</h3>
+    <div style="display:flex; gap: 24px; margin-top: 8px;">
+      <div style="flex:1; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#ef4444;" id="pHot">0</div>
+        <div style="font-size:11px; color:var(--gray); margin-top:4px;">HOT (≥70)</div>
+      </div>
+      <div style="flex:1; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#fbbf24;" id="pWarm">0</div>
+        <div style="font-size:11px; color:var(--gray); margin-top:4px;">WARM (40-69)</div>
+      </div>
+      <div style="flex:1; text-align:center;">
+        <div style="font-size:28px; font-weight:700; color:#9ca3af;" id="pCool">0</div>
+        <div style="font-size:11px; color:var(--gray); margin-top:4px;">COOL (&lt;40)</div>
+      </div>
+    </div>
+    <div class="sub" style="margin-top:16px;" id="pTotal">Total inquiries: —</div>
+  </div>
+
+  <!-- Row 3: Call feed + Complaints + Competitors -->
+  <div class="card span2">
+    <h3>Recent Call Feed</h3>
+    <div class="feed" id="callFeed">
+      <div class="empty">No calls yet. Call the voice agent to see data flow in.</div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Complaint Categories</h3>
+    <div id="complaintCats"><div class="empty">No complaints detected.</div></div>
+  </div>
+  <div class="card">
+    <h3>Competitive Intelligence</h3>
+    <div id="compIntel"><div class="empty">No competitor mentions yet.</div></div>
+  </div>
+
+  <!-- Row 4: Route Intel + AI Performance -->
+  <div class="card span2">
+    <h3>Route Intelligence</h3>
+    <p style="font-size:13px; color: var(--gray); line-height: 1.5;">Generate an AI briefing for today's route. Includes customer mood, open issues, upsell opportunities, and demand predictions for every stop.</p>
+    <a href="#" class="route-btn" id="routeBtn" onclick="loadRouteBriefing(event)">Generate Route 12 Briefing →</a>
+    <div id="routeResult" style="margin-top: 16px;"></div>
+  </div>
+  <div class="card span2">
+    <h3>AI Agent Performance</h3>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-top:8px;">
+      <div>
+        <div style="font-size:13px; color:var(--gray);">Calls Handled by AI</div>
+        <div style="font-size:22px; font-weight:700; color:var(--green);" id="aiHandled">100%</div>
+      </div>
+      <div>
+        <div style="font-size:13px; color:var(--gray);">Avg Call Duration</div>
+        <div style="font-size:22px; font-weight:700;" id="aiDuration">—</div>
+      </div>
+      <div>
+        <div style="font-size:13px; color:var(--gray);">Est. Cost per Call</div>
+        <div style="font-size:22px; font-weight:700; color:var(--green);" id="aiCost">—</div>
+      </div>
+      <div>
+        <div style="font-size:13px; color:var(--gray);">vs. Human CSR Cost</div>
+        <div style="font-size:22px; font-weight:700; color:var(--gray);">~$8-12</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+async function fetchDashboard() {
+  try {
+    const res = await fetch('https://laundry-service-miami.netlify.app/api/dashboard-api');
+    const d = await res.json();
+    
+    // Key metrics
+    document.getElementById('dTotal').textContent = d.overview.total_calls;
+    document.getElementById('dToday').textContent = `today: ${d.overview.calls_today}`;
+    document.getElementById('dSentiment').textContent = d.overview.avg_sentiment || '—';
+    document.getElementById('dHot').textContent = d.leads.tiers.hot;
+    document.getElementById('dWarm').textContent = `warm: ${d.leads.tiers.warm}`;
+    document.getElementById('dComplaints').textContent = d.overview.active_complaints;
+    
+    // Sentiment bars
+    const maxCount = Math.max(...d.sentiment.distribution.map(s => s.count), 1);
+    document.getElementById('sentBars').innerHTML = d.sentiment.distribution.map(s => {
+      const h = Math.max((s.count / maxCount) * 90, 2);
+      const color = s.score >= 7 ? 'var(--green)' : s.score >= 4 ? 'var(--amber)' : 'var(--red)';
+      return `<div class="bar" style="height:${h}px; background:${color};"><span class="bar-label">${s.score}</span></div>`;
+    }).join('');
+    
+    // Lead pipeline
+    document.getElementById('pHot').textContent = d.leads.tiers.hot;
+    document.getElementById('pWarm').textContent = d.leads.tiers.warm;
+    document.getElementById('pCool').textContent = d.leads.tiers.cool;
+    document.getElementById('pTotal').textContent = `Total inquiries: ${d.leads.total_inquiries}`;
+    
+    // Call feed
+    const feed = document.getElementById('callFeed');
+    if (d.recent_calls.length > 0) {
+      feed.innerHTML = d.recent_calls.map(c => {
+        const time = new Date(c.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        const tier = c.lead_tier || 'cool';
+        return `<div class="feed-item">
+          <span class="time">${time}</span>
+          <span><span class="biz">${c.business || 'Unknown'}</span><br><span class="type">${c.classification} — ${(c.summary || '').slice(0, 60)}</span></span>
+          <span class="tier-badge ${tier}">${c.lead_score || '—'}</span>
+          <span>${c.sentiment >= 7 ? '🟢' : c.sentiment >= 4 ? '🟡' : '🔴'} ${c.sentiment}</span>
+        </div>`;
+      }).join('');
+    }
+    
+    // Complaints
+    const cats = d.complaints.categories;
+    const catsEl = document.getElementById('complaintCats');
+    if (Object.keys(cats).length > 0) {
+      catsEl.innerHTML = Object.entries(cats).sort((a, b) => b[1] - a[1]).map(([cat, count]) => 
+        `<div class="comp-row"><span>${cat}</span><span class="comp-count">${count}</span></div>`
+      ).join('');
+    }
+    
+    // Competitive intel
+    const comps = d.competitive.mentions;
+    const compsEl = document.getElementById('compIntel');
+    if (Object.keys(comps).length > 0) {
+      compsEl.innerHTML = Object.entries(comps).sort((a, b) => b[1] - a[1]).map(([comp, count]) => 
+        `<div class="comp-row"><span>${comp}</span><span class="comp-count">${count} mentions</span></div>`
+      ).join('');
+    }
+    
+    // AI performance
+    if (d.overview.avg_duration_seconds > 0) {
+      const mins = Math.floor(d.overview.avg_duration_seconds / 60);
+      const secs = d.overview.avg_duration_seconds % 60;
+      document.getElementById('aiDuration').textContent = `${mins}m ${secs}s`;
+      // Rough cost estimate: ~$0.09/min Bland + ~$0.01 Claude
+      const costPerCall = (d.overview.avg_duration_seconds / 60 * 0.09 + 0.01).toFixed(2);
+      document.getElementById('aiCost').textContent = `$${costPerCall}`;
+    }
+    
+  } catch (err) {
+    console.log('Dashboard fetch error:', err);
+  }
+}
+
+async function loadRouteBriefing(e) {
+  e.preventDefault();
+  const btn = document.getElementById('routeBtn');
+  const result = document.getElementById('routeResult');
+  btn.textContent = 'Generating...';
+  btn.style.opacity = '0.6';
+  btn.style.pointerEvents = 'none';
+  
+  try {
+    const res = await fetch('https://laundry-service-miami.netlify.app/api/route-intel?route=route-12');
+    const data = await res.json();
+    result.innerHTML = data.briefing_html;
+    btn.textContent = 'Refresh Briefing';
+  } catch (err) {
+    result.innerHTML = '<p style="color:var(--red);">Failed to generate briefing.</p>';
+    btn.textContent = 'Retry →';
+  }
+  btn.style.opacity = '1';
+  btn.style.pointerEvents = 'auto';
+}
+
+fetchDashboard();
+setInterval(fetchDashboard, 15000);
+</script>
+</body>
+</html>
