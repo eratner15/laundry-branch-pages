@@ -98,11 +98,11 @@ const ACCOUNTS = [
     complaint_count: 1, last_complaint_days: 7,
     delivery_score: 71, quality_score: 63, relationship_score: 69,
     order_volume_trend: 'declining', order_volume_change_pct: -8,
-    last_rsr_contact_days: 7, competitive_signal: false, competitive_signal_detail: null,
+    last_rsr_contact_days: 38, competitive_signal: false, competitive_signal_detail: null,
     upsell_opportunity: 'restroom',
-    account_contact_name: 'Rachel Bloom', account_contact_title: 'General Manager',
-    notes: 'GM Rachel Bloom noticed towel pilling in passing — get ahead of it by swapping out old inventory before it becomes a formal complaint.',
-    recommended_action: 'Proactively swap oldest towel inventory on next delivery; follow up with Rachel in writing.',
+    account_contact_name: 'Contact TBD', account_contact_title: 'Key contact (Rachel Bloom) left Jan 2026 — replacement not yet assigned',
+    notes: 'GM transition in progress. No active relationship contact on file. RSR has not been re-introduced to new management. High risk window — competitor could move in before relationship is re-established.',
+    recommended_action: 'Identify and introduce to new GM before next delivery. Do not wait for them to reach out.',
     recommended_action_deadline: 'this_visit',
   },
   {
@@ -188,6 +188,23 @@ const ACCOUNTS = [
     recommended_action_deadline: 'this_visit',
   },
 
+  {
+    id: 'uc-cincinnati-dining', name: 'University of Cincinnati — Dining Services',
+    industry: 'education', territory: 'Northside / Clifton', contract_value_annual: 218000,
+    churn_probability: 0.44, risk_tier: 'elevated', days_to_likely_action: 55,
+    risk_factors: ['contract_renewal_approaching', 'key_contact_changed', 'reduced_order_volume'],
+    assigned_rsr: 'Sandra K.', contract_renewal_date: daysFromNow(72), contract_age_months: 72,
+    complaint_count: 0, last_complaint_days: null,
+    delivery_score: 74, quality_score: 81, relationship_score: 42,
+    order_volume_trend: 'declining', order_volume_change_pct: -22,
+    last_rsr_contact_days: 52, competitive_signal: false, competitive_signal_detail: null,
+    upsell_opportunity: 'restroom',
+    account_contact_name: 'Contact Unknown', account_contact_title: 'Procurement contact changed — new contact not yet identified in CRM',
+    notes: 'No complaints on record, but order volume is down 22% over 3 months and RSR has not made contact in 52 days. This is a $218K contract approaching renewal with no active relationship. Silent churn risk.',
+    recommended_action: 'Priority: Identify new procurement contact through UC facilities office. 52 days without contact on a $218K account approaching renewal is unacceptable. Escalate to branch manager.',
+    recommended_action_deadline: 'this_week',
+  },
+
   // ── MONITOR ──────────────────────────────────────────────────────────────
   {
     id: 'kroger-hq-cafe', name: 'Kroger HQ Campus Cafeteria', industry: 'other',
@@ -201,9 +218,9 @@ const ACCOUNTS = [
     last_rsr_contact_days: 10, competitive_signal: false, competitive_signal_detail: null,
     upsell_opportunity: 'mats',
     account_contact_name: 'Marcus Webb', account_contact_title: 'Facilities Manager',
-    notes: 'A delivery timing complaint 10 days ago has gone without RSR follow-up — unaddressed complaints compound quickly with corporate accounts.',
-    recommended_action: 'Proactive check-in with Marcus; document the follow-up to show responsiveness.',
-    recommended_action_deadline: 'this_week',
+    notes: 'Delivery timing complaint logged 10 days ago. No RSR follow-up documented in CRM. Marcus Webb has not been contacted. This account has been with Cintas 48 months — losing it to inaction would be avoidable churn.',
+    recommended_action: 'OVERDUE: Contact Marcus Webb today. Every day without follow-up after a complaint increases churn probability. No excuse for 10 days of silence on a $62K account.',
+    recommended_action_deadline: 'this_visit',
   },
   {
     id: 'fifth-third-arena-catering', name: 'Fifth Third Arena (Catering Ops)', industry: 'other',

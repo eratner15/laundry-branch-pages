@@ -582,7 +582,7 @@ function buildBriefingHtml(route, shieldByBusiness) {
     </div>
     <div style="text-align:right">
       ${isPilot ? '<div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#003DA5;background:rgba(0,61,165,0.12);padding:4px 10px;border-radius:4px;margin-bottom:6px">CINCINNATI PILOT</div>' : ''}
-      <div class="demo-badge">Demo Mode</div>
+      <div class="demo-badge">Simulated Data · Cincinnati Pilot</div>
     </div>
   </div>
 
