@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Operations Hub — Linen & Uniform Services</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --blue: #003DA5; --blue-light: #0052CC; --dark: #0f1419; --dark2: #1a1f26; --dark3: #242a33;
+      --gray: #8899a6; --light: #e1e8ed; --white: #ffffff;
+      --red: #dc2626; --amber: #f59e0b; --green: #16a34a; --coral: #E07A5F;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', -apple-system, sans-serif; background: var(--dark); color: var(--white); -webkit-font-smoothing: antialiased; }
+    
+    nav { padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dark3); }
+    .logo { font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: var(--gray); text-transform: uppercase; }
+    .logo span { color: var(--blue); }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: 13px; margin-left: 24px; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-links a.active { color: var(--white); font-weight: 500; }
+
+    .hero { max-width: 900px; margin: 0 auto; padding: 80px 32px 40px; text-align: center; }
+    .hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
+    .hero h1 span { color: var(--blue); }
+    .hero p { font-size: 17px; color: var(--gray); max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
+    
+    .phone-cta { display: inline-flex; align-items: center; gap: 12px; background: var(--blue); color: white; padding: 16px 32px; border-radius: 12px; font-size: 22px; font-weight: 700; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; letter-spacing: 0.02em; }
+    .phone-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,61,165,0.4); }
+    .phone-cta .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    .phone-sub { font-size: 13px; color: var(--gray); margin-top: 12px; }
+    
+    .stats-bar { max-width: 900px; margin: 40px auto; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
+    .stat-card { background: var(--dark2); border: 1px solid var(--dark3); border-radius: 10px; padding: 20px; text-align: center; }
+    .stat-card .number { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
+    .stat-card .label { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-card .number.hot { color: var(--red); }
+    .stat-card .number.warm { color: var(--amber); }
+    .stat-card .number.green { color: var(--green); }
+    .stat-card .number.blue { color: var(--blue); }
+
+    .solutions { max-width: 900px; margin: 60px auto; padding: 0 32px; }
+    .solutions h2 { font-size: 22px; margin-bottom: 24px; font-weight: 600; }
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .solution-card { background: var(--dark2); border: 1px solid var(--dark3); border-radius: 10px; padding: 24px; transition: border-color 0.2s; }
+    .solution-card:hover { border-color: var(--blue); }
+    .solution-num { font-size: 12px; color: var(--blue); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
+    .solution-card h3 { font-size: 17px; margin-bottom: 6px; font-weight: 600; }
+    .solution-card p { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .solution-card .tag { display: inline-block; font-size: 11px; background: var(--dark3); color: var(--gray); padding: 2px 8px; border-radius: 4px; margin-top: 10px; }
+    .solution-card.live .tag { background: rgba(22,163,74,0.15); color: var(--green); }
+    .solution-card.full-width { grid-column: 1 / -1; }
+
+    .recent { max-width: 900px; margin: 60px auto; padding: 0 32px 80px; }
+    .recent h2 { font-size: 22px; margin-bottom: 16px; font-weight: 600; }
+    .call-list { display: flex; flex-direction: column; gap: 8px; }
+    .call-row { display: grid; grid-template-columns: 80px 1fr 80px 60px; gap: 12px; align-items: center; background: var(--dark2); border: 1px solid var(--dark3); border-radius: 8px; padding: 14px 16px; font-size: 13px; }
+    .call-row .time { color: var(--gray); font-size: 12px; }
+    .call-row .biz { font-weight: 500; }
+    .call-row .score { font-weight: 600; text-align: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
+    .call-row .score.hot { background: rgba(220,38,38,0.15); color: #ef4444; }
+    .call-row .score.warm { background: rgba(245,158,11,0.15); color: #fbbf24; }
+    .call-row .score.cool { background: rgba(107,114,128,0.15); color: #9ca3af; }
+    .call-row .sent { text-align: center; }
+    .empty-state { text-align: center; padding: 40px; color: var(--gray); font-size: 14px; }
+
+    footer { border-top: 1px solid var(--dark3); padding: 24px 32px; text-align: center; }
+    footer p { font-size: 12px; color: var(--gray); }
+    footer a { color: var(--coral); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .solution-grid { grid-template-columns: 1fr; }
+      .call-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span>AI</span> Operations Hub</div>
+  <div class="nav-links">
+    <a href="../" title="Back to main site">Main Site</a>
+    <a href="./" class="active">Overview</a>
+    <a href="./dashboard.html">Dashboard</a>
+    <a href="/laundry/api/route-intel?route=route-12" target="_blank">Route Intel</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>AI-Powered Operations for<br><span>Linen & Uniform Services</span></h1>
+  <p>Every inbound call answered, qualified, and routed. Every complaint detected and escalated. Every driver briefed before they knock on the door.</p>
+  
+  <a href="tel:+15138225130" class="phone-cta" id="phoneLink">
+    <span class="pulse"></span>
+    <span id="phoneDisplay">(513) 822-5130</span>
+  </a>
+  <div class="phone-sub">Call now — AI answers 24/7 in English & Spanish</div>
+</div>
+
+<div class="stats-bar" id="statsBar">
+  <div class="stat-card"><div class="number blue" id="totalCalls">—</div><div class="label">Calls Handled</div></div>
+  <div class="stat-card"><div class="number green" id="avgSentiment">—</div><div class="label">Avg Sentiment</div></div>
+  <div class="stat-card"><div class="number hot" id="hotLeads">—</div><div class="label">Hot Leads</div></div>
+  <div class="stat-card"><div class="number warm" id="activeComplaints">—</div><div class="label">Complaints Flagged</div></div>
+</div>
+
+<div class="solutions">
+  <h2>5 AI Solutions — One Integrated Layer</h2>
+  <div class="solution-grid">
+    <div class="solution-card live">
+      <div class="solution-num">Solution 01</div>
+      <h3>Voice Agent</h3>
+      <p>AI answers every inbound call. Qualifies callers, captures data, handles FAQs, escalates complaints. Delivers structured lead summaries via email in real time.</p>
+      <span class="tag">LIVE</span>
+    </div>
+    <div class="solution-card live">
+      <div class="solution-num">Solution 02</div>
+      <h3>Lead Engine</h3>
+      <p>Every lead scored 0–100 by business size, urgency, service fit. Hot leads routed instantly. Warm leads enter nurture sequence. Zero leads lost.</p>
+      <span class="tag">LIVE</span>
+    </div>
+    <div class="solution-card live">
+      <div class="solution-num">Solution 03</div>
+      <h3>Service Shield</h3>
+      <p>Every call analyzed for customer satisfaction. Negative sentiment triggers instant alerts. Complaint patterns surface before they become systemic.</p>
+      <span class="tag">LIVE</span>
+    </div>
+    <div class="solution-card">
+      <div class="solution-num">Solution 04</div>
+      <h3>Route Intelligence</h3>
+      <p>AI-generated driver briefings before every route. Customer mood, open issues, upsell opportunities, predicted demand — all on their phone before they leave.</p>
+      <span class="tag">DEMO</span>
+    </div>
+    <div class="solution-card full-width">
+      <div class="solution-num">Solution 05</div>
+      <h3>Command Dashboard</h3>
+      <p>Real-time corporate visibility across all branches. Call volume, lead pipeline, customer sentiment, service issues, competitive intelligence — one view.</p>
+      <span class="tag"><a href="./dashboard.html" style="color: inherit; text-decoration: none;">Open Dashboard →</a></span>
+    </div>
+  </div>
+</div>
+
+<div class="recent">
+  <h2>Recent Calls</h2>
+  <div class="call-list" id="callList">
+    <div class="empty-state">No calls yet. Call the number above to see it work.</div>
+  </div>
+</div>
+
+<footer>
+  <p>Built by <a href="https://cafecito-ai.com" target="_blank">Cafecito AI</a> — Miami's AI consulting partner. <a href="../">← Back to main site</a></p>
+</footer>
+
+<script>
+async function fetchMetrics() {
+  try {
+    const res = await fetch('/laundry/api/dashboard-api');
+    const data = await res.json();
+    document.getElementById('totalCalls').textContent = data.overview.total_calls || '0';
+    document.getElementById('avgSentiment').textContent = data.overview.avg_sentiment ? data.overview.avg_sentiment + '/10' : '—';
+    document.getElementById('hotLeads').textContent = data.leads.tiers.hot || '0';
+    document.getElementById('activeComplaints').textContent = data.overview.active_complaints || '0';
+    const callList = document.getElementById('callList');
+    if (data.recent_calls && data.recent_calls.length > 0) {
+      callList.innerHTML = data.recent_calls.map(call => {
+        const time = new Date(call.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+        const tierClass = call.lead_tier || 'cool';
+        const sentEmoji = call.sentiment >= 7 ? '🟢' : call.sentiment >= 4 ? '🟡' : '🔴';
+        return '<div class="call-row"><span class="time">' + time + '</span><span class="biz">' + (call.business || call.name || 'Unknown') + ' — <span style="color:var(--gray);font-weight:400">' + (call.summary || call.classification).slice(0, 80) + '</span></span><span class="score ' + tierClass + '">' + (call.lead_score || '—') + '</span><span class="sent">' + sentEmoji + ' ' + call.sentiment + '/10</span></div>';
+      }).join('');
+    }
+  } catch (err) { console.log('Metrics fetch failed:', err); }
+}
+fetchMetrics();
+setInterval(fetchMetrics, 15000);
+</script>
+</body>
+</html>

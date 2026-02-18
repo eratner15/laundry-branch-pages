@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Account — laundry service</title>
+  <link rel="icon" type="image/x-icon" href="/laundry/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black: #0a0a09;
+      --night: #111110;
+      --charcoal: #1a1a18;
+      --stone: #2a2a27;
+      --ash: #4a4a44;
+      --drift: #7a7a70;
+      --sand: #b0aa9c;
+      --bone: #d4cfc2;
+      --linen: #e8e3d8;
+      --cream: #f2efe8;
+      --milk: #f9f7f3;
+      --white: #fefdfb;
+      --warm: #c4a872;
+      --copper: #b87a4a;
+      --blush: #c49080;
+      --moss: #5a6e56;
+      --green: #16a34a;
+      --amber: #f59e0b;
+      --red: #dc2626;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--milk);
+      color: var(--charcoal);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Nav */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--linen);
+      padding: 0 clamp(1.5rem, 4vw, 3rem);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 60px;
+    }
+    .wordmark {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.08em;
+      color: var(--charcoal); text-decoration: none;
+    }
+    .nav-back {
+      font-size: 0.72rem; color: var(--drift); text-decoration: none;
+      letter-spacing: 0.04em; transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--charcoal); }
+
+    /* Main */
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.5rem, 4vw, 2rem);
+    }
+
+    /* Loading state */
+    .loading-state {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 60vh; gap: 16px; text-align: center;
+    }
+    .spinner {
+      width: 32px; height: 32px;
+      border: 2px solid var(--linen);
+      border-top-color: var(--charcoal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { font-size: 0.85rem; color: var(--drift); }
+
+    /* Error state */
+    .error-state {
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      min-height: 60vh; gap: 16px; text-align: center;
+    }
+    .error-icon { font-size: 2.5rem; }
+    .error-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--charcoal); }
+    .error-msg { font-size: 0.88rem; color: var(--drift); max-width: 340px; line-height: 1.6; }
+
+    /* Content */
+    #portal-content { display: none; }
+
+    /* Account header */
+    .account-header {
+      background: var(--charcoal);
+      border-radius: 12px;
+      padding: clamp(1.5rem, 4vw, 2rem);
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+    .account-tier {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--warm); margin-bottom: 8px;
+    }
+    .account-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 1.8rem);
+      font-weight: 400; letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+    .account-address { font-size: 0.82rem; color: var(--sand); margin-bottom: 16px; }
+    .account-meta {
+      display: flex; gap: 24px; flex-wrap: wrap;
+    }
+    .account-meta-item { display: flex; flex-direction: column; }
+    .account-meta-label { font-size: 0.62rem; color: var(--drift); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 2px; }
+    .account-meta-value { font-size: 0.88rem; color: var(--cream); font-weight: 500; }
+
+    /* Next delivery banner */
+    .next-delivery {
+      background: var(--white);
+      border: 1px solid var(--linen);
+      border-left: 3px solid var(--copper);
+      border-radius: 10px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+    }
+    .delivery-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--copper); margin-bottom: 4px; }
+    .delivery-date { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 400; color: var(--charcoal); }
+    .delivery-window { font-size: 0.8rem; color: var(--drift); margin-top: 2px; }
+    .delivery-badge {
+      background: var(--cream); padding: 8px 16px; border-radius: 6px;
+      font-size: 0.78rem; font-weight: 600; color: var(--charcoal);
+      letter-spacing: 0.04em;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 12px; margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--linen);
+      border-radius: 10px; padding: 16px 18px;
+    }
+    .stat-label { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--drift); margin-bottom: 6px; }
+    .stat-value { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1.6rem; color: var(--charcoal); line-height: 1; }
+    .stat-sub { font-size: 0.72rem; color: var(--sand); margin-top: 3px; }
+
+    /* Section */
+    .section { margin-bottom: 24px; }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .section-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ash); }
+    .section-link { font-size: 0.72rem; color: var(--copper); text-decoration: none; letter-spacing: 0.04em; border-bottom: 1px solid rgba(184,122,74,0.3); padding-bottom: 1px; }
+
+    /* Deliveries table */
+    .deliveries-list { background: var(--white); border: 1px solid var(--linen); border-radius: 10px; overflow: hidden; }
+    .delivery-row {
+      display: grid; grid-template-columns: 1fr auto auto auto;
+      align-items: center; gap: 12px;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--linen);
+      font-size: 0.82rem;
+    }
+    .delivery-row:last-child { border-bottom: none; }
+    .delivery-row-date { font-weight: 500; color: var(--charcoal); }
+    .delivery-row-note { font-size: 0.72rem; color: var(--drift); margin-top: 2px; }
+    .delivery-row-pieces { color: var(--ash); font-size: 0.8rem; text-align: right; }
+    .delivery-status {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .delivery-status.completed { background: rgba(22,163,74,0.1); color: var(--green); }
+    .delivery-status.pending { background: rgba(245,158,11,0.1); color: var(--amber); }
+
+    /* Issues */
+    .issues-list { display: flex; flex-direction: column; gap: 8px; }
+    .issue-card {
+      background: var(--white); border: 1px solid var(--linen); border-radius: 10px; padding: 14px 18px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .issue-card.open { border-left: 3px solid var(--amber); }
+    .issue-card.resolved { border-left: 3px solid var(--green); opacity: 0.7; }
+    .issue-icon { font-size: 1.1rem; margin-top: 1px; flex-shrink: 0; }
+    .issue-title { font-size: 0.88rem; font-weight: 500; color: var(--charcoal); margin-bottom: 3px; }
+    .issue-meta { font-size: 0.72rem; color: var(--drift); }
+    .issue-badge {
+      margin-left: auto; flex-shrink: 0;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .issue-badge.investigating { background: rgba(245,158,11,0.1); color: var(--amber); }
+    .issue-badge.resolved { background: rgba(22,163,74,0.1); color: var(--green); }
+    .issue-badge.open { background: rgba(220,38,38,0.1); color: var(--red); }
+
+    /* Services */
+    .services-wrap { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-chip {
+      background: var(--cream); border: 1px solid var(--linen);
+      padding: 6px 14px; border-radius: 20px;
+      font-size: 0.78rem; color: var(--ash); font-weight: 500;
+    }
+
+    /* Invoices */
+    .invoices-list { background: var(--white); border: 1px solid var(--linen); border-radius: 10px; overflow: hidden; }
+    .invoice-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px; border-bottom: 1px solid var(--linen);
+      font-size: 0.82rem;
+    }
+    .invoice-row:last-child { border-bottom: none; }
+    .invoice-month { font-weight: 500; color: var(--charcoal); }
+    .invoice-amount { font-family: 'Playfair Display', serif; font-style: italic; font-size: 1rem; color: var(--charcoal); }
+    .invoice-status {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 10px; border-radius: 4px;
+    }
+    .invoice-status.paid { background: rgba(22,163,74,0.1); color: var(--green); }
+    .invoice-status.pending { background: rgba(245,158,11,0.1); color: var(--amber); }
+
+    /* Quick actions */
+    .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .action-card {
+      background: var(--white); border: 1px solid var(--linen); border-radius: 10px;
+      padding: 16px 18px; cursor: pointer; text-align: left;
+      transition: all 0.25s; text-decoration: none; display: block;
+    }
+    .action-card:hover { border-color: var(--copper); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .action-label { font-size: 0.85rem; font-weight: 600; color: var(--charcoal); margin-bottom: 4px; }
+    .action-desc { font-size: 0.75rem; color: var(--drift); line-height: 1.5; }
+    .action-arrow { font-size: 0.75rem; color: var(--copper); margin-top: 8px; }
+
+    /* Empty state */
+    .empty-list {
+      background: var(--white); border: 1px solid var(--linen); border-radius: 10px;
+      padding: 24px; text-align: center;
+      color: var(--drift); font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .actions-grid { grid-template-columns: 1fr; }
+      .delivery-row { grid-template-columns: 1fr auto; }
+      .delivery-row-pieces { display: none; }
+      .account-meta { gap: 16px; }
+    }
+    @media (max-width: 400px) {
+      .stats-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-inner">
+      <a href="/laundry/miami/" class="wordmark">laundry service</a>
+      <a href="/laundry/miami/" class="nav-back">← back to site</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="loading-state" id="loading-state">
+      <div class="spinner"></div>
+      <div class="loading-text">Loading your account...</div>
+    </div>
+
+    <div class="error-state" id="error-state">
+      <div class="error-icon">🧺</div>
+      <div class="error-title">Account not found</div>
+      <div class="error-msg" id="error-msg">We couldn't load your account. Please contact us at (513) 822-5130.</div>
+    </div>
+
+    <div id="portal-content">
+
+      <div class="account-header">
+        <div class="account-tier" id="acct-tier"></div>
+        <div class="account-name" id="acct-name"></div>
+        <div class="account-address" id="acct-address"></div>
+        <div class="account-meta">
+          <div class="account-meta-item">
+            <div class="account-meta-label">Contact</div>
+            <div class="account-meta-value" id="acct-contact"></div>
+          </div>
+          <div class="account-meta-item">
+            <div class="account-meta-label">Account since</div>
+            <div class="account-meta-value" id="acct-since"></div>
+          </div>
+          <div class="account-meta-item">
+            <div class="account-meta-label">Driver</div>
+            <div class="account-meta-value" id="acct-driver"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="next-delivery" id="next-delivery">
+        <div>
+          <div class="delivery-label">Next Delivery</div>
+          <div class="delivery-date" id="next-date"></div>
+          <div class="delivery-window" id="next-window"></div>
+        </div>
+        <div class="delivery-badge" id="next-days"></div>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Weekly Pieces</div>
+          <div class="stat-value" id="stat-pieces"></div>
+          <div class="stat-sub">avg per delivery</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Monthly Rate</div>
+          <div class="stat-value" id="stat-rate"></div>
+          <div class="stat-sub">billed monthly</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">YTD Spend</div>
+          <div class="stat-value" id="stat-ytd"></div>
+          <div class="stat-sub">year to date</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Services</div>
+        </div>
+        <div class="services-wrap" id="services-wrap"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Recent Deliveries</div>
+        </div>
+        <div class="deliveries-list" id="deliveries-list"></div>
+      </div>
+
+      <div class="section" id="issues-section">
+        <div class="section-header">
+          <div class="section-title">Open Issues</div>
+        </div>
+        <div class="issues-list" id="issues-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Recent Invoices</div>
+        </div>
+        <div class="invoices-list" id="invoices-list"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-header">
+          <div class="section-title">Quick Actions</div>
+        </div>
+        <div class="actions-grid" id="actions-grid"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    // Get account from URL params or default to demo
+    const params = new URLSearchParams(window.location.search);
+    const accountId = params.get('account') || 'miami-beach-resort';
+
+    function fmt(n) {
+      return '$' + n.toLocaleString();
+    }
+
+    function renderPortal(data) {
+      document.getElementById('loading-state').style.display = 'none';
+      document.getElementById('portal-content').style.display = 'block';
+
+      // Account header
+      document.getElementById('acct-tier').textContent = (data.tier || 'standard').toUpperCase() + ' ACCOUNT';
+      document.getElementById('acct-name').textContent = data.business_name || '—';
+      document.getElementById('acct-address').textContent = data.address || '—';
+      document.getElementById('acct-contact').textContent = data.contact_name + (data.contact_title ? ` · ${data.contact_title}` : '');
+      document.getElementById('acct-since').textContent = data.account_since
+        ? new Date(data.account_since).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+        : '—';
+      document.getElementById('acct-driver').textContent = data.driver || '—';
+
+      // Next delivery
+      if (data.next_delivery) {
+        const nd = data.next_delivery;
+        document.getElementById('next-date').textContent = nd.date;
+        document.getElementById('next-window').textContent = nd.window + ' · ' + nd.driver;
+        document.getElementById('next-days').textContent = nd.days_away === 1 ? 'Tomorrow' : `In ${nd.days_away} days`;
+      }
+
+      // Stats
+      document.getElementById('stat-pieces').textContent = data.weekly_pieces || '—';
+      document.getElementById('stat-rate').textContent = data.monthly_rate ? fmt(data.monthly_rate) : '—';
+      document.getElementById('stat-ytd').textContent = data.ytd_spend ? fmt(data.ytd_spend) : '—';
+
+      // Services
+      const servicesWrap = document.getElementById('services-wrap');
+      servicesWrap.innerHTML = (data.services || []).map(s => `<div class="service-chip">${s}</div>`).join('');
+
+      // Deliveries
+      const deliveriesList = document.getElementById('deliveries-list');
+      if ((data.recent_deliveries || []).length === 0) {
+        deliveriesList.innerHTML = '<div style="padding:20px;text-align:center;color:var(--drift);font-size:0.85rem">No deliveries yet</div>';
+      } else {
+        deliveriesList.innerHTML = (data.recent_deliveries || []).map(d => `
+          <div class="delivery-row">
+            <div>
+              <div class="delivery-row-date">${d.date}</div>
+              ${d.notes ? `<div class="delivery-row-note">${d.notes}</div>` : ''}
+            </div>
+            <div class="delivery-row-pieces">${d.pieces_delivered} pcs</div>
+            <div class="delivery-row-pieces">↩ ${d.pieces_collected}</div>
+            <div class="delivery-status ${d.status}">${d.status}</div>
+          </div>
+        `).join('');
+      }
+
+      // Issues
+      const issuesList = document.getElementById('issues-list');
+      if ((data.open_issues || []).length === 0) {
+        issuesList.innerHTML = '<div class="empty-list">No open issues — all good.</div>';
+      } else {
+        issuesList.innerHTML = (data.open_issues || []).map(issue => `
+          <div class="issue-card ${issue.status === 'resolved' ? 'resolved' : 'open'}">
+            <div class="issue-icon">${issue.status === 'resolved' ? '✅' : '⚠️'}</div>
+            <div style="flex:1">
+              <div class="issue-title">${issue.title}</div>
+              <div class="issue-meta">Opened ${issue.created} · Priority: ${issue.priority}</div>
+            </div>
+            <div class="issue-badge ${issue.status}">${issue.status}</div>
+          </div>
+        `).join('');
+      }
+
+      // Invoices
+      const invoicesList = document.getElementById('invoices-list');
+      invoicesList.innerHTML = (data.monthly_invoices || []).map(inv => `
+        <div class="invoice-row">
+          <div class="invoice-month">${inv.month}</div>
+          <div class="invoice-amount">${fmt(inv.amount)}</div>
+          <div class="invoice-status ${inv.status}">${inv.status}</div>
+        </div>
+      `).join('') || '<div style="padding:16px;text-align:center;color:var(--drift);font-size:0.85rem">No invoices yet</div>';
+
+      // Quick actions
+      const actionsGrid = document.getElementById('actions-grid');
+      actionsGrid.innerHTML = (data.quick_actions || []).map(action => `
+        <a class="action-card" href="${action.action === 'contact_ops' ? 'tel:+15138225130' : '#'}">
+          <div class="action-label">${action.label}</div>
+          <div class="action-desc">${action.description}</div>
+          <div class="action-arrow">→</div>
+        </a>
+      `).join('');
+    }
+
+    function showError(msg) {
+      document.getElementById('loading-state').style.display = 'none';
+      const errEl = document.getElementById('error-state');
+      errEl.style.display = 'flex';
+      if (msg) document.getElementById('error-msg').textContent = msg;
+    }
+
+    // Fetch account data
+    fetch(`/laundry/api/customer-portal?account=${encodeURIComponent(accountId)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.error) return showError(data.error);
+        renderPortal(data);
+      })
+      .catch(err => {
+        console.error(err);
+        showError('Unable to load account data. Please call (513) 822-5130.');
+      });
+  </script>
+</body>
+</html>

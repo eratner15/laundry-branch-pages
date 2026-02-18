@@ -1,0 +1,13 @@
+name = "laundry-branch-platform"
+compatibility_date = "2025-01-01"
+pages_build_output_dir = "public"
+
+[vars]
+ALERT_EMAIL = "evan@cafecito-ai.com"
+PHONE_NUMBER = "(513) 822-5130"
+
+# KV binding — uncomment after creating namespace:
+# [[kv_namespaces]]
+# binding = "DATA"
+# id = "REPLACE_WITH_REAL_KV_ID"
+# preview_id = "REPLACE_WITH_REAL_KV_ID"
