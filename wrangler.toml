@@ -7,7 +7,7 @@ ALERT_EMAIL = "evan@cafecito-ai.com"
 PHONE_NUMBER = "(513) 822-5130"
 
 # KV binding — uncomment after creating namespace:
-# [[kv_namespaces]]
-# binding = "DATA"
-# id = "REPLACE_WITH_REAL_KV_ID"
-# preview_id = "REPLACE_WITH_REAL_KV_ID"
+[[kv_namespaces]]
+binding = "DATA"
+id = "6fa34669ee8b4d91921e984b5a0ebfab"
+preview_id = "6fa34669ee8b4d91921e984b5a0ebfab"

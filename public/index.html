@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>laundry service — AI-powered local branch pages</title>
+  <title>Branch Operations Intelligence — Cafecito AI</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&family=Syne:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,6 +13,7 @@
       --ash: #4a4a44; --drift: #7a7a70; --sand: #b0aa9c; --bone: #d4cfc2;
       --linen: #e8e3d8; --cream: #f2efe8; --milk: #f9f7f3; --white: #fefdfb;
       --warm: #c4a872; --copper: #b87a4a;
+      --blue: #003DA5;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -28,7 +29,7 @@
       background-repeat: repeat; background-size: 128px;
     }
 
-    .container { max-width: 800px; width: 100%; position: relative; z-index: 1; }
+    .container { max-width: 860px; width: 100%; position: relative; z-index: 1; }
 
     .tag {
       font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
@@ -38,54 +39,121 @@
     h1 {
       font-family: 'Playfair Display', serif; font-weight: 400;
       font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05;
-      letter-spacing: -0.04em; color: var(--charcoal); margin-bottom: 1.5rem;
+      letter-spacing: -0.04em; color: var(--charcoal); margin-bottom: 1rem;
       opacity: 0; animation: slideUp 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     h1 i { font-style: italic; color: var(--ash); }
+    .tagline {
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--drift); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeIn 0.8s 0.35s forwards;
+    }
     .subtitle {
-      font-size: 1rem; line-height: 1.75; color: var(--drift); max-width: 560px; margin-bottom: 3rem;
+      font-size: 0.95rem; line-height: 1.8; color: var(--drift); max-width: 600px; margin-bottom: 3rem;
       opacity: 0; animation: fadeIn 0.8s 0.5s forwards;
     }
 
-    .cities {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+    /* Capabilities grid */
+    .caps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-bottom: 2px;
       opacity: 0; animation: fadeIn 0.8s 0.7s forwards;
     }
-    .city {
-      background: var(--milk); padding: clamp(28px, 3vw, 40px);
+    .cap-row-2 {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+      opacity: 0; animation: fadeIn 0.8s 0.75s forwards;
+    }
+    .cap {
+      background: var(--milk); padding: clamp(24px, 3vw, 36px);
       text-decoration: none; color: var(--charcoal);
       transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
     }
-    .city:hover {
-      background: var(--cream); transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(10,10,9,0.08);
+    .cap:hover {
+      background: var(--cream); transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(10,10,9,0.07);
     }
-    .city-accent {
-      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    .cap-accent {
+      position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--blue);
     }
-    .city-miami .city-accent { background: var(--copper); }
-    .city-cincy .city-accent { background: #5a7a9a; }
-    .city-dallas .city-accent { background: #a0694a; }
-
-    .city-label {
-      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--drift); margin-bottom: 12px;
+    .cap-num {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 12px;
     }
-    .city h2 {
-      font-family: 'Playfair Display', serif; font-size: 1.4rem;
+    .cap h2 {
+      font-family: 'Playfair Display', serif; font-size: 1.1rem;
       font-weight: 400; margin-bottom: 8px; letter-spacing: -0.02em;
     }
-    .city h2 i { font-style: italic; color: var(--ash); }
-    .city p {
-      font-size: 0.78rem; color: var(--drift); line-height: 1.6; margin-bottom: 16px;
+    .cap h2 i { font-style: italic; color: var(--ash); }
+    .cap p {
+      font-size: 0.76rem; color: var(--drift); line-height: 1.6; margin-bottom: 14px;
     }
-    .city-link {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+    .cap-link {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
       color: var(--charcoal); border-bottom: 1.5px solid var(--bone);
       padding-bottom: 2px; transition: all 0.3s;
     }
-    .city:hover .city-link { border-color: var(--charcoal); }
+    .cap:hover .cap-link { border-color: var(--charcoal); }
 
+    /* Pilot CTA */
+    .pilot {
+      background: var(--night); padding: clamp(28px, 4vw, 44px);
+      margin-top: 2px;
+      opacity: 0; animation: fadeIn 0.8s 0.85s forwards;
+    }
+    .pilot-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--drift); margin-bottom: 12px;
+    }
+    .pilot h3 {
+      font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.1rem;
+      color: var(--linen); margin-bottom: 8px;
+    }
+    .pilot p { font-size: 0.8rem; color: var(--drift); line-height: 1.7; margin-bottom: 16px; }
+    .pilot-link {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--warm); text-decoration: none;
+      border-bottom: 1.5px solid rgba(196,168,114,0.4); padding-bottom: 2px;
+      transition: all 0.3s;
+    }
+    .pilot-link:hover { border-color: var(--warm); }
+
+    /* Local Depots section */
+    .depots {
+      margin-top: 2px;
+      opacity: 0; animation: fadeIn 0.8s 0.82s forwards;
+    }
+    .depots-header {
+      padding: clamp(24px, 3vw, 36px);
+      background: var(--milk);
+    }
+    .depots-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--drift); margin-bottom: 10px;
+    }
+    .depots-heading {
+      font-family: 'Playfair Display', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 400; margin-bottom: 6px; letter-spacing: -0.02em; color: var(--charcoal);
+    }
+    .depots-heading i { font-style: italic; color: var(--ash); }
+    .depots-sub {
+      font-size: 0.76rem; color: var(--drift); line-height: 1.65; max-width: 540px;
+    }
+    .depots-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    }
+    .depot-card {
+      background: var(--cream); padding: clamp(24px, 3vw, 36px);
+      text-decoration: none; color: var(--charcoal);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; overflow: hidden;
+    }
+    .depot-card:hover { background: var(--linen); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(10,10,9,0.07); }
+    .depot-accent { position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .depot-label { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--drift); margin-bottom: 10px; }
+    .depot-card h3 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 400; margin-bottom: 8px; letter-spacing: -0.03em; }
+    .depot-card p { font-size: 0.76rem; color: var(--drift); line-height: 1.6; margin-bottom: 14px; }
+    .depot-link { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; color: var(--charcoal); border-bottom: 1.5px solid var(--bone); padding-bottom: 2px; transition: all 0.3s; }
+    .depot-card:hover .depot-link { border-color: var(--charcoal); }
+
+    /* Bottom */
     .bottom {
       margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--bone);
       display: flex; justify-content: space-between; align-items: center;
@@ -95,13 +163,6 @@
       font-family: 'Playfair Display', serif; font-style: italic;
       font-size: 0.85rem; color: var(--ash);
     }
-    .bottom-link {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      color: var(--charcoal); text-decoration: none;
-      border-bottom: 1.5px solid var(--charcoal); padding-bottom: 2px;
-      transition: all 0.3s;
-    }
-    .bottom-link:hover { color: var(--copper); border-color: var(--copper); }
 
     .badge {
       position: fixed; bottom: 24px; right: 24px;
@@ -115,8 +176,10 @@
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-    @media (max-width: 600px) {
-      .cities { grid-template-columns: 1fr; }
+    @media (max-width: 700px) {
+      .caps { grid-template-columns: 1fr; }
+      .cap-row-2 { grid-template-columns: 1fr; }
+      .depots-grid { grid-template-columns: 1fr; }
       .bottom { flex-direction: column; gap: 12px; text-align: center; }
     }
   </style>
@@ -124,41 +187,88 @@
 <body>
 
 <div class="container">
-  <div class="tag">White-label AI branch pages</div>
-  <h1>One platform.<br>Every <i>local market.</i></h1>
-  <p class="subtitle">Each branch gets a beautiful, locally-themed customer page with six AI services baked in — phone agent, instant chat, smart quoting, complaint detection, driver intelligence, and a real-time dashboard. Deployable in a day.</p>
+  <div class="tag">Branch Operations Intelligence</div>
+  <h1>Branch operations<br><i>intelligence.</i></h1>
+  <div class="tagline">What happens after the truck leaves.</div>
+  <p class="subtitle">The last mile is where accounts are won and lost. Service Shield monitors every account in real time. Route Intelligence briefs your RSRs before they hit the road. Predictive churn scoring flags at-risk accounts 90 days before they cancel. All of it connected — designed to plug into your existing Salesforce, SAP, and CRM workflows.</p>
 
-  <div class="cities">
-    <a href="./miami/" class="city city-miami">
-      <div class="city-accent"></div>
-      <div class="city-label">Florida</div>
-      <h2>Miami</h2>
-      <p>Hospitality-focused. Hotels, HOAs, spas, and restaurants across Miami-Dade, Broward, and Palm Beach.</p>
-      <span class="city-link">View branch page →</span>
+  <div class="caps">
+    <a href="./service-shield/" class="cap">
+      <div class="cap-accent"></div>
+      <div class="cap-num">01 — Service Shield</div>
+      <h2>Account Health<br><i>Monitor</i></h2>
+      <p>Real-time complaint detection at the branch level. Every account health-scored. Complaint-to-escalation velocity tracked. At-risk flags surface before the customer calls to cancel.</p>
+      <span class="cap-link">Open Service Shield →</span>
     </a>
-    <a href="./cincinnati/" class="city city-cincy">
-      <div class="city-accent"></div>
-      <div class="city-label">Ohio</div>
-      <h2>Cincinnati</h2>
-      <p>Industry-focused. Manufacturing, restaurants, medical offices, and service businesses across Greater Cincinnati.</p>
-      <span class="city-link">View branch page →</span>
+    <a href="./route-intel/" class="cap">
+      <div class="cap-accent"></div>
+      <div class="cap-num">02 — Route Intelligence</div>
+      <h2>RSR Morning<br><i>Briefings</i></h2>
+      <p>AI-generated driver briefings before every route. Account health, open issues, upsell flags — on their phone at 6am. Smarter RSRs catch problems before the customer calls.</p>
+      <span class="cap-link">Open Route Intel →</span>
     </a>
-    <a href="./dallas/" class="city city-dallas">
-      <div class="city-accent"></div>
-      <div class="city-label">Texas</div>
-      <h2>Dallas</h2>
-      <p>Growth-focused. Hotels, medical campuses, corporate HQs, and restaurants across the DFW metroplex.</p>
-      <span class="city-link">View branch page →</span>
+    <a href="./churn-risk/" class="cap">
+      <div class="cap-accent"></div>
+      <div class="cap-num">03 — Churn Risk</div>
+      <h2>Predictive<br><i>Churn Scoring</i></h2>
+      <p>"This account has a 72% probability of canceling in the next 90 days." The model that makes the revenue math real — with contributing factors and days-to-action estimates.</p>
+      <span class="cap-link">Open Churn Dashboard →</span>
     </a>
+  </div>
+
+  <div class="cap-row-2">
+    <a href="./rep-coaching/" class="cap">
+      <div class="cap-accent"></div>
+      <div class="cap-num">04 — Rep Coaching</div>
+      <h2>Weekly Coaching<br><i>Intelligence</i></h2>
+      <p>Your top 3 at-risk accounts, what's driving the risk, and what to say — synthesized for every RSR before the team meeting. Pattern detection before it shows up in attrition reports.</p>
+      <span class="cap-link">Open Rep Coaching →</span>
+    </a>
+    <a href="./ops/" class="cap">
+      <div class="cap-accent"></div>
+      <div class="cap-num">05 — Ops Hub</div>
+      <h2>Branch Operations<br><i>Command Center</i></h2>
+      <p>Real-time visibility across all channels. Calls, chats, complaints, leads, competitive signals — one command view for branch managers. Live data, auto-refreshed.</p>
+      <span class="cap-link">Open Ops Hub →</span>
+    </a>
+  </div>
+
+  <!-- Local Service Depots -->
+  <div class="depots">
+    <div class="depots-header">
+      <div class="depots-label">Local Service Depots</div>
+      <div class="depots-heading">Local service, <i>local operators.</i></div>
+      <p class="depots-sub">For independent laundry and linen operators — branch-level AI designed for businesses from 1 to 20 locations.</p>
+    </div>
+    <div class="depots-grid">
+      <a href="./miami/" class="depot-card">
+        <div class="depot-accent" style="background:#b87a4a"></div>
+        <div class="depot-label">South Florida</div>
+        <h3>Miami</h3>
+        <p>AI-powered customer acquisition and service for South Florida linen and uniform operators.</p>
+        <span class="depot-link" style="color:#b87a4a;border-color:rgba(184,122,74,0.35)">See Miami demo →</span>
+      </a>
+      <a href="./dallas/" class="depot-card">
+        <div class="depot-accent" style="background:#a0694a"></div>
+        <div class="depot-label">North Texas</div>
+        <h3>Dallas</h3>
+        <p>From restaurant linen to hospitality uniforms — AI that works for independent Texas operators.</p>
+        <span class="depot-link" style="color:#a0694a;border-color:rgba(160,105,74,0.35)">See Dallas demo →</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="pilot">
+    <div class="pilot-label">Cincinnati Pilot</div>
+    <h3>The Cincinnati market is scoped as a 90-day pilot.</h3>
+    <p>One branch, real workflows, measurable outcomes. $75K–$150K. If the model doesn't move the needle on churn, you don't pay for the next phase. See the full pilot scoped with real Cincinnati routes, accounts, and RSR data.</p>
+    <a href="./cincinnati/" class="pilot-link">See the pilot scope →</a>
   </div>
 
   <div class="bottom">
-    <span class="bottom-text">Same platform. Local flavor. AI everywhere.</span>
-    <a href="./ops/" class="bottom-link">Operations dashboard →</a>
+    <span class="bottom-text">Built on your feedback. Deployed in a day.</span>
   </div>
 </div>
-
-<a href="https://cafecito-ai.com" class="badge">Built by Cafecito AI</a>
 
 </body>
 </html>

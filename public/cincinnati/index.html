@@ -3,363 +3,430 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>laundry service — cincinnati</title>
-  <meta name="description" content="Uniform and linen service for Greater Cincinnati. Manufacturing, restaurants, medical, hospitality. linen la vida loca.">
+  <title>Cincinnati Branch — 90-Day Pilot Demo</title>
   <link rel="icon" type="image/x-icon" href="../favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --ink: #141618;
-      --slate: #1e2328;
-      --steel: #2d333b;
-      --iron: #444c56;
-      --metal: #636e7b;
-      --fog: #8b949e;
-      --cloud: #c9d1d9;
-      --snow: #e6edf3;
-      --paper: #f0f3f6;
-      --white: #f8fafc;
-      --blue: #4a7aa8;
-      --blue-deep: #2a5a88;
-      --rust: #c47a4a;
-      --amber: #d4944a;
+      --dark: #161e2d; --dark2: #1e2840; --dark3: #2c3750;
+      --blue: #003DA5; --blue-l: #1a52c4; --blue-glow: rgba(0,61,165,0.15);
+      --red: #e53935; --orange: #ff9800; --yellow: #ffc107; --green: #43a047;
+      --text: #f0f3f6; --muted: #8899a6; --border: #2c3750;
+      --warm: #c4a872; --cream: #f2efe8; --charcoal: #1a1a18; --bone: #d4cfc2;
     }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; color: var(--ink); background: var(--white); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',sans-serif; background:#161e2d; color:#f0f3f6; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 clamp(2rem, 5vw, 4rem); background: rgba(248,250,252,0); transition: all 0.5s; }
-    nav.scrolled { background: rgba(248,250,252,0.95); backdrop-filter: blur(20px); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 72px; }
-    .wordmark { font-size: 0.82rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
-    .wordmark span { color: var(--blue); font-weight: 400; }
-    .nav-right { display: flex; align-items: center; gap: 32px; }
-    .nav-link { font-size: 0.74rem; font-weight: 500; color: var(--metal); text-decoration: none; letter-spacing: 0.04em; transition: color 0.3s; }
-    .nav-link:hover { color: var(--ink); }
-    .nav-btn { font-size: 0.74rem; font-weight: 600; color: var(--white); background: var(--ink); text-decoration: none; padding: 10px 24px; letter-spacing: 0.04em; transition: all 0.3s; }
-    .nav-btn:hover { background: var(--slate); }
+    /* ── NAV ── */
+    nav { position:fixed; top:0; left:0; right:0; z-index:200; padding:0 clamp(1.5rem,4vw,3rem); background:rgba(22,30,45,0.92); backdrop-filter:blur(20px); border-bottom:1px solid #1e2a40; }
+    .nav-inner { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:64px; }
+    .nav-brand { font-size:13px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#f0f3f6; text-decoration:none; display:flex; align-items:center; gap:10px; }
+    .nav-brand .brand-blue { color:#003DA5; }
+    .demo-badge { font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:#8899a6; background:#1e2840; border:1px solid #2c3750; padding:3px 10px; border-radius:3px; }
+    .nav-links { display:flex; align-items:center; gap:24px; }
+    .nav-links a { font-size:12px; color:#8899a6; text-decoration:none; letter-spacing:0.04em; transition:color 0.2s; }
+    .nav-links a:hover { color:#f0f3f6; }
+    .nav-cta { font-size:12px; font-weight:600; color:#f0f3f6; background:#003DA5; padding:8px 20px; text-decoration:none; transition:background 0.2s; letter-spacing:0.04em; }
+    .nav-cta:hover { background:#1a52c4; }
 
-    .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; }
-    .hero-content { display: flex; flex-direction: column; justify-content: flex-end; padding: clamp(6rem, 12vh, 10rem) clamp(2rem, 5vw, 4rem) clamp(4rem, 8vh, 6rem); }
-    .hero-visual { background: var(--slate); position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .hero-visual::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px), repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px); }
-    .hero-grid-text { font-family: 'Instrument Serif', serif; font-size: clamp(8rem, 20vw, 16rem); color: rgba(255,255,255,0.03); position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); white-space: nowrap; }
-    .hero-stats { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 32px; padding: 40px; }
-    .hero-stat { text-align: center; }
-    .hero-stat-num { font-family: 'Instrument Serif', serif; font-size: 3.5rem; color: var(--cloud); line-height: 1; }
-    .hero-stat-label { font-size: 0.68rem; font-weight: 500; color: var(--fog); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; }
-    .hero-tag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
-    .hero-tag::before { content: ''; width: 32px; height: 2px; background: var(--blue); }
-    .hero h1 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(3rem, 6vw, 5.5rem); line-height: 0.95; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 2rem; }
-    .hero h1 em { font-style: italic; color: var(--metal); }
-    .hero-desc { font-size: 0.95rem; line-height: 1.8; color: var(--metal); max-width: 440px; margin-bottom: 2.5rem; }
-    .hero-actions { display: flex; gap: 16px; align-items: center; }
-    .btn-primary { font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; color: var(--white); background: var(--ink); padding: 16px 32px; text-decoration: none; transition: all 0.3s; text-transform: uppercase; }
-    .btn-primary:hover { background: var(--blue-deep); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,0,0,0.15); }
-    .btn-ghost { font-size: 0.78rem; font-weight: 500; color: var(--metal); text-decoration: none; border-bottom: 1px solid var(--cloud); padding-bottom: 2px; transition: all 0.3s; }
-    .btn-ghost:hover { color: var(--ink); border-color: var(--ink); }
+    /* ── HERO ── */
+    .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:flex-end; padding:120px clamp(1.5rem,5vw,4rem) clamp(4rem,8vh,6rem); position:relative; overflow:hidden; }
+    .hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 80% 60% at 60% 40%, rgba(0,61,165,0.08) 0%, transparent 70%); pointer-events:none; }
+    .hero-grid { position:absolute; inset:0; opacity:0.04; background-image:linear-gradient(#8899a6 1px, transparent 1px), linear-gradient(90deg, #8899a6 1px, transparent 1px); background-size:60px 60px; pointer-events:none; }
+    .hero-inner { max-width:1200px; margin:0 auto; width:100%; position:relative; z-index:1; }
+    .pilot-tag { display:inline-flex; align-items:center; gap:8px; font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#003DA5; background:rgba(0,61,165,0.12); border:1px solid rgba(0,61,165,0.25); padding:5px 12px; border-radius:3px; margin-bottom:24px; }
+    .pilot-dot { width:6px; height:6px; border-radius:50%; background:#003DA5; animation:pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .hero h1 { font-family:'Instrument Serif',serif; font-size:clamp(2.8rem,6vw,5.5rem); font-weight:400; line-height:1.0; letter-spacing:-0.02em; margin-bottom:24px; }
+    .hero h1 .sub { display:block; font-size:clamp(1.5rem,3vw,2.8rem); color:#8899a6; font-style:italic; margin-top:8px; }
+    .hero-desc { font-size:1rem; line-height:1.75; color:#8899a6; max-width:600px; margin-bottom:40px; }
+    .hero-stats { display:flex; gap:40px; flex-wrap:wrap; margin-bottom:40px; }
+    .hero-stat-num { font-family:'Instrument Serif',serif; font-size:2.4rem; color:#f0f3f6; line-height:1; }
+    .hero-stat-lbl { font-size:11px; color:#8899a6; letter-spacing:0.08em; text-transform:uppercase; margin-top:4px; }
+    .hero-divider { width:1px; background:#2c3750; align-self:stretch; }
+    .hero-actions { display:flex; gap:16px; flex-wrap:wrap; }
+    .btn-primary { font-size:13px; font-weight:600; letter-spacing:0.06em; color:#f0f3f6; background:#003DA5; padding:14px 32px; text-decoration:none; transition:all 0.2s; border:none; cursor:pointer; }
+    .btn-primary:hover { background:#1a52c4; transform:translateY(-1px); }
+    .btn-ghost { font-size:13px; font-weight:500; color:#8899a6; text-decoration:none; border:1px solid #2c3750; padding:14px 28px; transition:all 0.2s; }
+    .btn-ghost:hover { color:#f0f3f6; border-color:#8899a6; }
 
-    .marquee { padding: 16px 0; background: var(--ink); overflow: hidden; }
-    .marquee-track { display: flex; animation: marquee 35s linear infinite; width: max-content; }
-    .marquee-item { font-size: 0.82rem; font-weight: 500; color: var(--fog); white-space: nowrap; padding: 0 20px; }
-    .marquee-dot { color: var(--steel); padding: 0 8px; font-size: 0.5rem; }
-    @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+    /* ── SECTIONS ── */
+    section { padding:clamp(4rem,8vh,7rem) clamp(1.5rem,5vw,4rem); }
+    .section-inner { max-width:1200px; margin:0 auto; }
+    .section-tag { font-size:10px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#003DA5; margin-bottom:12px; display:flex; align-items:center; gap:10px; }
+    .section-tag::before { content:''; width:20px; height:2px; background:#003DA5; }
+    .section-h2 { font-family:'Instrument Serif',serif; font-size:clamp(1.8rem,3vw,2.8rem); font-weight:400; line-height:1.15; margin-bottom:16px; }
+    .section-h2 em { font-style:italic; color:#8899a6; }
+    .section-sub { font-size:0.95rem; color:#8899a6; line-height:1.7; max-width:620px; }
 
-    .intro { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--paper); }
-    .intro-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
-    .stag { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 12px; }
-    .stag::before { content: ''; width: 20px; height: 2px; background: var(--blue); }
-    .intro-headline { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.2; color: var(--ink); }
-    .intro-headline em { font-style: italic; color: var(--metal); }
-    .intro-body { font-size: 0.95rem; line-height: 1.85; color: var(--iron); margin-bottom: 2.5rem; }
-    .traits { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--cloud); }
-    .trait { padding: 24px; background: var(--white); }
-    .trait h3 { font-size: 0.82rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
-    .trait p { font-size: 0.76rem; color: var(--metal); line-height: 1.5; }
+    /* ── CHURN MATH ── */
+    .churn-math { background:#1e2840; border:1px solid #2c3750; border-radius:12px; padding:clamp(2rem,4vw,3rem); margin-top:3rem; display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; }
+    .churn-number { font-family:'Instrument Serif',serif; font-size:clamp(3rem,6vw,5rem); color:#f0f3f6; line-height:1; margin-bottom:8px; }
+    .churn-number span { color:#003DA5; }
+    .churn-label { font-size:14px; color:#8899a6; line-height:1.5; }
+    .churn-math-right { font-size:14px; color:#8899a6; line-height:1.8; }
+    .churn-math-right strong { color:#f0f3f6; font-weight:600; }
+    .churn-math-right .highlight { color:#003DA5; font-weight:700; }
 
-    .services { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--ink); color: var(--cloud); }
-    .services-inner { max-width: 1200px; margin: 0 auto; }
-    .services .stag { color: var(--amber); }
-    .services .stag::before { background: var(--amber); }
-    .services-title { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.2; color: var(--snow); margin-bottom: clamp(3rem, 6vh, 5rem); }
-    .services-title em { color: var(--fog); }
-    .svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--steel); }
-    .svc-card { padding: clamp(28px, 3vw, 40px); background: var(--slate); transition: background 0.3s; }
-    .svc-card:hover { background: var(--steel); }
-    .svc-num { font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--iron); margin-bottom: 12px; }
-    .svc-card h3 { font-size: 0.88rem; font-weight: 600; color: var(--snow); margin-bottom: 8px; }
-    .svc-card p { font-size: 0.78rem; color: var(--fog); line-height: 1.6; }
+    /* ── CAPABILITIES ── */
+    .caps-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; margin-top:3rem; background:#161e2d; }
+    .cap-card { background:#1e2840; padding:clamp(1.5rem,3vw,2.5rem); text-decoration:none; color:#f0f3f6; transition:background 0.2s; border:1px solid #2c3750; position:relative; }
+    .cap-card:hover { background:#1e2530; border-color:#003DA5; }
+    .cap-num { font-size:10px; color:#003DA5; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:10px; }
+    .cap-card h3 { font-size:17px; font-weight:600; margin-bottom:8px; }
+    .cap-card p { font-size:13px; color:#8899a6; line-height:1.55; margin-bottom:14px; }
+    .cap-link { font-size:12px; font-weight:600; color:#003DA5; display:flex; align-items:center; gap:6px; }
+    .cap-tag { position:absolute; top:16px; right:16px; font-size:9px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:3px 8px; border-radius:3px; }
+    .cap-tag.live { background:rgba(67,160,71,0.15); color:#43a047; }
+    .cap-tag.demo { background:rgba(0,61,165,0.15); color:#6b9fd4; }
 
-    .ai-section { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--white); }
-    .ai-inner { max-width: 1200px; margin: 0 auto; }
-    .ai-header { margin-bottom: clamp(3rem, 6vh, 4rem); max-width: 560px; }
-    .ai-title { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
-    .ai-title em { color: var(--metal); }
-    .ai-sub { font-size: 0.92rem; line-height: 1.75; color: var(--metal); }
-    .ai-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--cloud); }
-    .ai-card { background: var(--white); padding: clamp(28px, 3vw, 36px); transition: all 0.3s; position: relative; }
-    .ai-card:hover { background: var(--paper); }
-    .ai-feat { background: var(--ink); }
-    .ai-feat:hover { background: var(--slate); }
-    .ai-feat h3 { color: var(--snow); }
-    .ai-feat p { color: var(--fog); }
-    .ai-feat .ai-ico { color: var(--amber); }
-    .ai-badge { position: absolute; top: 16px; right: 16px; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; color: var(--amber); background: rgba(212,148,74,0.12); }
-    .ai-ico { color: var(--blue); margin-bottom: 16px; display: block; }
-    .ai-card h3 { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
-    .ai-card p { font-size: 0.78rem; color: var(--metal); line-height: 1.6; }
-    .ai-cta { display: inline-block; margin-top: 14px; font-size: 0.74rem; font-weight: 600; color: var(--amber); text-decoration: none; border-bottom: 1px solid rgba(212,148,74,0.3); padding-bottom: 1px; }
-    .ai-cta:hover { border-color: var(--amber); }
-    .ai-bottom { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--cloud); display: flex; justify-content: space-between; align-items: center; }
-    .ai-bottom i { font-family: 'Instrument Serif', serif; font-style: italic; font-size: 0.88rem; color: var(--metal); }
-    .ai-bottom a { font-size: 0.74rem; font-weight: 600; color: var(--ink); text-decoration: none; border-bottom: 1.5px solid var(--ink); padding-bottom: 2px; }
-    .ai-bottom a:hover { color: var(--blue); border-color: var(--blue); }
+    /* ── ROUTE INTEL PREVIEW ── */
+    .route-preview { background:#1e2840; border:1px solid #2c3750; border-radius:12px; margin-top:3rem; overflow:hidden; }
+    .route-header { padding:20px 24px; border-bottom:1px solid #2c3750; display:flex; justify-content:space-between; align-items:center; }
+    .route-title { font-size:14px; font-weight:600; }
+    .route-sub { font-size:12px; color:#8899a6; margin-top:2px; }
+    .route-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#161e2d; }
+    .route-card { background:#1e2840; padding:20px; cursor:pointer; transition:background 0.2s; text-decoration:none; color:#f0f3f6; display:block; }
+    .route-card:hover { background:#1e2530; }
+    .route-id-tag { font-size:9px; color:#003DA5; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; }
+    .route-name { font-size:14px; font-weight:600; margin-bottom:4px; }
+    .route-meta { font-size:12px; color:#8899a6; }
+    .route-health { display:flex; gap:8px; margin-top:10px; flex-wrap:wrap; }
+    .rh-dot { width:8px; height:8px; border-radius:50%; }
+    .rh-green { background:#43a047; }
+    .rh-yellow { background:#ffc107; }
+    .rh-red { background:#e53935; }
+    .rh-label { font-size:11px; color:#8899a6; }
 
-    .process { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--paper); }
-    .process-inner { max-width: 1200px; margin: 0 auto; }
-    .process-title { font-family: 'Instrument Serif', serif; font-size: 1.6rem; color: var(--ink); margin-bottom: clamp(2rem, 4vh, 3rem); }
-    .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--cloud); }
-    .step { padding: 32px; background: var(--white); }
-    .step-n { font-family: 'Instrument Serif', serif; font-size: 2.5rem; color: var(--cloud); margin-bottom: 12px; line-height: 1; }
-    .step h3 { font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
-    .step p { font-size: 0.78rem; color: var(--metal); line-height: 1.55; }
+    /* ── SERVICE SHIELD FEED ── */
+    .shield-feed { margin-top:3rem; }
+    .feed-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+    .feed-events { display:flex; flex-direction:column; gap:8px; }
+    .feed-event { background:#1e2840; border:1px solid #2c3750; border-radius:8px; padding:14px 16px; display:grid; grid-template-columns:auto 1fr auto auto; gap:12px; align-items:start; }
+    .feed-event.critical { border-left:3px solid #e53935; }
+    .feed-event.elevated { border-left:3px solid #ff9800; }
+    .feed-event.positive { border-left:3px solid #43a047; }
+    .fe-icon { font-size:16px; }
+    .fe-biz { font-size:13px; font-weight:600; }
+    .fe-desc { font-size:12px; color:#8899a6; margin-top:2px; line-height:1.4; }
+    .fe-time { font-size:11px; color:#8899a6; white-space:nowrap; }
+    .fe-score { font-size:12px; font-weight:700; padding:2px 8px; border-radius:4px; white-space:nowrap; }
+    .fe-score.s-critical { background:rgba(229,57,53,0.15); color:#e53935; }
+    .fe-score.s-elevated { background:rgba(255,152,0,0.15); color:#ff9800; }
+    .fe-score.s-healthy { background:rgba(67,160,71,0.15); color:#43a047; }
 
-    .contact { padding: clamp(5rem, 10vh, 8rem) clamp(2rem, 5vw, 4rem); background: var(--white); }
-    .contact-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
-    .contact-hl { font-family: 'Instrument Serif', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; line-height: 1.2; color: var(--ink); margin-bottom: 1rem; }
-    .contact-hl em { color: var(--metal); }
-    .contact-body { font-size: 0.92rem; line-height: 1.75; color: var(--metal); margin-bottom: 2rem; }
-    .promises { list-style: none; }
-    .promises li { display: flex; gap: 12px; padding: 10px 0; font-size: 0.85rem; color: var(--iron); }
-    .promises li strong { color: var(--ink); }
-    .pm { font-family: 'Instrument Serif', serif; color: var(--blue); font-size: 1rem; min-width: 20px; }
-    .form-wrap { background: var(--paper); padding: 36px; }
-    .form-header h3 { font-family: 'Instrument Serif', serif; font-size: 1.2rem; margin-bottom: 4px; }
-    .form-header p { font-size: 0.78rem; color: var(--metal); margin-bottom: 24px; }
-    .fg { margin-bottom: 16px; }
-    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .fg label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--metal); margin-bottom: 6px; }
-    .fg input, .fg select, .fg textarea { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; padding: 12px 14px; border: 1px solid var(--cloud); background: var(--white); color: var(--ink); outline: none; transition: border 0.3s; }
-    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--blue); }
-    .fg textarea { min-height: 100px; resize: vertical; }
-    .form-submit { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); background: var(--ink); border: none; padding: 16px; cursor: pointer; transition: all 0.3s; }
-    .form-submit:hover { background: var(--blue-deep); }
-    .form-fine { font-size: 0.7rem; color: var(--fog); margin-top: 8px; text-align: center; }
-    .form-success { display: none; text-align: center; padding: 60px 20px; }
-    .form-success h3 { font-family: 'Instrument Serif', serif; font-size: 1.4rem; margin-bottom: 8px; }
-    .form-success p { color: var(--metal); }
+    /* ── INTEGRATION DIAGRAM ── */
+    .integration { background:#1e2840; border:1px solid #2c3750; border-radius:12px; padding:clamp(2rem,4vw,3rem); margin-top:3rem; }
+    .int-title { font-size:14px; font-weight:600; margin-bottom:6px; }
+    .int-sub { font-size:12px; color:#8899a6; margin-bottom:32px; }
+    .diagram { display:flex; align-items:center; gap:0; flex-wrap:nowrap; overflow-x:auto; padding-bottom:8px; }
+    .d-node { background:#161e2d; border:1px solid #2c3750; border-radius:8px; padding:14px 16px; min-width:130px; text-align:center; flex-shrink:0; }
+    .d-node.accent { border-color:#003DA5; background:rgba(0,61,165,0.08); }
+    .d-node-icon { font-size:20px; margin-bottom:6px; }
+    .d-node-label { font-size:11px; font-weight:600; color:#f0f3f6; line-height:1.3; }
+    .d-node-sub { font-size:10px; color:#8899a6; margin-top:3px; }
+    .d-arrow { color:#2c3750; font-size:18px; flex-shrink:0; padding:0 8px; align-self:center; }
 
-    footer { background: var(--ink); padding: clamp(3rem, 5vh, 4rem) clamp(2rem, 5vw, 4rem); }
-    .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .footer-mark { font-size: 0.82rem; font-weight: 700; color: var(--fog); letter-spacing: 0.08em; text-transform: uppercase; }
-    .footer-mark span { font-weight: 400; color: var(--iron); font-style: italic; text-transform: none; letter-spacing: 0; }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 0.74rem; color: var(--fog); text-decoration: none; }
-    .footer-links a:hover { color: var(--cloud); }
-    .footer-bottom { max-width: 1200px; margin: 16px auto 0; padding-top: 16px; border-top: 1px solid var(--steel); display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--iron); }
+    /* ── PILOT CTA ── */
+    .pilot-cta { background:linear-gradient(135deg, #0f1520 0%, #121e30 100%); border:1px solid rgba(0,61,165,0.3); border-radius:12px; padding:clamp(2.5rem,5vw,4rem); text-align:center; margin-top:3rem; }
+    .pilot-cta h2 { font-family:'Instrument Serif',serif; font-size:clamp(1.8rem,3vw,2.6rem); font-weight:400; margin-bottom:16px; }
+    .pilot-cta p { font-size:15px; color:#8899a6; max-width:560px; margin:0 auto 32px; line-height:1.7; }
+    .cta-pills { display:flex; justify-content:center; gap:24px; flex-wrap:wrap; margin-bottom:32px; }
+    .cta-pill { font-size:12px; color:#8899a6; background:#1e2840; border:1px solid #2c3750; padding:8px 16px; border-radius:20px; }
+    .cta-pill strong { color:#f0f3f6; }
 
-    .sticky-cta { position: fixed; bottom: 0; left: 0; right: 0; background: var(--ink); padding: 12px clamp(2rem, 5vw, 4rem); transform: translateY(100%); transition: transform 0.4s; z-index: 99; }
-    .sticky-cta.visible { transform: translateY(0); }
-    .sticky-inner { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-    .sticky-text { font-size: 0.78rem; color: var(--fog); }
-    .sticky-text strong { color: var(--cloud); }
-    .sticky-actions { display: flex; gap: 16px; align-items: center; }
-    .sticky-phone { font-size: 0.82rem; font-weight: 600; color: var(--cloud); text-decoration: none; }
-    .sticky-book { font-size: 0.74rem; font-weight: 600; color: var(--ink); background: var(--cloud); padding: 8px 20px; text-decoration: none; }
+    footer { border-top:1px solid #1e2840; padding:24px clamp(1.5rem,5vw,4rem); }
+    .footer-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+    .footer-text { font-size:12px; color:#4a5568; }
+    .footer-links { display:flex; gap:20px; }
+    .footer-links a { font-size:12px; color:#4a5568; text-decoration:none; }
+    .footer-links a:hover { color:#8899a6; }
 
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; } .hero-visual { min-height: 280px; }
-      .intro-inner, .contact-inner { grid-template-columns: 1fr; gap: 48px; }
-      .svc-grid, .ai-grid { grid-template-columns: 1fr 1fr; }
-      .steps { grid-template-columns: 1fr 1fr; }
-      .sticky-text { display: none; }
-      .ai-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    @media(max-width:900px) {
+      .churn-math { grid-template-columns:1fr; }
+      .caps-grid { grid-template-columns:1fr; }
+      .route-cards { grid-template-columns:1fr; }
+      .diagram { flex-wrap:wrap; justify-content:center; }
     }
-    @media (max-width: 600px) {
-      .svc-grid, .ai-grid, .steps, .traits, .fg-row { grid-template-columns: 1fr; }
-      .nav-link { display: none; }
+    @media(max-width:600px) {
+      .hero-stats { gap:24px; }
+      .feed-event { grid-template-columns:auto 1fr; }
+      .fe-time, .fe-score { grid-column:2; }
     }
   </style>
 </head>
 <body>
-  <nav id="nav"><div class="nav-inner">
-    <a href="../" class="wordmark">laundry service <span>cincy</span></a>
-    <div class="nav-right">
-      <a href="#services" class="nav-link">services</a>
-      <a href="#ai" class="nav-link">ai</a>
-      <a href="#process" class="nav-link">process</a>
-      <a href="#contact" class="nav-btn">get a quote</a>
-    </div>
-  </div></nav>
 
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-tag">Greater Cincinnati</div>
-      <h1>Clean uniforms.<br>Every shift.<br><em>No excuses.</em></h1>
-      <p class="hero-desc">Uniform and linen service for manufacturers, restaurants, medical offices, and hospitality across Hamilton, Butler, and Warren counties. We pick up, we clean, we deliver. You run your business.</p>
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Get a quote</a>
-        <a href="#services" class="btn-ghost">what we handle</a>
-      </div>
+<nav>
+  <div class="nav-inner">
+    <a href="/laundry/" class="nav-brand">Branch Ops <span class="brand-blue">Intel</span></a>
+    <div class="demo-badge">Demo Mode</div>
+    <div class="nav-links">
+      <a href="/laundry/service-shield/">Service Shield</a>
+      <a href="/laundry/churn-risk/">Churn Risk</a>
+      <a href="/laundry/route-intel/">Route Intel</a>
+      <a href="https://cal.com/cafecito-ai/cintas-pilot" target="_blank" class="nav-cta">Book Pilot Call</a>
     </div>
-    <div class="hero-visual">
-      <div class="hero-grid-text">CIN</div>
-      <div class="hero-stats">
-        <div class="hero-stat"><div class="hero-stat-num">3</div><div class="hero-stat-label">Counties served</div></div>
-        <div class="hero-stat"><div class="hero-stat-num">48hr</div><div class="hero-stat-label">Quote turnaround</div></div>
-        <div class="hero-stat"><div class="hero-stat-num">24/7</div><div class="hero-stat-label">AI phone line</div></div>
-      </div>
-    </div>
-  </section>
+  </div>
+</nav>
 
-  <div class="marquee"><div class="marquee-track">
-    <span class="marquee-item">Hamilton County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Butler County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Warren County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Work Uniforms</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Shop Towels</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Lab Coats</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Table Linens</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Kitchen Towels</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Scrubs</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Coveralls</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Weekly Routes</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Emergency Rush</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Hamilton County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Butler County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Warren County</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Work Uniforms</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Shop Towels</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Lab Coats</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Table Linens</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Kitchen Towels</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Scrubs</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Coveralls</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Weekly Routes</span><span class="marquee-dot">•</span>
-    <span class="marquee-item">Emergency Rush</span><span class="marquee-dot">•</span>
-  </div></div>
-
-  <section class="intro">
-    <div class="intro-inner">
-      <div><div class="stag">The premise</div>
-        <div class="intro-headline">Your crew shows up<br>in what you give them.<br><em>Make it count.</em></div>
-      </div>
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div class="pilot-tag"><span class="pilot-dot"></span>Cincinnati Branch · 90-Day Pilot</div>
+    <h1>Operations intelligence<span class="sub">rebuilt for your feedback.</span></h1>
+    <p class="hero-desc">This is what you asked for, Jim. Not a customer website — internal ops intelligence. Account health, churn prediction, RSR coaching, route briefings. The Cincinnati market is scoped as a live pilot. One branch. Real workflows. Measurable churn impact.</p>
+    <div class="hero-stats">
       <div>
-        <p class="intro-body">We're a uniform and linen service built for Cincinnati's working businesses. Manufacturers who need coveralls that show up clean every Monday. Restaurants where the table linens set the tone. Medical offices where scrubs and lab coats have to be spotless. Pickup, cleaning, delivery, replacement — all handled. No contracts. No surprises.</p>
-        <div class="traits">
-          <div class="trait"><h3>Full replacement</h3><p>Worn items swapped out. No paperwork, no upcharges.</p></div>
-          <div class="trait"><h3>No contracts</h3><p>We earn it every delivery. Leave whenever you want.</p></div>
-          <div class="trait"><h3>Reliable routes</h3><p>Same driver, same day, every week. That's the product.</p></div>
-          <div class="trait"><h3>Real people</h3><p>Local team, local number. We pick up the phone.</p></div>
+        <div class="hero-stat-num">1</div>
+        <div class="hero-stat-lbl">Branch Active</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div>
+        <div class="hero-stat-num">90</div>
+        <div class="hero-stat-lbl">Day Pilot</div>
+      </div>
+      <div class="hero-divider"></div>
+      <div>
+        <div class="hero-stat-num">$65M</div>
+        <div class="hero-stat-lbl">1% Churn = Revenue Saved</div>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="/laundry/churn-risk/" class="btn-primary">See the Churn Math →</a>
+      <a href="/laundry/service-shield/" class="btn-ghost">Service Shield →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── THE CHURN MATH ── -->
+<section style="background:#0a0e14;padding-top:0">
+  <div class="section-inner">
+    <div class="section-tag">The Business Case</div>
+    <div class="section-h2">1% churn reduction = <em>$65M preserved.</em></div>
+    <p class="section-sub">In Cintas's Rental division. Every year. Service Shield catches complaints 48 hours earlier. Route Intel makes RSRs smarter before they knock. Rep Coaching tells managers what's happening before it shows up in attrition reports.</p>
+    <div class="churn-math">
+      <div>
+        <div class="churn-number">$<span>65</span>M</div>
+        <div class="churn-label">In preserved annual revenue per 1% churn reduction in the Rental division</div>
+      </div>
+      <div class="churn-math-right">
+        <strong>The model this pilot proves:</strong><br><br>
+        Prevent <strong>10 cancellations</strong> per branch per year at <strong>$50K avg contract value</strong> = <span class="highlight">$500K preserved per branch.</span><br><br>
+        Across <strong>460 branches</strong>: that's <span class="highlight">$230M in preserved revenue</span> — from a complaint detection system that costs less than one lost account.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CAPABILITIES ── -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">Platform Capabilities</div>
+    <div class="section-h2">Five systems. <em>One integrated layer.</em></div>
+    <p class="section-sub">Each capability stands alone. Together, they give branch managers and RSRs a 48-hour lead on every account that's about to walk.</p>
+    <div class="caps-grid">
+      <a href="/laundry/service-shield/" class="cap-card">
+        <span class="cap-tag live">Live</span>
+        <div class="cap-num">01</div>
+        <h3>Service Shield</h3>
+        <p>Real-time account health monitoring. Complaint detection at the branch level — every interaction scored, every at-risk account flagged before the customer calls to cancel.</p>
+        <div class="cap-link">Open Service Shield →</div>
+      </a>
+      <a href="/laundry/route-intel/" class="cap-card">
+        <span class="cap-tag live">Live</span>
+        <div class="cap-num">02</div>
+        <h3>Route Intelligence</h3>
+        <p>AI-generated RSR briefings before every route. Account health, open issues, upsell flags, cross-sell opportunities — on their phone at 6am before the truck leaves.</p>
+        <div class="cap-link">Open Route Intel →</div>
+      </a>
+      <a href="/laundry/churn-risk/" class="cap-card">
+        <span class="cap-tag live">Live</span>
+        <div class="cap-num">03</div>
+        <h3>Predictive Churn Scoring</h3>
+        <p>"This account has a 72% probability of canceling in the next 90 days." The model that makes the revenue math real — with contributing factors per account and days-to-action estimates.</p>
+        <div class="cap-link">Open Churn Dashboard →</div>
+      </a>
+      <a href="/laundry/rep-coaching/" class="cap-card">
+        <span class="cap-tag live">Live</span>
+        <div class="cap-num">04</div>
+        <h3>Rep Coaching Intelligence</h3>
+        <p>Weekly summaries for every RSR. Top at-risk accounts, complaint themes, suggested talking points. Synthesized coaching for branch managers — pattern detection before the team meeting.</p>
+        <div class="cap-link">Open Rep Coaching →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── ROUTE INTEL PREVIEW ── -->
+<section style="background:#0a0e14">
+  <div class="section-inner">
+    <div class="section-tag">Route Intelligence</div>
+    <div class="section-h2">What your RSRs see <em>at 6am.</em></div>
+    <p class="section-sub">Before the truck leaves, every driver gets a briefing: account health, open issues, upsell flags, complaint history. The Cincinnati pilot covers Routes 7, 9, and 15.</p>
+    <div class="route-preview">
+      <div class="route-header">
+        <div>
+          <div class="route-title">Cincinnati Pilot Routes</div>
+          <div class="route-sub">Click any route to open the live RSR briefing</div>
+        </div>
+        <a href="/laundry/route-intel/" style="font-size:12px;color:#003DA5;text-decoration:none;font-weight:600">All Routes →</a>
+      </div>
+      <div class="route-cards">
+        <a href="/laundry/api/route-intel?route=route-7" target="_blank" class="route-card">
+          <div class="route-id-tag">Route 7</div>
+          <div class="route-name">Downtown / Over-the-Rhine</div>
+          <div class="route-meta">Driver: Mike T. · 12 stops · 3,645 pcs/wk</div>
+          <div class="route-health">
+            <span class="rh-dot rh-red"></span><span class="rh-label">1 critical</span>
+            <span class="rh-dot rh-yellow"></span><span class="rh-label">2 monitor</span>
+            <span class="rh-dot rh-green"></span><span class="rh-label">9 healthy</span>
+          </div>
+        </a>
+        <a href="/laundry/api/route-intel?route=route-9" target="_blank" class="route-card">
+          <div class="route-id-tag">Route 9</div>
+          <div class="route-name">Northside / Clifton</div>
+          <div class="route-meta">Driver: Sandra K. · 10 stops · 2,665 pcs/wk</div>
+          <div class="route-health">
+            <span class="rh-dot rh-red"></span><span class="rh-label">1 critical</span>
+            <span class="rh-dot rh-yellow"></span><span class="rh-label">3 monitor</span>
+            <span class="rh-dot rh-green"></span><span class="rh-label">6 healthy</span>
+          </div>
+        </a>
+        <a href="/laundry/api/route-intel?route=route-15" target="_blank" class="route-card">
+          <div class="route-id-tag">Route 15</div>
+          <div class="route-name">Blue Ash / Mason</div>
+          <div class="route-meta">Driver: Carlos P. · 11 stops · 3,515 pcs/wk</div>
+          <div class="route-health">
+            <span class="rh-dot rh-red"></span><span class="rh-label">1 critical</span>
+            <span class="rh-dot rh-yellow"></span><span class="rh-label">4 monitor</span>
+            <span class="rh-dot rh-green"></span><span class="rh-label">6 healthy</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICE SHIELD LIVE FEED ── -->
+<section>
+  <div class="section-inner">
+    <div class="section-tag">Service Shield</div>
+    <div class="section-h2">Account events, <em>live feed.</em></div>
+    <p class="section-sub">Every inbound signal — call, chat, complaint, positive mention — scored in real time. Branch managers see this on their dashboard by 7am.</p>
+    <div class="shield-feed">
+      <div class="feed-events" id="shieldFeed">
+        <!-- Loaded by JS -->
+        <div class="feed-event critical">
+          <div class="fe-icon">🔴</div>
+          <div><div class="fe-biz">TriHealth Good Samaritan Hospital</div><div class="fe-desc">Wrong scrub sizes for 3rd week running — XS delivered, L ordered. Kevin Marsh requesting escalation. RSR: Sandra K.</div></div>
+          <div class="fe-time">2h ago</div>
+          <div class="fe-score s-critical">2/10 · CRITICAL</div>
+        </div>
+        <div class="feed-event critical">
+          <div class="fe-icon">🔴</div>
+          <div><div class="fe-biz">Mason Medical Center</div><div class="fe-desc">Missed Monday pickup — second occurrence in 30 days. Ellen Torres sent formal email to ops. RSR: Carlos P.</div></div>
+          <div class="fe-time">4h ago</div>
+          <div class="fe-score s-critical">2/10 · CRITICAL</div>
+        </div>
+        <div class="feed-event elevated">
+          <div class="fe-icon">🟠</div>
+          <div><div class="fe-biz">FC Cincinnati Training Facility</div><div class="fe-desc">Wrong jersey sizes again — Dana Loftus mentioned competitor pricing. RSR: Mike T.</div></div>
+          <div class="fe-time">1d ago</div>
+          <div class="fe-score s-elevated">3/10 · ELEVATED</div>
+        </div>
+        <div class="feed-event elevated">
+          <div class="fe-icon">🟠</div>
+          <div><div class="fe-biz">Orchids at Palm Court (Hilton)</div><div class="fe-desc">Linen quality complaint — contract renewal in 45 days. Chef Reyes escalating to GM. RSR: Mike T.</div></div>
+          <div class="fe-time">1d ago</div>
+          <div class="fe-score s-elevated">4/10 · ELEVATED</div>
+        </div>
+        <div class="feed-event positive">
+          <div class="fe-icon">🟢</div>
+          <div><div class="fe-biz">Cincinnati Children's Hospital</div><div class="fe-desc">Rita Okafor sent formal commendation — 12 consecutive perfect deliveries. RSR: Sandra K.</div></div>
+          <div class="fe-time">4h ago</div>
+          <div class="fe-score s-healthy">10/10 · HEALTHY</div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="services" id="services"><div class="services-inner">
-    <div class="stag">What we handle</div>
-    <div class="services-title">Programs built for<br><em>Cincinnati industry</em></div>
-    <div class="svc-grid">
-      <div class="svc-card"><div class="svc-num">01</div><h3>Manufacturing & Industrial</h3><p>Uniforms, coveralls, shop towels, and floor mats for production floors. We match your shift schedule and handle seasonal hiring surges.</p></div>
-      <div class="svc-card"><div class="svc-num">02</div><h3>Restaurants & Hospitality</h3><p>Table linens, napkins, kitchen towels, chef coats. Delivery timed to your prep schedule, quality your front-of-house notices.</p></div>
-      <div class="svc-card"><div class="svc-num">03</div><h3>Medical & Healthcare</h3><p>Lab coats, scrubs, patient gowns, surgical towels. OSHA-compliant handling. Reliability your practice management team can count on.</p></div>
-      <div class="svc-card"><div class="svc-num">04</div><h3>Auto & Service Shops</h3><p>Uniforms, shop towels, fender covers, detail cloths. Built for the volume and grime that comes with automotive work.</p></div>
-      <div class="svc-card"><div class="svc-num">05</div><h3>Hotels & Event Venues</h3><p>Bed linens, bath towels, table settings, staff uniforms. Full-service programs for hotels, conference centers, and banquet halls.</p></div>
-      <div class="svc-card"><div class="svc-num">06</div><h3>Food Service & Catering</h3><p>Kitchen towels, aprons, chef coats, bar mops for caterers, commissaries, and food halls. Scaled to your event calendar.</p></div>
-    </div>
-  </div></section>
-
-  <section id="ai"></section>
-  <script src="../js/ai-services-data.js"></script>
-  <script src="../js/ai-services.js"></script>
-  <script>AiServices.init({ city: 'cincinnati' });</script>
-
-  <section class="process" id="process"><div class="process-inner">
-    <div class="stag">How it works</div>
-    <div class="process-title">Four steps. Then forget about it.</div>
-    <div class="steps">
-      <div class="step"><div class="step-n">01</div><h3>Tell us your setup</h3><p>Business type, headcount, what you need. Two-minute form.</p></div>
-      <div class="step"><div class="step-n">02</div><h3>Custom quote</h3><p>Pricing built around your operation. No hidden fees.</p></div>
-      <div class="step"><div class="step-n">03</div><h3>First delivery</h3><p>Fresh inventory on your schedule. Setup is on us.</p></div>
-      <div class="step"><div class="step-n">04</div><h3>Forget about it</h3><p>We show up every week. Pickup, clean, deliver. Handled.</p></div>
-    </div>
-  </div></section>
-
-  <section class="contact" id="contact"><div class="contact-inner">
-    <div>
-      <div class="stag">Get started</div>
-      <div class="contact-hl">Let's build your<br><em>uniform program.</em></div>
-      <p class="contact-body">Tell us about your business. Custom quote back within a few hours — evenings and weekends included.</p>
-      <ul class="promises">
-        <li><span class="pm">i</span><span><strong>No contracts.</strong> We earn your business every delivery.</span></li>
-        <li><span class="pm">ii</span><span><strong>Free setup.</strong> First inventory delivery, no charge.</span></li>
-        <li><span class="pm">iii</span><span><strong>Auto-replacement.</strong> Worn items swapped. No surprise fees.</span></li>
-        <li><span class="pm">iv</span><span><strong>Local and personal.</strong> A real person picks up the phone.</span></li>
-      </ul>
-    </div>
-    <div class="form-wrap">
-      <form id="intakeForm">
-        <div class="form-header"><h3>Request a quote</h3><p>Two minutes. No commitment.</p></div>
-        <div class="form-body">
-          <div class="fg-row">
-            <div class="fg"><label for="name">Name</label><input type="text" id="name" name="name" required placeholder="Mike Brennan"></div>
-            <div class="fg"><label for="email">Email</label><input type="email" id="email" name="email" required placeholder="mike@brennanmfg.com"></div>
-          </div>
-          <div class="fg-row">
-            <div class="fg"><label for="phone">Phone</label><input type="tel" id="phone" name="phone" placeholder="(513) 555-0000"></div>
-            <div class="fg"><label for="btype">Business type</label>
-              <select id="btype" name="btype" required>
-                <option value="">Select...</option>
-                <option value="manufacturing">Manufacturing / Industrial</option>
-                <option value="restaurant">Restaurant / Hospitality</option>
-                <option value="medical">Medical / Healthcare</option>
-                <option value="auto">Auto / Service Shop</option>
-                <option value="hotel">Hotel / Event Venue</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-          <div class="fg"><label for="bname">Business name</label><input type="text" id="bname" name="bname" placeholder="Cincinnati Brewing Co."></div>
-          <div class="fg"><label for="message">What do you need</label><textarea id="message" name="message" required placeholder="50-person shop floor in Norwood. Currently buying uniforms at retail. Looking for a weekly rental program."></textarea></div>
-          <button type="submit" class="form-submit" id="submitBtn">Send request</button>
-          <div class="form-fine">Your information stays between us.</div>
+<!-- ── INTEGRATION ARCHITECTURE ── -->
+<section style="background:#0a0e14">
+  <div class="section-inner">
+    <div class="section-tag">Integration Architecture</div>
+    <div class="section-h2">Plugs into <em>what you already run.</em></div>
+    <p class="section-sub">Designed to layer on top of your existing Salesforce CRM, SAP ERP (GCP), and RSR mobile workflows. No rip-and-replace. No 18-month implementation.</p>
+    <div class="integration">
+      <div class="int-title">Cincinnati Pilot — Data Flow</div>
+      <div class="int-sub">Pilot scope: single branch, simulated data flows, 90-day measurability window</div>
+      <div class="diagram">
+        <div class="d-node">
+          <div class="d-node-icon">📱</div>
+          <div class="d-node-label">RSR Mobile App</div>
+          <div class="d-node-sub">Route briefings, issue capture</div>
         </div>
-      </form>
-      <div class="form-success" id="formSuccess"><h3>We're on it.</h3><p>Custom quote incoming — usually within a few hours.</p></div>
+        <div class="d-arrow">→</div>
+        <div class="d-node">
+          <div class="d-node-icon">☁️</div>
+          <div class="d-node-label">Cintas CRM</div>
+          <div class="d-node-sub">Salesforce</div>
+        </div>
+        <div class="d-arrow">⇄</div>
+        <div class="d-node accent">
+          <div class="d-node-icon">🛡️</div>
+          <div class="d-node-label">Service Shield API</div>
+          <div class="d-node-sub">Cafecito AI Layer</div>
+        </div>
+        <div class="d-arrow">⇄</div>
+        <div class="d-node">
+          <div class="d-node-icon">🗄️</div>
+          <div class="d-node-label">SAP ERP</div>
+          <div class="d-node-sub">GCP · Ops Data</div>
+        </div>
+        <div class="d-arrow">→</div>
+        <div class="d-node accent">
+          <div class="d-node-icon">📊</div>
+          <div class="d-node-label">Branch Manager Dashboard</div>
+          <div class="d-node-sub">Real-time · No login required</div>
+        </div>
+      </div>
     </div>
-  </div></section>
+  </div>
+</section>
 
-  <div class="sticky-cta" id="stickyCta"><div class="sticky-inner">
-    <div class="sticky-text"><strong>laundry service</strong> — uniform & linen, cincinnati</div>
-    <div class="sticky-actions">
-      <a href="tel:+15138225130" class="sticky-phone">(513) 822-5130</a>
-      <a href="#contact" class="sticky-book">Get a quote</a>
+<!-- ── PILOT CTA ── -->
+<section>
+  <div class="section-inner">
+    <div class="pilot-cta">
+      <h2>Ready to run the pilot?</h2>
+      <p>90 days. One Cincinnati branch. $75K–$150K. Measurable churn impact with before-and-after reporting. If the model doesn't move the needle, you don't pay for the next phase.</p>
+      <div class="cta-pills">
+        <div class="cta-pill"><strong>90 days</strong> · Pilot timeline</div>
+        <div class="cta-pill"><strong>1 branch</strong> · Cincinnati</div>
+        <div class="cta-pill"><strong>$75K–$150K</strong> · Pilot budget</div>
+        <div class="cta-pill"><strong>$65M</strong> · Revenue at stake per 1% churn</div>
+      </div>
+      <a href="https://cal.com/cafecito-ai/cintas-pilot" target="_blank" class="btn-primary">Book the Pilot Conversation →</a>
     </div>
-  </div></div>
+  </div>
+</section>
 
-  <footer><div class="footer-inner">
-    <div class="footer-mark">laundry service <span>linen la vida loca.</span></div>
-    <div class="footer-links"><a href="#services">services</a><a href="#ai">ai</a><a href="#process">process</a><a href="#contact">contact</a></div>
-  </div><div class="footer-bottom"><span>&copy; 2025 laundry service</span><span>hamilton / butler / warren county</span></div></footer>
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">Branch Ops Intelligence · Cincinnati Pilot Demo · <span style="color:#4a5568">Demo Mode</span></div>
+    <div class="footer-links">
+      <a href="/laundry/">Platform Home</a>
+      <a href="/laundry/ops/">Ops Hub</a>
+      <a href="/laundry/service-shield/">Service Shield</a>
+    </div>
+  </div>
+</footer>
 
-  <script>
-    window.addEventListener('scroll', () => {
-      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
-      const s = document.getElementById('stickyCta'), c = document.getElementById('contact');
-      s.classList.toggle('visible', window.scrollY > 600 && c.getBoundingClientRect().top > window.innerHeight);
-    });
-    document.getElementById('intakeForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const b = document.getElementById('submitBtn'); b.disabled = true; b.textContent = 'sending...';
-      const d = { name: document.getElementById('name').value, email: document.getElementById('email').value, phone: document.getElementById('phone').value, business_type: document.getElementById('btype').value, business_name: document.getElementById('bname').value, message: document.getElementById('message').value, source: 'website_cincinnati', timestamp: new Date().toISOString() };
-      try { await fetch('/laundry/api/intake', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(d) }); } catch (err) {}
-      document.getElementById('intakeForm').style.display = 'none';
-      document.getElementById('formSuccess').style.display = 'block';
-    });
-    document.querySelectorAll('a[href^="#"]').forEach(a => { a.addEventListener('click', e => { e.preventDefault(); document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' }); }); });
-  </script>
-  <script src="/laundry/js/chat-widget.js" defer></script>
 </body>
 </html>

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Churn Risk Scoring — Cincinnati Pilot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #161e2d; --dark2: #1e2840; --dark3: #2c3750;
+      --blue: #003DA5; --text: #f0f3f6; --muted: #8899a6;
+      --red: #e53935; --orange: #ff9800; --yellow: #ffc107; --green: #43a047;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',sans-serif; background:var(--dark); color:var(--text); -webkit-font-smoothing:antialiased; }
+
+    nav { padding:0 clamp(1rem,4vw,2rem); background:rgba(22,30,45,0.95); border-bottom:1px solid var(--dark3); position:sticky; top:0; z-index:200; backdrop-filter:blur(16px); }
+    .nav-inner { max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:60px; }
+    .nav-brand { font-size:13px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:6px; }
+    .nav-brand span { color:var(--blue); }
+    .nav-links { display:flex; gap:20px; align-items:center; }
+    .nav-links a { font-size:12px; color:var(--muted); text-decoration:none; transition:color 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--text); }
+    .demo-badge { font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); background:var(--dark3); padding:3px 8px; border-radius:3px; }
+
+    .page { max-width:1280px; margin:0 auto; padding:clamp(1.5rem,4vw,3rem) clamp(1rem,3vw,2rem); }
+
+    .hero-section { margin-bottom:3rem; }
+    .page-tag { font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); margin-bottom:12px; }
+    .hero-headline { font-family:'Instrument Serif',serif; font-size:clamp(2rem,4vw,3.5rem); font-weight:400; line-height:1.0; margin-bottom:16px; }
+    .hero-headline em { font-style:italic; color:var(--muted); }
+    .hero-sub { font-size:15px; color:var(--muted); max-width:640px; line-height:1.7; }
+
+    .roi-banner { background:var(--dark2); border:1px solid var(--dark3); border-left:4px solid var(--blue); border-radius:10px; padding:clamp(1.5rem,4vw,2.5rem); margin-bottom:2rem; display:flex; align-items:center; gap:clamp(1.5rem,4vw,3rem); flex-wrap:wrap; }
+    .roi-num { font-family:'Instrument Serif',serif; font-size:clamp(3rem,7vw,5.5rem); color:var(--text); line-height:1; flex-shrink:0; }
+    .roi-num span { color:var(--blue); }
+    .roi-text h3 { font-size:17px; font-weight:600; margin-bottom:8px; }
+    .roi-text p { font-size:14px; color:var(--muted); line-height:1.6; }
+    .roi-math { margin-top:12px; font-size:13px; color:var(--muted); }
+    .roi-math strong { color:var(--text); }
+
+    .stats-row { display:grid; grid-template-columns:repeat(6,1fr); gap:12px; margin-bottom:2rem; }
+    .stat-c { background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:16px; text-align:center; }
+    .stat-c .val { font-size:26px; font-weight:700; line-height:1; margin-bottom:4px; }
+    .stat-c .lbl { font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; }
+    .val-red { color:var(--red); } .val-orange { color:var(--orange); }
+    .val-yellow { color:var(--yellow); } .val-green { color:var(--green); }
+    .val-blue { color:var(--blue); }
+
+    /* Filter bar */
+    .filter-bar { background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:14px 16px; margin-bottom:12px; display:flex; flex-wrap:wrap; gap:16px; align-items:center; }
+    .filter-group { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .filter-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+    .filter-pill { font-size:11px; font-weight:600; padding:4px 10px; border-radius:20px; border:1px solid var(--dark3); background:transparent; color:var(--muted); cursor:pointer; transition:all 0.15s; white-space:nowrap; }
+    .filter-pill:hover { border-color:var(--blue); color:var(--text); }
+    .filter-pill.active { background:var(--blue); border-color:var(--blue); color:#fff; }
+    .filter-divider { width:1px; height:24px; background:var(--dark3); }
+    .sort-select { font-size:11px; color:var(--text); background:var(--dark3); border:1px solid var(--dark3); border-radius:6px; padding:4px 8px; cursor:pointer; }
+
+    /* Table */
+    .table-wrap { background:var(--dark2); border:1px solid var(--dark3); border-radius:10px; overflow:hidden; margin-bottom:2rem; }
+    .table-header { padding:16px 20px; border-bottom:1px solid var(--dark3); display:flex; justify-content:space-between; align-items:center; }
+    .table-title { font-size:14px; font-weight:600; }
+    .table-sub { font-size:12px; color:var(--muted); }
+    .table-count { font-size:12px; color:var(--muted); }
+    table { width:100%; border-collapse:collapse; }
+    th { font-size:10px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); padding:12px 16px; text-align:left; border-bottom:1px solid var(--dark3); white-space:nowrap; }
+    td { padding:12px 16px; font-size:13px; border-bottom:1px solid rgba(36,42,51,0.5); vertical-align:middle; }
+    tr:last-child td { border-bottom:none; }
+    tr.clickable-row { cursor:pointer; }
+    tr.clickable-row:hover td { background:rgba(255,255,255,0.03); }
+    .account-name { font-weight:600; font-size:13px; }
+    .account-industry { font-size:11px; color:var(--muted); margin-top:2px; }
+    .churn-bar-wrap { display:flex; align-items:center; gap:8px; min-width:120px; }
+    .churn-bar-bg { flex:1; height:4px; background:var(--dark3); border-radius:2px; }
+    .churn-bar-fill { height:100%; border-radius:2px; }
+    .churn-pct { font-size:12px; font-weight:700; min-width:36px; text-align:right; }
+    .tier-badge { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 8px; border-radius:3px; white-space:nowrap; }
+    .tier-critical { background:rgba(229,57,53,0.15); color:var(--red); }
+    .tier-elevated { background:rgba(255,152,0,0.15); color:var(--orange); }
+    .tier-monitor { background:rgba(255,193,7,0.15); color:var(--yellow); }
+    .tier-healthy { background:rgba(67,160,71,0.15); color:var(--green); }
+    .risk-tags { display:flex; gap:4px; flex-wrap:wrap; }
+    .risk-tag { font-size:10px; color:var(--muted); background:var(--dark3); padding:2px 6px; border-radius:3px; white-space:nowrap; }
+    .rsr-name { font-size:12px; color:var(--muted); }
+    .days-num { font-size:13px; font-weight:600; }
+    .days-na { color:var(--muted); }
+
+    /* Drawer overlay */
+    .drawer-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:300; opacity:0; pointer-events:none; transition:opacity 0.25s; }
+    .drawer-overlay.open { opacity:1; pointer-events:all; }
+    .drawer { position:fixed; top:0; right:0; bottom:0; width:420px; max-width:100vw; background:#1a1f26; border-left:1px solid #242a33; z-index:301; transform:translateX(100%); transition:transform 0.3s cubic-bezier(0.16,1,0.3,1); overflow-y:auto; }
+    .drawer.open { transform:translateX(0); }
+    .drawer-header { padding:20px; border-bottom:1px solid #242a33; display:flex; justify-content:space-between; align-items:flex-start; position:sticky; top:0; background:#1a1f26; z-index:10; }
+    .drawer-close { background:none; border:none; color:var(--muted); cursor:pointer; font-size:18px; padding:2px 6px; border-radius:4px; transition:color 0.15s; }
+    .drawer-close:hover { color:var(--text); }
+    .drawer-body { padding:20px; }
+
+    /* Drawer content elements */
+    .d-account-name { font-size:18px; font-weight:700; margin-bottom:4px; }
+    .d-badges { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px; }
+    .d-badge { font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:3px 8px; border-radius:3px; }
+    .d-industry { background:var(--dark3); color:var(--muted); }
+    .d-territory { background:rgba(0,61,165,0.15); color:#6b9fd4; }
+    .gauge-wrap { margin-bottom:20px; }
+    .gauge-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .gauge-bar { height:8px; background:var(--dark3); border-radius:4px; overflow:hidden; margin-bottom:4px; }
+    .gauge-fill { height:100%; border-radius:4px; transition:width 0.5s; }
+    .gauge-val { font-size:24px; font-weight:700; text-align:center; margin-bottom:4px; }
+    .score-trio { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-bottom:16px; }
+    .score-item { background:var(--dark3); border-radius:8px; padding:10px; text-align:center; }
+    .score-item-lbl { font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:6px; }
+    .score-bar-wrap { height:4px; background:#1a1f26; border-radius:2px; overflow:hidden; margin-bottom:4px; }
+    .score-bar-fill { height:100%; border-radius:2px; }
+    .score-item-val { font-size:14px; font-weight:700; }
+    .d-section { margin-bottom:16px; }
+    .d-section-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .d-tag-list { display:flex; flex-wrap:wrap; gap:6px; }
+    .d-tag { font-size:11px; color:var(--muted); background:var(--dark3); padding:3px 8px; border-radius:4px; }
+    .d-meta-row { display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid #242a33; font-size:13px; }
+    .d-meta-row:last-child { border-bottom:none; }
+    .d-meta-label { color:var(--muted); }
+    .d-meta-val { font-weight:600; }
+    .d-competitive { background:rgba(229,57,53,0.08); border:1px solid rgba(229,57,53,0.25); border-radius:8px; padding:12px; margin-bottom:16px; }
+    .d-competitive-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--red); margin-bottom:4px; }
+    .d-competitive-text { font-size:13px; color:#ef5350; line-height:1.5; }
+    .d-upsell { background:rgba(0,61,165,0.08); border:1px solid rgba(0,61,165,0.2); border-radius:8px; padding:12px; margin-bottom:16px; }
+    .d-upsell-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#6b9fd4; margin-bottom:4px; }
+    .d-upsell-text { font-size:13px; color:#90bef0; line-height:1.5; }
+    .d-notes { background:var(--dark3); border-radius:8px; padding:12px; font-size:13px; color:var(--muted); line-height:1.65; margin-bottom:16px; }
+    .d-action-box { border-radius:8px; padding:14px; margin-bottom:16px; }
+    .d-action-box.this-visit { background:rgba(229,57,53,0.08); border:1px solid rgba(229,57,53,0.25); }
+    .d-action-box.this-week { background:rgba(255,152,0,0.08); border:1px solid rgba(255,152,0,0.25); }
+    .d-action-box.this-month { background:rgba(0,61,165,0.08); border:1px solid rgba(0,61,165,0.2); }
+    .d-action-label { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:6px; }
+    .d-action-text { font-size:13px; line-height:1.6; }
+    .d-action-deadline { display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:2px 8px; border-radius:3px; margin-left:8px; }
+    .deadline-this-visit { background:rgba(229,57,53,0.2); color:var(--red); }
+    .deadline-this-week { background:rgba(255,152,0,0.2); color:var(--orange); }
+    .deadline-this-month { background:rgba(0,61,165,0.15); color:#6b9fd4; }
+    .d-footer { border-top:1px solid #242a33; padding-top:14px; font-size:12px; color:var(--muted); display:flex; justify-content:space-between; }
+
+    /* ROI Calculator */
+    .calc-section { background:var(--dark2); border:1px solid var(--dark3); border-radius:10px; padding:clamp(1.5rem,4vw,2.5rem); margin-bottom:2rem; }
+    .calc-title { font-size:16px; font-weight:600; margin-bottom:4px; }
+    .calc-sub { font-size:13px; color:var(--muted); margin-bottom:28px; }
+    .calc-grid { display:grid; grid-template-columns:1fr 1fr; gap:32px; }
+    .calc-control { margin-bottom:24px; }
+    .calc-label { font-size:12px; font-weight:600; color:var(--muted); letter-spacing:0.06em; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; }
+    .calc-label span { color:var(--text); font-size:14px; font-weight:700; letter-spacing:0; text-transform:none; }
+    input[type="range"] { width:100%; height:4px; background:var(--dark3); border-radius:2px; outline:none; -webkit-appearance:none; cursor:pointer; }
+    input[type="range"]::-webkit-slider-thumb { -webkit-appearance:none; width:16px; height:16px; border-radius:50%; background:var(--blue); cursor:pointer; }
+    .calc-results { background:var(--dark); border:1px solid var(--dark3); border-radius:8px; padding:clamp(1rem,3vw,2rem); }
+    .calc-result-row { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--dark3); }
+    .calc-result-row:last-child { border-bottom:none; }
+    .cr-label { font-size:13px; color:var(--muted); }
+    .cr-value { font-size:18px; font-weight:700; }
+    .cr-value.big { font-size:24px; color:var(--green); }
+    .static-callout { background:rgba(0,61,165,0.08); border:1px solid rgba(0,61,165,0.2); border-radius:8px; padding:16px; margin-top:20px; font-size:13px; color:var(--muted); line-height:1.6; }
+    .static-callout strong { color:var(--text); }
+
+    footer { border-top:1px solid var(--dark3); padding:20px clamp(1rem,4vw,2rem); margin-top:2rem; }
+    .footer-inner { max-width:1280px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+    .footer-text { font-size:12px; color:#4a5568; }
+    .footer-links { display:flex; gap:16px; }
+    .footer-links a { font-size:12px; color:#4a5568; text-decoration:none; }
+    .footer-links a:hover { color:var(--muted); }
+
+    @media(max-width:1000px) { .stats-row { grid-template-columns:repeat(3,1fr); } }
+    @media(max-width:900px) { .calc-grid { grid-template-columns:1fr; } .drawer { width:100vw; } }
+    @media(max-width:700px) { .roi-banner { flex-direction:column; } table { font-size:12px; } th,td { padding:10px 10px; } .churn-bar-wrap { min-width:80px; } }
+    @media(max-width:500px) { .stats-row { grid-template-columns:repeat(2,1fr); } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="/laundry/" class="nav-brand"><span>Branch Ops</span> Intel</a>
+    <div class="demo-badge">Demo Mode</div>
+    <div class="nav-links">
+      <a href="/laundry/service-shield/">Service Shield</a>
+      <a href="/laundry/churn-risk/" class="active">Churn Risk</a>
+      <a href="/laundry/route-intel/">Route Intel</a>
+      <a href="/laundry/rep-coaching/">Rep Coaching</a>
+      <a href="/laundry/cincinnati/">Pilot Overview</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Drawer Overlay -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="accountDrawer">
+  <div class="drawer-header">
+    <div id="drawerTitle" style="font-size:15px;font-weight:600">Account Detail</div>
+    <button class="drawer-close" onclick="closeDrawer()">✕</button>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<div class="page">
+  <div class="hero-section">
+    <div class="page-tag">Predictive Churn Scoring · Cincinnati Pilot</div>
+    <div class="hero-headline">The accounts that are about to leave.<br><em>90 days before they do.</em></div>
+    <p class="hero-sub">Every account scored daily. Contributing factors surfaced automatically. RSRs notified before the customer calls to cancel. This is the model that turns churn from a lagging metric into a leading one.</p>
+  </div>
+
+  <div class="roi-banner">
+    <div class="roi-num">$<span>65</span>M</div>
+    <div class="roi-text">
+      <h3>In preserved annual revenue per 1% churn reduction.</h3>
+      <p>In Cintas's Rental division. The math isn't aspirational — it's arithmetic. This dashboard shows which accounts are driving that number right now.</p>
+      <div class="roi-math">Preventing <strong>10 cancellations per branch per year</strong> at <strong>$50K avg contract value</strong> = <strong style="color:var(--green)">$500K preserved per branch</strong> · Across <strong>460 branches: $230M</strong></div>
+    </div>
+  </div>
+
+  <div class="stats-row" id="statsRow">
+    <div class="stat-c"><div class="val val-red" id="statCritical">3</div><div class="lbl">Critical Risk</div></div>
+    <div class="stat-c"><div class="val val-orange" id="statElevated">8</div><div class="lbl">Elevated Risk</div></div>
+    <div class="stat-c"><div class="val val-blue" id="statAtRisk">$331K</div><div class="lbl">Revenue at Risk</div></div>
+    <div class="stat-c"><div class="val val-green" id="statSaveable">$166K</div><div class="lbl">Saveable w/ Intervention</div></div>
+    <div class="stat-c"><div class="val val-blue" id="statUpsellCount">14</div><div class="lbl">Upsell Opportunities</div></div>
+    <div class="stat-c"><div class="val val-green" id="statUpsellRevenue">$127K</div><div class="lbl">Upsell Revenue Potential</div></div>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">Territory</span>
+      <button class="filter-pill active" data-filter="territory" data-val="">All</button>
+      <button class="filter-pill" data-filter="territory" data-val="Downtown / OTR">Downtown/OTR</button>
+      <button class="filter-pill" data-filter="territory" data-val="Northside / Clifton">Northside</button>
+      <button class="filter-pill" data-filter="territory" data-val="Kenwood / Hyde Park">Kenwood</button>
+      <button class="filter-pill" data-filter="territory" data-val="Blue Ash / Mason">Blue Ash</button>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Risk</span>
+      <button class="filter-pill active" data-filter="tier" data-val="">All</button>
+      <button class="filter-pill" data-filter="tier" data-val="critical">Critical</button>
+      <button class="filter-pill" data-filter="tier" data-val="elevated">Elevated</button>
+      <button class="filter-pill" data-filter="tier" data-val="monitor">Monitor</button>
+      <button class="filter-pill" data-filter="tier" data-val="healthy">Healthy</button>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Industry</span>
+      <button class="filter-pill active" data-filter="industry" data-val="">All</button>
+      <button class="filter-pill" data-filter="industry" data-val="medical">Medical</button>
+      <button class="filter-pill" data-filter="industry" data-val="restaurant">Restaurant</button>
+      <button class="filter-pill" data-filter="industry" data-val="hospitality">Hospitality</button>
+      <button class="filter-pill" data-filter="industry" data-val="fitness">Fitness</button>
+      <button class="filter-pill" data-filter="industry" data-val="education">Education</button>
+    </div>
+    <div class="filter-divider"></div>
+    <div class="filter-group">
+      <span class="filter-label">Sort</span>
+      <select class="sort-select" id="sortSelect">
+        <option value="churn_desc">Churn Risk ↓</option>
+        <option value="value_desc">Contract Value ↓</option>
+        <option value="days_asc">Days to Action ↑</option>
+        <option value="contact_asc">Last Contact ↑</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header">
+      <div>
+        <div class="table-title">Churn Risk Dashboard</div>
+        <div class="table-sub">Cincinnati Branch · <span id="tableCount">30</span> accounts · Click any row for details</div>
+      </div>
+    </div>
+    <div style="overflow-x:auto">
+      <table id="churnTable">
+        <thead>
+          <tr>
+            <th>Account</th>
+            <th>Churn Probability</th>
+            <th>Risk Tier</th>
+            <th>Risk Factors</th>
+            <th>Days to Action</th>
+            <th>Annual Value</th>
+            <th>RSR</th>
+          </tr>
+        </thead>
+        <tbody id="churnBody">
+          <tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">Loading accounts...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ROI Calculator -->
+  <div class="calc-section">
+    <div class="calc-title">ROI Calculator</div>
+    <div class="calc-sub">Adjust the parameters to see the revenue impact of early churn intervention.</div>
+    <div class="calc-grid">
+      <div>
+        <div class="calc-control">
+          <div class="calc-label">Accounts at critical risk <span id="acctCountLabel">10</span></div>
+          <input type="range" id="acctCount" min="1" max="50" value="10">
+        </div>
+        <div class="calc-control">
+          <div class="calc-label">Avg annual contract value <span id="contractValLabel">$50,000</span></div>
+          <input type="range" id="contractVal" min="10000" max="200000" step="5000" value="50000">
+        </div>
+        <div class="calc-control">
+          <div class="calc-label">Intervention success rate <span id="successRateLabel">50%</span></div>
+          <input type="range" id="successRate" min="10" max="90" value="50">
+        </div>
+      </div>
+      <div class="calc-results">
+        <div class="calc-result-row">
+          <div class="cr-label">Revenue at risk</div>
+          <div class="cr-value" id="revenueAtRisk">$500,000</div>
+        </div>
+        <div class="calc-result-row">
+          <div class="cr-label">Accounts saved (est.)</div>
+          <div class="cr-value" id="accountsSaved">5</div>
+        </div>
+        <div class="calc-result-row">
+          <div class="cr-label">Revenue preserved</div>
+          <div class="cr-value big" id="revenueSaved">$250,000</div>
+        </div>
+        <div class="static-callout">
+          Across <strong>460 branches</strong>, preventing <strong>10 cancellations per branch per year</strong> at <strong>$50K avg contract value</strong> = <strong style="color:var(--green)">$230M in preserved revenue</strong> annually.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-text">Churn Risk Scoring · Cincinnati Pilot Demo · <a href="/laundry/" style="color:inherit">Platform Home</a></div>
+    <div class="footer-links">
+      <a href="/laundry/service-shield/">Service Shield</a>
+      <a href="/laundry/rep-coaching/">Rep Coaching</a>
+      <a href="/laundry/cincinnati/">Pilot Overview</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const UPSELL_LABELS = { mats: 'Floor Mats', restroom: 'Restroom Supply', first_aid: 'First Aid Cabinets', fire_protection: 'Fire Protection' };
+const UPSELL_VALUES = { mats: 9000, restroom: 8000, first_aid: 6000, fire_protection: 15000 };
+
+function fmt(n) { return '$' + Math.round(n).toLocaleString(); }
+function tierColor(tier) {
+  return { critical:'#e53935', elevated:'#ff9800', monitor:'#ffc107', healthy:'#43a047' }[tier] || '#8899a6';
+}
+function scoreColor(s) {
+  if (s >= 80) return '#43a047';
+  if (s >= 60) return '#ffc107';
+  if (s >= 40) return '#ff9800';
+  return '#e53935';
+}
+function riskLabel(r) { return r.replace(/_/g,' '); }
+function daysLabel(d) {
+  if (!d) return '<span class="days-na">—</span>';
+  const cls = d <= 30 ? 'val-red' : d <= 60 ? 'val-orange' : '';
+  return `<span class="days-num ${cls}">${d}d</span>`;
+}
+function deadlineClass(d) {
+  return { this_visit: 'deadline-this-visit', this_week: 'deadline-this-week', this_month: 'deadline-this-month' }[d] || '';
+}
+function deadlineLabel(d) {
+  return { this_visit: 'This Visit', this_week: 'This Week', this_month: 'This Month' }[d] || d;
+}
+function actionBoxClass(d) {
+  return { this_visit: 'this-visit', this_week: 'this-week', this_month: 'this-month' }[d] || 'this-month';
+}
+function actionColor(d) {
+  return { this_visit: '#e53935', this_week: '#ff9800', this_month: '#6b9fd4' }[d] || '#6b9fd4';
+}
+
+// State
+let allAccounts = [];
+let activeFilters = { territory: '', tier: '', industry: '' };
+let sortMode = 'churn_desc';
+
+function applyFiltersAndRender() {
+  let filtered = allAccounts.filter(a => {
+    if (activeFilters.territory && a.territory !== activeFilters.territory) return false;
+    if (activeFilters.tier && a.risk_tier !== activeFilters.tier) return false;
+    if (activeFilters.industry && a.industry !== activeFilters.industry) return false;
+    return true;
+  });
+
+  // Sort
+  if (sortMode === 'churn_desc') filtered.sort((a, b) => b.churn_probability - a.churn_probability);
+  else if (sortMode === 'value_desc') filtered.sort((a, b) => b.contract_value_annual - a.contract_value_annual);
+  else if (sortMode === 'days_asc') filtered.sort((a, b) => (a.days_to_likely_action ?? 999) - (b.days_to_likely_action ?? 999));
+  else if (sortMode === 'contact_asc') filtered.sort((a, b) => (a.last_rsr_contact_days ?? 0) - (b.last_rsr_contact_days ?? 0));
+
+  document.getElementById('tableCount').textContent = filtered.length;
+
+  const tbody = document.getElementById('churnBody');
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:32px">No accounts match current filters.</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = filtered.map(a => {
+    const pct = Math.round(a.churn_probability * 100);
+    const barColor = tierColor(a.risk_tier);
+    return `<tr class="clickable-row" onclick="openDrawer('${a.id}')">
+      <td>
+        <div class="account-name">${a.name}</div>
+        <div class="account-industry">${a.industry} · ${a.territory || ''}</div>
+      </td>
+      <td>
+        <div class="churn-bar-wrap">
+          <div class="churn-bar-bg"><div class="churn-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+          <div class="churn-pct" style="color:${barColor}">${pct}%</div>
+        </div>
+      </td>
+      <td><span class="tier-badge tier-${a.risk_tier}">${a.risk_tier}</span></td>
+      <td><div class="risk-tags">${(a.risk_factors||[]).slice(0,3).map(r => `<span class="risk-tag">${riskLabel(r)}</span>`).join('')}</div></td>
+      <td>${daysLabel(a.days_to_likely_action)}</td>
+      <td style="font-size:13px;font-weight:600">${fmt(a.contract_value_annual)}</td>
+      <td><span class="rsr-name">${a.assigned_rsr}</span></td>
+    </tr>`;
+  }).join('');
+}
+
+function openDrawer(id) {
+  const a = allAccounts.find(x => x.id === id);
+  if (!a) return;
+
+  const pct = Math.round(a.churn_probability * 100);
+  const tierCol = tierColor(a.risk_tier);
+  const upsellText = a.upsell_opportunity
+    ? `${UPSELL_LABELS[a.upsell_opportunity] || a.upsell_opportunity} — est. ${fmt(UPSELL_VALUES[a.upsell_opportunity] || 7000)}/yr`
+    : null;
+
+  document.getElementById('drawerTitle').textContent = a.name;
+  document.getElementById('drawerBody').innerHTML = `
+    <div class="d-account-name">${a.name}</div>
+    <div class="d-badges">
+      <span class="d-badge d-industry">${a.industry}</span>
+      <span class="d-badge d-territory">${a.territory}</span>
+      <span class="tier-badge tier-${a.risk_tier}">${a.risk_tier}</span>
+    </div>
+
+    <div class="gauge-wrap">
+      <div class="gauge-label">Churn Probability</div>
+      <div class="gauge-val" style="color:${tierCol}">${pct}%</div>
+      <div class="gauge-bar"><div class="gauge-fill" style="width:${pct}%;background:${tierCol}"></div></div>
+      ${a.days_to_likely_action ? `<div style="font-size:12px;color:${tierCol};text-align:center;margin-top:4px">Likely action in ~${a.days_to_likely_action} days</div>` : ''}
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-label">Service Scores</div>
+      <div class="score-trio">
+        ${[['Delivery', a.delivery_score], ['Quality', a.quality_score], ['Relationship', a.relationship_score]].map(([lbl, score]) => `
+          <div class="score-item">
+            <div class="score-item-lbl">${lbl}</div>
+            <div class="score-bar-wrap"><div class="score-bar-fill" style="width:${score}%;background:${scoreColor(score)}"></div></div>
+            <div class="score-item-val" style="color:${scoreColor(score)}">${score}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-label">Order Volume</div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--dark3);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:20px">${a.order_volume_trend === 'declining' ? '📉' : a.order_volume_trend === 'growing' ? '📈' : '➡️'}</div>
+        <div>
+          <div style="font-size:13px;font-weight:600;color:${a.order_volume_trend === 'declining' ? 'var(--red)' : a.order_volume_trend === 'growing' ? 'var(--green)' : 'var(--muted)'}">
+            ${a.order_volume_trend} ${a.order_volume_change_pct > 0 ? '+' : ''}${a.order_volume_change_pct}%
+          </div>
+          <div style="font-size:11px;color:var(--muted)">vs. prior period</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-section">
+      <div class="d-section-label">Contract Details</div>
+      <div style="background:var(--dark3);border-radius:8px;overflow:hidden;">
+        <div class="d-meta-row" style="padding:8px 12px;"><span class="d-meta-label">Annual Value</span><span class="d-meta-val">${fmt(a.contract_value_annual)}</span></div>
+        <div class="d-meta-row" style="padding:8px 12px;"><span class="d-meta-label">Renewal Date</span><span class="d-meta-val">${a.contract_renewal_date || '—'}</span></div>
+        <div class="d-meta-row" style="padding:8px 12px;"><span class="d-meta-label">Contract Age</span><span class="d-meta-val">${a.contract_age_months} months</span></div>
+        <div class="d-meta-row" style="padding:8px 12px;border-bottom:none;"><span class="d-meta-label">Complaints (open)</span><span class="d-meta-val" style="color:${a.complaint_count > 0 ? 'var(--red)' : 'var(--muted)'}">${a.complaint_count}</span></div>
+      </div>
+    </div>
+
+    ${(a.risk_factors || []).length > 0 ? `
+    <div class="d-section">
+      <div class="d-section-label">Risk Factors</div>
+      <div class="d-tag-list">${a.risk_factors.map(r => `<span class="d-tag">${riskLabel(r)}</span>`).join('')}</div>
+    </div>` : ''}
+
+    ${a.competitive_signal && a.competitive_signal_detail ? `
+    <div class="d-competitive">
+      <div class="d-competitive-label">⚡ Competitive Signal Detected</div>
+      <div class="d-competitive-text">${a.competitive_signal_detail}</div>
+    </div>` : ''}
+
+    ${upsellText ? `
+    <div class="d-upsell">
+      <div class="d-upsell-label">📦 Cross-Sell Opportunity</div>
+      <div class="d-upsell-text">${upsellText}</div>
+    </div>` : ''}
+
+    <div class="d-section">
+      <div class="d-section-label">Account Contact</div>
+      <div style="background:var(--dark3);border-radius:8px;padding:10px 12px;">
+        <div style="font-size:14px;font-weight:600">${a.account_contact_name || '—'}</div>
+        <div style="font-size:12px;color:var(--muted)">${a.account_contact_title || ''}</div>
+      </div>
+    </div>
+
+    ${a.notes ? `<div class="d-notes">💡 ${a.notes}</div>` : ''}
+
+    <div class="d-action-box ${actionBoxClass(a.recommended_action_deadline)}">
+      <div class="d-action-label" style="color:${actionColor(a.recommended_action_deadline)}">
+        Recommended Action
+        <span class="d-action-deadline ${deadlineClass(a.recommended_action_deadline)}">${deadlineLabel(a.recommended_action_deadline)}</span>
+      </div>
+      <div class="d-action-text" style="color:var(--text)">${a.recommended_action}</div>
+    </div>
+
+    <div class="d-footer">
+      <span>Assigned RSR: <strong style="color:var(--text)">${a.assigned_rsr}</strong></span>
+      <span>Last contact: <strong style="color:${(a.last_rsr_contact_days || 0) > 14 ? 'var(--red)' : 'var(--text)'}"> ${a.last_rsr_contact_days ?? '—'}d ago</strong></span>
+    </div>
+  `;
+
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('accountDrawer').classList.add('open');
+}
+
+function closeDrawer() {
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('accountDrawer').classList.remove('open');
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDrawer(); });
+
+// Filter pills
+document.querySelectorAll('.filter-pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const filterType = pill.dataset.filter;
+    document.querySelectorAll(`.filter-pill[data-filter="${filterType}"]`).forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    activeFilters[filterType] = pill.dataset.val;
+    applyFiltersAndRender();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  sortMode = e.target.value;
+  applyFiltersAndRender();
+});
+
+async function loadData() {
+  try {
+    const res = await fetch('/laundry/api/churn-risk');
+    const data = await res.json();
+    allAccounts = data.accounts;
+    const summary = data.branch_summary;
+
+    document.getElementById('statCritical').textContent = summary.critical_accounts;
+    document.getElementById('statElevated').textContent = summary.elevated_accounts;
+    document.getElementById('statAtRisk').textContent = fmt(summary.total_revenue_at_risk);
+    document.getElementById('statSaveable').textContent = fmt(summary.revenue_saveable_with_intervention);
+    document.getElementById('statUpsellCount').textContent = summary.upsell_opportunities_total;
+    document.getElementById('statUpsellRevenue').textContent = fmt(summary.upsell_revenue_potential);
+
+    applyFiltersAndRender();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('churnBody').innerHTML = '<tr><td colspan="7" style="text-align:center;color:#8899a6;padding:32px">Using demo data — API loading</td></tr>';
+  }
+}
+
+// Calculator
+function updateCalc() {
+  const count = parseInt(document.getElementById('acctCount').value);
+  const val = parseInt(document.getElementById('contractVal').value);
+  const rate = parseInt(document.getElementById('successRate').value) / 100;
+  document.getElementById('acctCountLabel').textContent = count;
+  document.getElementById('contractValLabel').textContent = fmt(val);
+  document.getElementById('successRateLabel').textContent = Math.round(rate * 100) + '%';
+  const atRisk = count * val;
+  const saved = Math.round(count * rate);
+  const revenue = saved * val;
+  document.getElementById('revenueAtRisk').textContent = fmt(atRisk);
+  document.getElementById('accountsSaved').textContent = saved;
+  document.getElementById('revenueSaved').textContent = fmt(revenue);
+}
+['acctCount','contractVal','successRate'].forEach(id => {
+  document.getElementById(id).addEventListener('input', updateCalc);
+});
+updateCalc();
+loadData();
+</script>
+</body>
+</html>

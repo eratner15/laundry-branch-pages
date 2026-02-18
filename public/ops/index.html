@@ -3,155 +3,300 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Operations Hub — Linen & Uniform Services</title>
+  <title>Branch Operations Command Center — Cincinnati Pilot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --blue: #003DA5; --blue-light: #0052CC; --dark: #0f1419; --dark2: #1a1f26; --dark3: #242a33;
+      --blue: #003DA5; --blue-light: #0052CC; --dark: #161e2d; --dark2: #1e2840; --dark3: #2c3750;
       --gray: #8899a6; --light: #e1e8ed; --white: #ffffff;
-      --red: #dc2626; --amber: #f59e0b; --green: #16a34a; --coral: #E07A5F;
+      --red: #e53935; --amber: #ff9800; --green: #43a047; --yellow: #ffc107;
     }
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', -apple-system, sans-serif; background: var(--dark); color: var(--white); -webkit-font-smoothing: antialiased; }
-    
-    nav { padding: 16px 32px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dark3); }
-    .logo { font-size: 14px; font-weight: 600; letter-spacing: 0.05em; color: var(--gray); text-transform: uppercase; }
+
+    nav { padding: 0 clamp(1rem,4vw,2rem); display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--dark3); background:rgba(22,30,45,0.97); position:sticky; top:0; z-index:100; }
+    .nav-inner-flex { max-width:1200px; margin:0 auto; width:100%; display:flex; align-items:center; justify-content:space-between; height:60px; }
+    .logo { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--gray); text-transform: uppercase; display:flex; align-items:center; gap:8px; }
     .logo span { color: var(--blue); }
-    .nav-links a { color: var(--gray); text-decoration: none; font-size: 13px; margin-left: 24px; transition: color 0.2s; }
+    .pilot-banner { font-size:10px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:#003DA5; background:rgba(0,61,165,0.12); border:1px solid rgba(0,61,165,0.25); padding:3px 10px; border-radius:3px; }
+    .nav-links { display:flex; gap:20px; align-items:center; }
+    .nav-links a { color: var(--gray); text-decoration: none; font-size: 12px; transition: color 0.2s; }
     .nav-links a:hover { color: var(--white); }
     .nav-links a.active { color: var(--white); font-weight: 500; }
+    .demo-badge { font-size:9px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gray); background:var(--dark3); padding:3px 8px; border-radius:3px; }
 
-    .hero { max-width: 900px; margin: 0 auto; padding: 80px 32px 40px; text-align: center; }
-    .hero h1 { font-size: clamp(28px, 4vw, 44px); font-weight: 700; line-height: 1.15; margin-bottom: 16px; }
-    .hero h1 span { color: var(--blue); }
-    .hero p { font-size: 17px; color: var(--gray); max-width: 600px; margin: 0 auto 32px; line-height: 1.6; }
-    
-    .phone-cta { display: inline-flex; align-items: center; gap: 12px; background: var(--blue); color: white; padding: 16px 32px; border-radius: 12px; font-size: 22px; font-weight: 700; text-decoration: none; transition: transform 0.15s, box-shadow 0.15s; letter-spacing: 0.02em; }
-    .phone-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,61,165,0.4); }
-    .phone-cta .pulse { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-    .phone-sub { font-size: 13px; color: var(--gray); margin-top: 12px; }
-    
-    .stats-bar { max-width: 900px; margin: 40px auto; padding: 0 32px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; }
-    .stat-card { background: var(--dark2); border: 1px solid var(--dark3); border-radius: 10px; padding: 20px; text-align: center; }
-    .stat-card .number { font-size: 28px; font-weight: 700; margin-bottom: 4px; }
-    .stat-card .label { font-size: 12px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.06em; }
-    .stat-card .number.hot { color: var(--red); }
-    .stat-card .number.warm { color: var(--amber); }
-    .stat-card .number.green { color: var(--green); }
-    .stat-card .number.blue { color: var(--blue); }
+    .page { max-width:1200px; margin:0 auto; padding:clamp(1.5rem,3vw,2.5rem) clamp(1rem,3vw,2rem); }
 
-    .solutions { max-width: 900px; margin: 60px auto; padding: 0 32px; }
-    .solutions h2 { font-size: 22px; margin-bottom: 24px; font-weight: 600; }
-    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .solution-card { background: var(--dark2); border: 1px solid var(--dark3); border-radius: 10px; padding: 24px; transition: border-color 0.2s; }
-    .solution-card:hover { border-color: var(--blue); }
-    .solution-num { font-size: 12px; color: var(--blue); font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px; }
-    .solution-card h3 { font-size: 17px; margin-bottom: 6px; font-weight: 600; }
-    .solution-card p { font-size: 13px; color: var(--gray); line-height: 1.5; }
-    .solution-card .tag { display: inline-block; font-size: 11px; background: var(--dark3); color: var(--gray); padding: 2px 8px; border-radius: 4px; margin-top: 10px; }
-    .solution-card.live .tag { background: rgba(22,163,74,0.15); color: var(--green); }
-    .solution-card.full-width { grid-column: 1 / -1; }
+    .page-header { margin-bottom:2rem; }
+    .page-tag { font-size:10px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:var(--blue); margin-bottom:10px; }
+    .page-h1 { font-size:clamp(1.4rem,3vw,2rem); font-weight:700; margin-bottom:8px; }
+    .page-sub { font-size:13px; color:var(--gray); max-width:640px; line-height:1.6; }
 
-    .recent { max-width: 900px; margin: 60px auto; padding: 0 32px 80px; }
-    .recent h2 { font-size: 22px; margin-bottom: 16px; font-weight: 600; }
-    .call-list { display: flex; flex-direction: column; gap: 8px; }
-    .call-row { display: grid; grid-template-columns: 80px 1fr 80px 60px; gap: 12px; align-items: center; background: var(--dark2); border: 1px solid var(--dark3); border-radius: 8px; padding: 14px 16px; font-size: 13px; }
-    .call-row .time { color: var(--gray); font-size: 12px; }
-    .call-row .biz { font-weight: 500; }
-    .call-row .score { font-weight: 600; text-align: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; }
-    .call-row .score.hot { background: rgba(220,38,38,0.15); color: #ef4444; }
-    .call-row .score.warm { background: rgba(245,158,11,0.15); color: #fbbf24; }
-    .call-row .score.cool { background: rgba(107,114,128,0.15); color: #9ca3af; }
-    .call-row .sent { text-align: center; }
-    .empty-state { text-align: center; padding: 40px; color: var(--gray); font-size: 14px; }
+    /* Stats */
+    .stats-row { display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:2rem; }
+    .stat-card { background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:16px; text-align:center; }
+    .stat-card .number { font-size:26px; font-weight:700; margin-bottom:4px; }
+    .stat-card .label { font-size:10px; color:var(--gray); text-transform:uppercase; letter-spacing:0.06em; }
+    .number.hot { color: var(--red); }
+    .number.warm { color: var(--amber); }
+    .number.green { color: var(--green); }
+    .number.blue { color: var(--blue); }
+    .number.yellow { color: var(--yellow); }
 
-    footer { border-top: 1px solid var(--dark3); padding: 24px 32px; text-align: center; }
-    footer p { font-size: 12px; color: var(--gray); }
-    footer a { color: var(--coral); text-decoration: none; }
+    /* Capabilities nav */
+    .caps-nav { display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-bottom:2rem; }
+    .cap-btn { background:var(--dark2); border:1px solid var(--dark3); border-radius:8px; padding:14px 10px; text-decoration:none; color:var(--white); text-align:center; transition:all 0.2s; }
+    .cap-btn:hover { border-color:var(--blue); background:#1a2230; }
+    .cap-btn-num { font-size:10px; color:var(--blue); font-weight:700; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:4px; }
+    .cap-btn-label { font-size:12px; font-weight:600; }
 
-    @media (max-width: 600px) {
-      .solution-grid { grid-template-columns: 1fr; }
-      .call-row { grid-template-columns: 1fr 1fr; gap: 4px; }
+    /* Two column layout */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:2rem; }
+    .full-col { margin-bottom:2rem; }
+
+    /* Section card */
+    .section-card { background:var(--dark2); border:1px solid var(--dark3); border-radius:10px; overflow:hidden; }
+    .card-header { padding:14px 18px; border-bottom:1px solid var(--dark3); display:flex; justify-content:space-between; align-items:center; }
+    .card-title { font-size:13px; font-weight:600; }
+    .card-sub { font-size:11px; color:var(--gray); }
+    .card-link { font-size:11px; color:var(--blue); text-decoration:none; font-weight:600; }
+    .card-link:hover { color:#4a7ed4; }
+    .card-body { padding:16px; }
+
+    /* Event list */
+    .event-list { display:flex; flex-direction:column; gap:6px; }
+    .event-row { background:var(--dark); border:1px solid var(--dark3); border-radius:6px; padding:10px 12px; display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+    .event-row.ev-critical { border-left:3px solid var(--red); }
+    .event-row.ev-elevated { border-left:3px solid var(--amber); }
+    .ev-title { font-size:12px; font-weight:600; margin-bottom:2px; }
+    .ev-sub { font-size:11px; color:var(--gray); }
+    .ev-time { font-size:10px; color:var(--gray); white-space:nowrap; flex-shrink:0; }
+
+    /* Churn risk mini */
+    .risk-list { display:flex; flex-direction:column; gap:6px; }
+    .risk-row { background:var(--dark); border:1px solid var(--dark3); border-radius:6px; padding:10px 12px; display:flex; align-items:center; gap:12px; }
+    .risk-row.r-critical { border-left:3px solid var(--red); }
+    .risk-row.r-elevated { border-left:3px solid var(--amber); }
+    .risk-name { font-size:12px; font-weight:600; flex:1; }
+    .risk-pct { font-size:14px; font-weight:700; }
+    .risk-rsr { font-size:11px; color:var(--gray); }
+    .risk-tier { font-size:9px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:2px 6px; border-radius:3px; }
+    .rt-critical { background:rgba(229,57,53,0.15); color:var(--red); }
+    .rt-elevated { background:rgba(255,152,0,0.15); color:var(--amber); }
+
+    /* Route intel */
+    .route-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:12px; }
+    .route-card { background:var(--dark); border:1px solid var(--dark3); border-radius:6px; padding:12px; text-decoration:none; color:var(--white); transition:border-color 0.2s; }
+    .route-card:hover { border-color:var(--blue); }
+    .rc-route { font-size:9px; color:var(--blue); font-weight:700; letter-spacing:0.12em; text-transform:uppercase; margin-bottom:4px; }
+    .rc-name { font-size:12px; font-weight:600; margin-bottom:2px; }
+    .rc-driver { font-size:11px; color:var(--gray); }
+    .rc-health { display:flex; gap:6px; margin-top:8px; }
+    .rh-dot { width:6px; height:6px; border-radius:50%; }
+
+    footer { border-top: 1px solid var(--dark3); padding: 20px clamp(1rem,4vw,2rem); }
+    .footer-inner { max-width:1200px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; }
+    .footer-inner p { font-size: 12px; color: var(--gray); }
+    .footer-inner a { color: var(--gray); text-decoration: none; }
+    .footer-inner a:hover { color:var(--white); }
+
+    @media(max-width:900px) {
+      .stats-row { grid-template-columns:repeat(3,1fr); }
+      .caps-nav { grid-template-columns:repeat(3,1fr); }
+      .two-col { grid-template-columns:1fr; }
+      .route-cards { grid-template-columns:1fr 1fr; }
+    }
+    @media(max-width:600px) {
+      .stats-row { grid-template-columns:repeat(2,1fr); }
+      .caps-nav { grid-template-columns:repeat(2,1fr); }
+      .route-cards { grid-template-columns:1fr; }
     }
   </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo"><span>AI</span> Operations Hub</div>
-  <div class="nav-links">
-    <a href="../" title="Back to main site">Main Site</a>
-    <a href="./" class="active">Overview</a>
-    <a href="./dashboard.html">Dashboard</a>
-    <a href="/laundry/api/route-intel?route=route-12" target="_blank">Route Intel</a>
+  <div class="nav-inner-flex">
+    <div class="logo"><span>Branch Ops</span> Command Center</div>
+    <div class="pilot-banner">Cincinnati Pilot Active</div>
+    <div class="demo-badge">Demo Mode</div>
+    <div class="nav-links">
+      <a href="/laundry/" title="Back to platform home">Platform Home</a>
+      <a href="/laundry/ops/" class="active">Ops Hub</a>
+      <a href="/laundry/service-shield/">Shield</a>
+      <a href="/laundry/churn-risk/">Churn</a>
+      <a href="/laundry/route-intel/">Routes</a>
+      <a href="/laundry/rep-coaching/">Coaching</a>
+    </div>
   </div>
 </nav>
 
-<div class="hero">
-  <h1>AI-Powered Operations for<br><span>Linen & Uniform Services</span></h1>
-  <p>Every inbound call answered, qualified, and routed. Every complaint detected and escalated. Every driver briefed before they knock on the door.</p>
-  
-  <a href="tel:+15138225130" class="phone-cta" id="phoneLink">
-    <span class="pulse"></span>
-    <span id="phoneDisplay">(513) 822-5130</span>
-  </a>
-  <div class="phone-sub">Call now — AI answers 24/7 in English & Spanish</div>
-</div>
+<div class="page">
+  <div class="page-header">
+    <div class="page-tag">Branch Operations Command Center · Cincinnati Pilot · 90-Day Demo</div>
+    <div class="page-h1">Real-time branch operations overview.</div>
+    <p class="page-sub">All channels, all metrics, one view. Data refreshes every 30 seconds.</p>
+  </div>
 
-<div class="stats-bar" id="statsBar">
-  <div class="stat-card"><div class="number blue" id="totalCalls">—</div><div class="label">Calls Handled</div></div>
-  <div class="stat-card"><div class="number green" id="avgSentiment">—</div><div class="label">Avg Sentiment</div></div>
-  <div class="stat-card"><div class="number hot" id="hotLeads">—</div><div class="label">Hot Leads</div></div>
-  <div class="stat-card"><div class="number warm" id="activeComplaints">—</div><div class="label">Complaints Flagged</div></div>
-</div>
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card"><div class="number blue" id="totalCalls">—</div><div class="label">Calls Handled</div></div>
+    <div class="stat-card"><div class="number green" id="avgSentiment">—</div><div class="label">Avg Sentiment</div></div>
+    <div class="stat-card"><div class="number hot" id="activeComplaints">—</div><div class="label">Complaints Flagged</div></div>
+    <div class="stat-card"><div class="number warm" id="churnRisk">3</div><div class="label">Churn Risk Accts</div></div>
+    <div class="stat-card"><div class="number yellow" id="hotLeads">—</div><div class="label">Hot Leads</div></div>
+  </div>
 
-<div class="solutions">
-  <h2>5 AI Solutions — One Integrated Layer</h2>
-  <div class="solution-grid">
-    <div class="solution-card live">
-      <div class="solution-num">Solution 01</div>
-      <h3>Voice Agent</h3>
-      <p>AI answers every inbound call. Qualifies callers, captures data, handles FAQs, escalates complaints. Delivers structured lead summaries via email in real time.</p>
-      <span class="tag">LIVE</span>
+  <div class="caps-nav">
+    <a href="/laundry/service-shield/" class="cap-btn">
+      <div class="cap-btn-num">01</div>
+      <div class="cap-btn-label">Service Shield</div>
+    </a>
+    <a href="/laundry/route-intel/" class="cap-btn">
+      <div class="cap-btn-num">02</div>
+      <div class="cap-btn-label">Route Intel</div>
+    </a>
+    <a href="/laundry/churn-risk/" class="cap-btn">
+      <div class="cap-btn-num">03</div>
+      <div class="cap-btn-label">Churn Risk</div>
+    </a>
+    <a href="/laundry/rep-coaching/" class="cap-btn">
+      <div class="cap-btn-num">04</div>
+      <div class="cap-btn-label">Rep Coaching</div>
+    </a>
+    <a href="/laundry/cincinnati/" class="cap-btn">
+      <div class="cap-btn-num">Pilot</div>
+      <div class="cap-btn-label">Cincinnati Scope</div>
+    </a>
+  </div>
+
+  <div class="two-col">
+    <!-- Recent events -->
+    <div class="section-card">
+      <div class="card-header">
+        <div><div class="card-title">Recent Shield Events</div><div class="card-sub">Last 6 account signals</div></div>
+        <a href="/laundry/service-shield/" class="card-link">View All →</a>
+      </div>
+      <div class="card-body">
+        <div class="event-list" id="eventList">
+          <div class="event-row ev-critical">
+            <div><div class="ev-title">TriHealth Good Samaritan Hospital</div><div class="ev-sub">Wrong scrub sizes for 3rd week — Kevin Marsh requesting escalation</div></div>
+            <div class="ev-time">2h ago</div>
+          </div>
+          <div class="event-row ev-critical">
+            <div><div class="ev-title">Mason Medical Center</div><div class="ev-sub">Missed Monday pickup again — Ellen Torres sent formal email</div></div>
+            <div class="ev-time">4h ago</div>
+          </div>
+          <div class="event-row ev-elevated">
+            <div><div class="ev-title">FC Cincinnati Training Facility</div><div class="ev-sub">Wrong jersey sizes — competitor pricing mentioned</div></div>
+            <div class="ev-time">1d ago</div>
+          </div>
+          <div class="event-row">
+            <div><div class="ev-title">Marriott at RiverCenter</div><div class="ev-sub">2-year renewal confirmed — Tom Halloran cited 6am delivery reliability</div></div>
+            <div class="ev-time">6h ago</div>
+          </div>
+          <div class="event-row">
+            <div><div class="ev-title">Cincinnati Children's Hospital</div><div class="ev-sub">12 consecutive perfect delivery months — formal commendation</div></div>
+            <div class="ev-time">4h ago</div>
+          </div>
+          <div class="event-row ev-elevated">
+            <div><div class="ev-title">Orchids at Palm Court (Hilton)</div><div class="ev-sub">Linen quality complaint — contract renewal in 45 days</div></div>
+            <div class="ev-time">1d ago</div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="solution-card live">
-      <div class="solution-num">Solution 02</div>
-      <h3>Lead Engine</h3>
-      <p>Every lead scored 0–100 by business size, urgency, service fit. Hot leads routed instantly. Warm leads enter nurture sequence. Zero leads lost.</p>
-      <span class="tag">LIVE</span>
-    </div>
-    <div class="solution-card live">
-      <div class="solution-num">Solution 03</div>
-      <h3>Service Shield</h3>
-      <p>Every call analyzed for customer satisfaction. Negative sentiment triggers instant alerts. Complaint patterns surface before they become systemic.</p>
-      <span class="tag">LIVE</span>
-    </div>
-    <div class="solution-card">
-      <div class="solution-num">Solution 04</div>
-      <h3>Route Intelligence</h3>
-      <p>AI-generated driver briefings before every route. Customer mood, open issues, upsell opportunities, predicted demand — all on their phone before they leave.</p>
-      <span class="tag">DEMO</span>
-    </div>
-    <div class="solution-card full-width">
-      <div class="solution-num">Solution 05</div>
-      <h3>Command Dashboard</h3>
-      <p>Real-time corporate visibility across all branches. Call volume, lead pipeline, customer sentiment, service issues, competitive intelligence — one view.</p>
-      <span class="tag"><a href="./dashboard.html" style="color: inherit; text-decoration: none;">Open Dashboard →</a></span>
+
+    <!-- Churn risk -->
+    <div class="section-card">
+      <div class="card-header">
+        <div><div class="card-title">Top Churn Risk Accounts</div><div class="card-sub">Highest probability of cancellation</div></div>
+        <a href="/laundry/churn-risk/" class="card-link">Full Dashboard →</a>
+      </div>
+      <div class="card-body">
+        <div class="risk-list" id="riskList">
+          <div class="risk-row r-critical">
+            <div style="flex:1"><div class="risk-name">TriHealth Good Samaritan Hospital</div><div class="risk-rsr">RSR: Sandra K. · $78K/yr</div></div>
+            <span class="risk-tier rt-critical">Critical</span>
+            <div class="risk-pct" style="color:#e53935">71%</div>
+          </div>
+          <div class="risk-row r-critical">
+            <div style="flex:1"><div class="risk-name">Mason Medical Center</div><div class="risk-rsr">RSR: Carlos P. · $52K/yr</div></div>
+            <span class="risk-tier rt-critical">Critical</span>
+            <div class="risk-pct" style="color:#e53935">68%</div>
+          </div>
+          <div class="risk-row r-critical">
+            <div style="flex:1"><div class="risk-name">FC Cincinnati Training Facility</div><div class="risk-rsr">RSR: Mike T. · $64K/yr</div></div>
+            <span class="risk-tier rt-critical">Critical</span>
+            <div class="risk-pct" style="color:#e53935">61%</div>
+          </div>
+          <div class="risk-row r-elevated">
+            <div style="flex:1"><div class="risk-name">P&amp;G Campus Cafeteria (Mason)</div><div class="risk-rsr">RSR: Carlos P. · $87K/yr</div></div>
+            <span class="risk-tier rt-elevated">Elevated</span>
+            <div class="risk-pct" style="color:#ff9800">52%</div>
+          </div>
+          <div class="risk-row r-elevated">
+            <div style="flex:1"><div class="risk-name">Kenwood Towne Marriott</div><div class="risk-rsr">RSR: Carlos P. · $56K/yr</div></div>
+            <span class="risk-tier rt-elevated">Elevated</span>
+            <div class="risk-pct" style="color:#ff9800">47%</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="recent">
-  <h2>Recent Calls</h2>
-  <div class="call-list" id="callList">
-    <div class="empty-state">No calls yet. Call the number above to see it work.</div>
+  <!-- Route intel -->
+  <div class="section-card full-col">
+    <div class="card-header">
+      <div><div class="card-title">Cincinnati Routes — Live Briefings</div><div class="card-sub">Click any route to open the RSR briefing</div></div>
+      <a href="/laundry/route-intel/" class="card-link">All Routes →</a>
+    </div>
+    <div class="route-cards">
+      <a href="/laundry/api/route-intel?route=route-7" target="_blank" class="route-card">
+        <div class="rc-route">Route 7</div>
+        <div class="rc-name">Downtown / Over-the-Rhine</div>
+        <div class="rc-driver">Driver: Mike T. · 12 stops</div>
+        <div class="rc-health">
+          <div class="rh-dot" style="background:#e53935"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+        </div>
+      </a>
+      <a href="/laundry/api/route-intel?route=route-9" target="_blank" class="route-card">
+        <div class="rc-route">Route 9</div>
+        <div class="rc-name">Northside / Clifton</div>
+        <div class="rc-driver">Driver: Sandra K. · 10 stops</div>
+        <div class="rc-health">
+          <div class="rh-dot" style="background:#e53935"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+        </div>
+      </a>
+      <a href="/laundry/api/route-intel?route=route-15" target="_blank" class="route-card">
+        <div class="rc-route">Route 15</div>
+        <div class="rc-name">Blue Ash / Mason</div>
+        <div class="rc-driver">Driver: Carlos P. · 11 stops</div>
+        <div class="rc-health">
+          <div class="rh-dot" style="background:#e53935"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#ffc107"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+          <div class="rh-dot" style="background:#43a047"></div>
+        </div>
+      </a>
+    </div>
   </div>
 </div>
 
 <footer>
-  <p>Built by <a href="https://cafecito-ai.com" target="_blank">Cafecito AI</a> — Miami's AI consulting partner. <a href="../">← Back to main site</a></p>
+  <div class="footer-inner">
+    <p>Branch Operations Command Center · <a href="/laundry/">Platform Home</a> · <a href="/laundry/cincinnati/">Cincinnati Pilot</a></p>
+    <p style="color:#4a5568">Demo Mode · Data refreshes every 30s</p>
+  </div>
 </footer>
 
 <script>
@@ -159,23 +304,18 @@ async function fetchMetrics() {
   try {
     const res = await fetch('/laundry/api/dashboard-api');
     const data = await res.json();
-    document.getElementById('totalCalls').textContent = data.overview.total_calls || '0';
-    document.getElementById('avgSentiment').textContent = data.overview.avg_sentiment ? data.overview.avg_sentiment + '/10' : '—';
-    document.getElementById('hotLeads').textContent = data.leads.tiers.hot || '0';
-    document.getElementById('activeComplaints').textContent = data.overview.active_complaints || '0';
-    const callList = document.getElementById('callList');
-    if (data.recent_calls && data.recent_calls.length > 0) {
-      callList.innerHTML = data.recent_calls.map(call => {
-        const time = new Date(call.timestamp).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
-        const tierClass = call.lead_tier || 'cool';
-        const sentEmoji = call.sentiment >= 7 ? '🟢' : call.sentiment >= 4 ? '🟡' : '🔴';
-        return '<div class="call-row"><span class="time">' + time + '</span><span class="biz">' + (call.business || call.name || 'Unknown') + ' — <span style="color:var(--gray);font-weight:400">' + (call.summary || call.classification).slice(0, 80) + '</span></span><span class="score ' + tierClass + '">' + (call.lead_score || '—') + '</span><span class="sent">' + sentEmoji + ' ' + call.sentiment + '/10</span></div>';
-      }).join('');
+    if (data.calls) document.getElementById('totalCalls').textContent = data.calls.total || '0';
+    if (data.sentiment) {
+      document.getElementById('avgSentiment').textContent = data.sentiment.avg_score ? data.sentiment.avg_score + '/10' : '—';
+      document.getElementById('activeComplaints').textContent = data.sentiment.complaints || '0';
     }
-  } catch (err) { console.log('Metrics fetch failed:', err); }
+    if (data.leads) document.getElementById('hotLeads').textContent = data.leads.hot || '0';
+  } catch (err) {
+    console.log('Metrics fetch failed:', err);
+  }
 }
 fetchMetrics();
-setInterval(fetchMetrics, 15000);
+setInterval(fetchMetrics, 30000);
 </script>
 </body>
 </html>
