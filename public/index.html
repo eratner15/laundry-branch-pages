@@ -137,7 +137,10 @@
 
     /* Local Depots section */
     .depots {
-      margin-top: 2px;
+      margin-top: clamp(3rem, 5vw, 4rem);
+      border: 1px solid var(--bone);
+      border-radius: 2px;
+      overflow: hidden;
       opacity: 0; animation: fadeIn 0.8s 0.82s forwards;
     }
     .depots-header {
