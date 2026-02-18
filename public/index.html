@@ -39,19 +39,61 @@
     h1 {
       font-family: 'Playfair Display', serif; font-weight: 400;
       font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05;
-      letter-spacing: -0.04em; color: var(--charcoal); margin-bottom: 1rem;
+      letter-spacing: -0.04em; color: var(--charcoal); margin-bottom: 1.5rem;
       opacity: 0; animation: slideUp 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
     h1 i { font-style: italic; color: var(--ash); }
-    .tagline {
-      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--drift); margin-bottom: 1.5rem;
-      opacity: 0; animation: fadeIn 0.8s 0.35s forwards;
+
+    /* Pilot hero */
+    .pilot-hero {
+      background: var(--night); margin-bottom: 2px;
+      padding: clamp(36px, 5vw, 60px) clamp(28px, 4vw, 44px);
+      opacity: 0; animation: fadeIn 0.8s 0.4s forwards;
+      position: relative; overflow: hidden;
     }
-    .subtitle {
-      font-size: 0.95rem; line-height: 1.8; color: var(--drift); max-width: 600px; margin-bottom: 3rem;
-      opacity: 0; animation: fadeIn 0.8s 0.5s forwards;
+    .pilot-hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,168,114,0.08) 0%, transparent 70%);
+      pointer-events: none;
     }
+    .pilot-badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--warm); margin-bottom: 16px; display: inline-flex; align-items: center; gap: 8px;
+    }
+    .pilot-badge::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--warm);
+      animation: pulse 2s infinite;
+    }
+    .pilot-city {
+      font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+      font-size: clamp(3rem, 7vw, 5.5rem); line-height: 0.95;
+      letter-spacing: -0.04em; color: var(--linen); margin-bottom: 20px;
+    }
+    .pilot-desc {
+      font-size: 0.88rem; line-height: 1.8; color: var(--drift); max-width: 520px; margin-bottom: 20px;
+    }
+    .pilot-terms {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ash); margin-bottom: 28px;
+    }
+    .pilot-cta {
+      display: inline-block; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em;
+      color: var(--warm); text-decoration: none;
+      border-bottom: 1.5px solid rgba(196,168,114,0.5); padding-bottom: 3px; transition: all 0.3s;
+    }
+    .pilot-cta:hover { border-color: var(--warm); }
+
+    /* Bridge between hero and caps */
+    .caps-context {
+      padding: clamp(20px, 3vw, 28px) 0 clamp(16px, 2vw, 20px);
+      opacity: 0; animation: fadeIn 0.8s 0.65s forwards;
+    }
+    .caps-context-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--drift); margin-bottom: 6px;
+    }
+    .caps-context p { font-size: 0.82rem; color: var(--drift); line-height: 1.7; max-width: 480px; }
 
     /* Capabilities grid */
     .caps {
@@ -93,29 +135,6 @@
     }
     .cap:hover .cap-link { border-color: var(--charcoal); }
 
-    /* Pilot CTA */
-    .pilot {
-      background: var(--night); padding: clamp(28px, 4vw, 44px);
-      margin-top: 2px;
-      opacity: 0; animation: fadeIn 0.8s 0.85s forwards;
-    }
-    .pilot-label {
-      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--drift); margin-bottom: 12px;
-    }
-    .pilot h3 {
-      font-family: 'Playfair Display', serif; font-weight: 400; font-size: 1.1rem;
-      color: var(--linen); margin-bottom: 8px;
-    }
-    .pilot p { font-size: 0.8rem; color: var(--drift); line-height: 1.7; margin-bottom: 16px; }
-    .pilot-link {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
-      color: var(--warm); text-decoration: none;
-      border-bottom: 1.5px solid rgba(196,168,114,0.4); padding-bottom: 2px;
-      transition: all 0.3s;
-    }
-    .pilot-link:hover { border-color: var(--warm); }
-
     /* Local Depots section */
     .depots {
       margin-top: 2px;
@@ -153,6 +172,16 @@
     .depot-link { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; color: var(--charcoal); border-bottom: 1.5px solid var(--bone); padding-bottom: 2px; transition: all 0.3s; }
     .depot-card:hover .depot-link { border-color: var(--charcoal); }
 
+    /* AI services feature tags */
+    .ai-features {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px;
+    }
+    .ai-feat {
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--drift); background: var(--cream); border: 1px solid var(--bone);
+      padding: 4px 10px; border-radius: 2px;
+    }
+
     /* Bottom */
     .bottom {
       margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--bone);
@@ -164,17 +193,19 @@
       font-size: 0.85rem; color: var(--ash);
     }
 
+    /* Fixed Book Pilot Call badge */
     .badge {
       position: fixed; bottom: 24px; right: 24px;
       font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--drift); background: var(--milk);
-      padding: 8px 14px; border: 1px solid var(--bone); border-radius: 2px;
+      color: var(--warm); background: var(--night);
+      padding: 10px 18px; border: 1px solid rgba(196,168,114,0.3); border-radius: 2px;
       text-decoration: none; transition: all 0.3s; z-index: 10;
     }
-    .badge:hover { color: var(--charcoal); border-color: var(--charcoal); }
+    .badge:hover { border-color: var(--warm); }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
     @media (max-width: 700px) {
       .caps { grid-template-columns: 1fr; }
@@ -188,9 +219,22 @@
 
 <div class="container">
   <div class="tag">Branch Operations Intelligence</div>
-  <h1>Branch operations<br><i>intelligence.</i></h1>
-  <div class="tagline">What happens after the truck leaves.</div>
-  <p class="subtitle">The last mile is where accounts are won and lost. Service Shield monitors every account in real time. Route Intelligence briefs your RSRs before they hit the road. Predictive churn scoring flags at-risk accounts 90 days before they cancel. All of it connected — designed to plug into your existing Salesforce, SAP, and CRM workflows.</p>
+  <h1>What happens<br><i>after the truck leaves.</i></h1>
+
+  <!-- HERO: Cincinnati pilot -->
+  <div class="pilot-hero">
+    <div class="pilot-badge">90-Day Market Pilot · Now Scoped</div>
+    <div class="pilot-city">Cincinnati.</div>
+    <p class="pilot-desc">One branch, real workflows, measurable outcomes. Route Intelligence briefs RSRs at 6am. Service Shield health-scores every account. Predictive churn scoring flags cancellations 90 days out. If the model doesn't move the needle on churn, you don't pay for the next phase.</p>
+    <div class="pilot-terms">$75K–$150K · No-risk second phase · Deploys in one day</div>
+    <a href="./cincinnati/" class="pilot-cta">See the full pilot scope →</a>
+  </div>
+
+  <!-- Bridge + Capabilities -->
+  <div class="caps-context">
+    <div class="caps-context-label">Five capabilities in the pilot</div>
+    <p>Live demos built on real Cincinnati routes, accounts, and RSR data.</p>
+  </div>
 
   <div class="caps">
     <a href="./service-shield/" class="cap">
@@ -239,6 +283,11 @@
       <div class="depots-label">Local Service Depots</div>
       <div class="depots-heading">Local service, <i>local operators.</i></div>
       <p class="depots-sub">For independent laundry and linen operators — branch-level AI designed for businesses from 1 to 20 locations.</p>
+      <div class="ai-features">
+        <span class="ai-feat">AI Phone Agent</span>
+        <span class="ai-feat">Instant Chat</span>
+        <span class="ai-feat">Smart Quoting</span>
+      </div>
     </div>
     <div class="depots-grid">
       <a href="./miami/" class="depot-card">
@@ -258,17 +307,13 @@
     </div>
   </div>
 
-  <div class="pilot">
-    <div class="pilot-label">Cincinnati Pilot</div>
-    <h3>The Cincinnati market is scoped as a 90-day pilot.</h3>
-    <p>One branch, real workflows, measurable outcomes. $75K–$150K. If the model doesn't move the needle on churn, you don't pay for the next phase. See the full pilot scoped with real Cincinnati routes, accounts, and RSR data.</p>
-    <a href="./cincinnati/" class="pilot-link">See the pilot scope →</a>
-  </div>
-
   <div class="bottom">
     <span class="bottom-text">Built on your feedback. Deployed in a day.</span>
   </div>
 </div>
+
+<!-- Fixed Book Pilot Call badge -->
+<a href="https://cal.com/cafecito-ai/cintas-pilot" class="badge" target="_blank">Book Pilot Call</a>
 
 </body>
 </html>
